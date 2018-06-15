@@ -1,0 +1,18 @@
+@import '../../../styles/variables';
+
+:host {
+    display: block;
+    text-align: center;
+    margin-top: 60px;
+    font-size: 14px;
+    color: $color-black;
+
+    h1 {
+        margin-bottom: 12px;
+    }
+
+    img {
+        width: 500px;
+        height: auto;
+    }
+}

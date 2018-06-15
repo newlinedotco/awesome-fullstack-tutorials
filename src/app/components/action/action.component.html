@@ -1,0 +1,17 @@
+<div *ngIf="!randomData">
+    <p>
+        Press this lovely button to fetch the data.
+    </p>
+
+    <button class="button" (click)="fetchData()">Fetch data</button>
+</div>
+
+<div *ngIf="randomData">
+    <p>Here's the list of random numbers.</p>
+
+    <div class="numbers">
+    <span *ngFor="let n of randomData">
+      {{ n }}
+    </span>
+    </div>
+</div>

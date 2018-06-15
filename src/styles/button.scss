@@ -1,0 +1,38 @@
+@import 'variables';
+
+.button {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: Lato, sans-serif;
+    border: 1px solid $color-white-grayish-blue;
+    border-radius: 2px;
+    background-color: $color-white-smoke;
+    color: $color-black-darken;
+    line-height: 32px;
+    height: 32px;
+    padding: 0 15px;
+    cursor: pointer;
+    box-sizing: border-box;
+    white-space: nowrap;
+    text-align: center;
+    text-transform: none;
+    text-decoration: none;
+    outline: none;
+
+    &:hover,
+    &:focus {
+        &:not(.button--disabled) {
+            border-color: $color-light-gray;
+            background-color: $color-white-smoke;
+        }
+    }
+
+    &:active,
+    &--active {
+        &:not(.button--disabled) {
+            border-color: $color-light-gray;
+            background-color: $color-white-smoke-darken;
+        }
+    }
+}
