@@ -14,7 +14,8 @@
             "installMode": "lazy",
             "updateMode": "lazy",
             "resources": {
-                "files": ["/assets/**"]
+                "files": ["/assets/**"],
+                "urls": ["https://angular.io/assets/images/logos/angular/angular.svg"]
             }
         }
     ]
