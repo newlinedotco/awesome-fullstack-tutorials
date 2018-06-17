@@ -18,5 +18,16 @@
                 "urls": ["https://angular.io/assets/images/logos/angular/angular.svg"]
             }
         }
+    ],
+    "dataGroups": [
+        {
+            "name": "random.org",
+            "urls": ["https://www.random.org/**"],
+            "cacheConfig": {
+                "maxSize": 3,
+                "maxAge": "7d",
+                "strategy": "freshness"
+            }
+        }
     ]
 }
