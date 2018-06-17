@@ -7,6 +7,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { ActionComponent } from './components/action/action.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { UpdatesNotificationComponent } from './components/updates-notification/updates-notification.component';
 
 @NgModule({
     imports: [
@@ -15,7 +16,7 @@ import { environment } from '../environments/environment';
         HttpClientModule,
         ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     ],
-    declarations: [AppComponent, HeaderComponent, ActionComponent],
+    declarations: [AppComponent, HeaderComponent, ActionComponent, UpdatesNotificationComponent],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
