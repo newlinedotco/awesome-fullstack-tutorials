@@ -1,13 +1,13 @@
 <div align="center">
   <p>
-    <img src="https://i.imgur.com/Vv6rYB1.png" width="250"/>
+    <img src="https://i.imgur.com/Vv6rYB1.png" width="550"/>
   </p>
 </div>
 
 ## Vuex
 
 > A [vue-cli](https://github.com/vuejs/vue-cli) scaffolded project to highlight the use of `Vuex`.
-> Part of the [Managing State in Vue.js](https://medium.com/fullstackio/managing-state-in-vue-js-23a0352b1c87) article.
+> Part of the article - [Managing State in Vue.js](https://medium.com/fullstackio/managing-state-in-vue-js-23a0352b1c87).
 
 ## Build Setup
 

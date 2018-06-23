@@ -1,9 +1,9 @@
 <div align="center">
   <p>
-    <img src="https://i.imgur.com/SUFg6FO.png" width="250"/>
+    <img src="https://i.imgur.com/SUFg6FO.png" width="550"/>
   </p>
 
-  <p>The source code for the <a href="https://medium.com/fullstackio/managing-state-in-vue-js-23a0352b1c87" target="_blank">Managing State in Vue.js</a> article.</p>
+  <h3>The source code for the article <a href="https://medium.com/fullstackio/managing-state-in-vue-js-23a0352b1c87" target="_blank">Managing State in Vue.js</a>.</h3>
 </div>
 
 ## Sandboxes
