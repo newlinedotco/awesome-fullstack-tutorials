@@ -1,6 +1,6 @@
 <div align="center">
   <p>
-    <img src="http://i.imgur.com/CSu35WO.png" width="250"/>
+    <img src="https://i.imgur.com/ESvsOrv.png" width="250"/>
   </p>
 
   <p>The source code for all public articles/blogs posted by <a href="https://www.fullstack.io/vue/" target="_blank">Fullstack Vue</a>!</p>
