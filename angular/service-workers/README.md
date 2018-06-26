@@ -1,30 +1,27 @@
 # Service Workers & Angular
 
-Last time I managed to migrate my small Angular application [from a custom Webpack build to Angular CLI](https://medium.com/bratislava-angular/from-custom-webpack-build-to-angular-cli-9d87c3da6925). Now my life as a developer of this application is much easier. After migrating and using (or sometimes abusing) the power of [Angular Schematics](https://blog.angular.io/schematics-an-introduction-dc1dfbc2a2b2) for generating *everything*, I was wondering what else does the [CLI](https://cli.angular.io/) offer to the developer. I found out that it should be quite easy to set up a service worker for my application using the CLI so I dug in and enabled it. And it *was actually easy*!
+A service worker is a small JavaScript program (a worker) that **runs in the background and intercepts HTTP requests**. It is up to the worker implementation to decide what to do with these requests (and the worker gets access to *every* HTTP request, not just those made from the application scripts like `fetch`, but also, for example, the request for the initial `index.html` file). 
 
-In this article I want to show you *how* and *why* you would use a service worker in an Angular application. We will create a simple application using the CLI and make a good use of a service worker for it.
+The worker can decide to **modify the request data**, **make several requests to the server**, **use the [cache](https://developer.mozilla.org/en-US/docs/Web/API/Cache)**, etc.
 
-## What are Service Workers
+The service worker **runs in the background** and _can continue running_ **even when the user closes the application tab**.
 
-Well, to be honest, I am not that great at explaining things... But here we go. I'll do my best and explain *how I understand service workers*.
+Now why would you, my dear friend, want to use a service worker? Well, there are several reasons, but for the purpose of this article (and Angular, and PWAs), **service workers allow you to manually handle the cache and use it even when the computer is not connected to the internet**. This allows us to build **offline Angular applications**.
 
-Basically, a service worker is a small JavaScript program (a worker) that runs in the background and intercepts HTTP requests. It is up to the worker implementation to decide what to do with these requests (and the worker gets access to *every* HTTP request, not just those made from the application scripts like `fetch`, but also for example the request for the initial `index.html` file). The worker can decide to modify the request data, make several requests to the server, use the [cache](https://developer.mozilla.org/en-US/docs/Web/API/Cache), etc.
+In this article I want to show you *how* and *why* you would use a service worker in an Angular application. We will create a simple application using the CLI and make good use of a service worker for it.
 
-The service worker runs in the background and can continue running even when the user closes the application tab. Now why would you, my dear friend, want to use a service worker? Well, there are several reasons, but for the purpose of this article (and Angular, and PWAs), service workers allow you to manually handle the cache and use it even when the computer is not connected to the internet. Offline Angular applications? Sure why not.
+Below, we'll enable and configure the service worker for the application and use it to:
 
-### Inspecting Service Workers in Chrome
+* **cache the application resources** and 
+* **detect when new updates are available**
 
-I wanted to show you how to inspect service workers because you will need it for the example project below. When you are on a page with a service worker, open the developer tools, select the `Application` tab, and choose `Service Workers` in the left navigation panel.
+## Example Code
 
-![service worker in Chrome](https://user-images.githubusercontent.com/4700122/41548656-e61a858a-7323-11e8-9281-e507c5845280.png)
+We've created a simple demo app showing how to use service workers in Angular. 
 
-Here you can see the service worker, you can access its source code, its console, you can simulate offline mode, and (most importantly) you can *unregister it* (on the right side). When you are done with the example project in this article, make sure to unregister the service worker for the application. Otherwise, it will keep serving the application even when you are not running the server.
+Start by cloning [the example project](https://github.com/chuckeles/angular-service-worker) and running `npm install` and `ng serve`
 
 ## Service Workers in an Angular application
-
-I have created a simple application for demonstrating the use of service worker. We will enable and configure the service worker for the application and use it to cache the resources. We will also use the service worker to detect when new updates are available for the application.
-
-Start by cloning [the example project](https://github.com/chuckeles/angular-service-worker) and then move to the directory of the application. If you check the Git history of this repository, you can see that there are multiple commits and tags for each step. The `final` tag and the master branch point to the last commit where the complete application is implemented and the service worker is already configured and utilized. If you want to follow along, check out the first tag called `start` using `git checkout start`. Now install Node dependencies by calling `yarn install`.
 
 ### The Application
 
@@ -85,19 +82,49 @@ The service worker is configured using the `ngsw-config.json` file. Go ahead and
 }
 ```
 
-As per [the documentation](https://angular.io/guide/service-worker-config#assetgroups), `assetGroups` are *resources that are part of the app version that update along with the app*. There are 2 modes that you can configure – `installMode` and `updateMode` – and they tell the service worker how to cache resources in the group. `installMode` determines how the resources are initially cached, that is, when the user first visits the application and the service worker is registered for the first time. `updateMode` works for resources already in the cache. You can use 2 options – `prefetch` and `lazy`. `prefetch` means that the service worker will go ahead and download all resources in the group as soon as possible and put them into the cache. This uses more data initially but ensures that resources are already in the cache, even when the application goes offline later. `lazy` means that the service worker will only download the resources when they are requested. You can read more in [the documentation for the service worker](https://angular.io/guide/service-worker-config).
+As per [the documentation](https://angular.io/guide/service-worker-config#assetgroups), `assetGroups` are *resources that are part of the app version that update along with the app*. There are 2 modes that you can configure – `installMode` and `updateMode` – and they tell the service worker how to cache resources in the group. 
+
+`installMode` determines how the resources are initially cached, that is, when the user first visits the application and the service worker is registered for the first time. 
+
+`updateMode` works for resources already in the cache. You can use 2 options – `prefetch` and `lazy`. `prefetch` means that the service worker will go ahead and download all resources in the group as soon as possible and put them into the cache. 
+
+This uses more data initially but ensures that resources are already in the cache, even when the application goes offline later. `lazy` means that the service worker will only download the resources when they are requested. You can read more in [the documentation for the service worker](https://angular.io/guide/service-worker-config).
 
 In our case, the service worker is configured to `prefetch` the application files (so the user always has the newest version downloaded) and use the `lazy` strategy for application assets. However, our application is not using any assets. We will configure the service worker to cache the Angular logo but first, let's test the application.
 
 ### Testing the Service Worker
 
-The service worker is enable only for the production mode of the application so we need to serve it in production mode to see the service worker in action. First, build the application using `ng build --prod`. The result will be placed into `dist/angular-service-worker` (you can also see the `ngsw-worker.js` file there). Then, we need to serve these files. I use [`serve`](https://www.npmjs.com/package/serve) for this, just install it with `yarn global add serve` and call `serve dist/angular-service-worker`. Finally, open the application in your browser (in my case Chrome).
+**You can use the Chrome developer tools to inspect service workers.** 
+
+When you are on a page with a service worker, open the developer tools, select the `Application` tab, and choose `Service Workers` in the left navigation panel.
+
+![service worker in Chrome](https://user-images.githubusercontent.com/4700122/41548656-e61a858a-7323-11e8-9281-e507c5845280.png)
+
+Here in the devtools we can:
+
+* see the service worker
+* access its source code
+* view its console
+* simulate offline mode and
+* _unregister it_
+
+> When you are done with the example project in this article, make sure to unregister the service worker for the application. Otherwise, it will keep serving the application even when you are not running the server.
+
+The service worker is enabled only for the production mode of the application so we need to serve it in production mode to see the service worker in action. 
+
+First, build the application using `ng build --prod`. The result will be placed into `dist/angular-service-worker` (you can also see the `ngsw-worker.js` file there). 
+
+Next, we need to serve these files. I use [`serve`](https://www.npmjs.com/package/serve) for this, just install it with `yarn global add serve` and call `serve dist/angular-service-worker`. Finally, open the application in your browser (in my case Chrome).
 
 If you open the devtools, you can see that the service worker is running. You can also check the cache storage to see the application files there.
 
 ![service worker](https://user-images.githubusercontent.com/4700122/41499605-ee5c167a-7182-11e8-8fe1-8ceff71ca686.png)
 
-If you now kill the `serve` command and reload the page, *the application still loads*! We used the `prefetch` strategy so the service worker has already *placed the whole app into the cache* and can load it even when the server is offline. However, if you disconnect from the internet (I know, just for a few seconds) and then reload the application, you can see that the Angular logo is not cached and does not load. Additionally, the *fetch data button* does not work because the external service is unavailable.
+If you now kill the `serve` command and reload the page, *the application still loads*! 
+
+We used the `prefetch` strategy so the service worker has already *placed the whole app into the cache* and can load it even when the server is offline. 
+
+However, if you disconnect from the internet (I know, just for a few seconds) and then reload the application, you can see that the Angular logo is not cached and does not load. Additionally, the *fetch data button* does not work because the external service is unavailable.
 
 ![offline](https://user-images.githubusercontent.com/4700122/41499638-814fd200-7183-11e8-9c69-24b9c7a25e07.png)
 
@@ -131,11 +158,13 @@ Now the service worker works correctly and caches the Angular logo. It even work
 
 ### Caching Data
 
-Besides `assetGroups` there are also `dataGroups`. As per [the documentation](https://angular.io/guide/service-worker-config#datagroups), they *are not versioned along with the app. They're cached according to manually-configured policies that are more useful for situations such as API requests and other data dependencies.* We can use this to cache the responses from the external service in case the application is offline!
+Besides `assetGroups` there are also `dataGroups`. As per [the documentation](https://angular.io/guide/service-worker-config#datagroups), they *are not versioned along with the app. They're cached according to manually-configured policies that are more useful for situations such as API requests and other data dependencies.* 
+
+We can use this to cache the responses from the external service in case the application is offline!
 
 If you want to follow along, `git checkout step2`.
 
-Open the service worker configuration file (you know which one it is by now, right?) and add the configuration for `dataGroups`:
+Open the service worker configuration file and add the configuration for `dataGroups`:
 
 ```
 "dataGroups": [
@@ -151,13 +180,23 @@ Open the service worker configuration file (you know which one it is by now, rig
 ]
 ```
 
-You can check the (well-written) documentation for the supported options but the most important one is called `strategy`. This tells the service worker how to cache the data, where `freshness` means that the service worker will always try to request newer data and only use the cached data if the request takes too long (or you are offline). There's also `performance` which means that the service worker will always prefer the cached data over making a request to the service. We always want fresh data and only use the cached data when the application is offline.
+You can check the (well-written) documentation for the supported options but the most important one is called `strategy`. 
 
-Now you can rebuild and application, serve it, load it in the browser, and reload the page to update the service worker. You can see that if you now press the button to fetch the data, the application gets new data every time and there are always different numbers. Now if you offline, load the application, and fetch the data, you will still see a list of numbers but they will always be the same – the ones that are stored in the cache.
+This tells the service worker how to cache the data, where `freshness` means that the service worker will always try to request newer data and only use the cached data if the request takes too long (or you are offline). 
+
+There's also `performance` which means that the service worker will always prefer the cached data over making a request to the service. We always want fresh data and only use the cached data when the application is offline.
+
+Now you can rebuild and application, serve it, load it in the browser, and reload the page to update the service worker. You can see that if you now press the button to fetch the data, the application gets new data every time and there are always different numbers. 
+
+Now if you're offline, load the application, and fetch the data, you will still see a list of numbers but they will always be the same – the ones that are stored in the cache.
 
 ### Notification for Updates
 
-So now we cache our whole application using the power of the Angular service worker! As the *last step*, we want to show a notification to the user when there are updates available for the application. The service worker allows us to do exactly that. It detects when there's a newer version available from the network than is in the browser cache. This check happens when the application is loaded or refreshed/reloaded. The service worker then downloads the newer version to the cache and lets our application know that an update is available. We can use this information to show a notification to the user.
+So now we cache our whole application using the power of the Angular service worker! 
+
+As the *last step*, we want to show a notification to the user when there are updates available for the application. The service worker allows us to do exactly that. It detects when there's a newer version available from the network than is in the browser cache. 
+
+This check happens when the application is loaded or refreshed/reloaded. The service worker then downloads the newer version to the cache and lets our application know that an update is available. We can use this information to show a notification to the user.
 
 You know the drill, `git checkout step4`. This step already contains the updates notification component and I'll just highlight the important parts.
 
@@ -173,7 +212,9 @@ constructor(private updates: SwUpdate) {
 }
 ```
 
-First, the component injects the `SwUpdate` service and subscribes to `SwUpdate.available`. This is an [Observable](http://reactivex.io/documentation/observable.html) which emits when the service worker detects and installs a new update to the cache. We construct our own Observable which starts with `false`, emits `true` when `SwUpdate` tells us that there are updates available, and finally emits `false` again when the user closes the notification. This Observable is used for displaying the notification. You can see how it is used in the component template.
+First, the component injects the `SwUpdate` service and subscribes to `SwUpdate.available`. This is an [Observable](http://reactivex.io/documentation/observable.html) which emits when the service worker detects and installs a new update to the cache. 
+
+We construct our own Observable which starts with `false`, emits `true` when `SwUpdate` tells us that there are updates available, and finally emits `false` again when the user closes the notification. This Observable is used for displaying the notification. You can see how it is used in the component template.
 
 The other important part is how we tell the service worker to activate the update.
 
@@ -197,6 +238,4 @@ When the user clicks on the *Activate* button, the component calls `SwUpdate.act
 - https://angular.io/guide/service-worker-intro
 - https://angular.io/guide/service-worker-devops
 
----
 
-Thank you for reading this long article!
