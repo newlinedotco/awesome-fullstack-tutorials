@@ -1,0 +1,65 @@
+@import '../../../styles/variables';
+
+:host {
+
+    $vertical-padding : 10px;
+    $horizontal-padding : 25px;
+    $close-size : 14px;
+
+    .banner {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        font-family: Lato, sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        z-index: 999;
+        display: block;
+        padding: $vertical-padding $horizontal-padding;
+        color: $color-white;
+        background-color: $color-black-darken;
+        opacity: .9;
+        margin: 25px;
+
+        &__link {
+            font-weight: 500;
+            color: $color-cyan;
+            background: none;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            outline: none;
+
+            &:hover,
+            &:focus,
+            &:active {
+                color: $color-cyan-darken;
+            }
+        }
+
+        &__close {
+            background: none;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            margin-left: 20px;
+            padding-right: 0;
+            height: $close-size;
+            line-height: $close-size;
+            vertical-align: text-top;
+
+            /deep/ svg {
+                width: $close-size;
+                height: $close-size;
+
+                path {
+                    stroke: $color-light-gray;
+                    stroke-width: 3px;
+                }
+            }
+        }
+    }
+
+}

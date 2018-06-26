@@ -1,0 +1,18 @@
+@import '../../../styles/variables';
+
+:host {
+    color: $color-dark-gray-darken;
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 100px;
+    display: block;
+
+    .numbers span {
+        background-color: $color-cyan;
+        color: $color-white;
+        border-radius: 50%;
+        display: inline-block;
+        padding: 5px 10px;
+        margin: 5px;
+    }
+}
