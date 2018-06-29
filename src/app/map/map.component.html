@@ -1,0 +1,49 @@
+<agm-map [(latitude)]="location.lat" [(longitude)]="location.lng" [(zoom)]="location.zoom" [disableDefaultUI]="true" [zoomControl]="true" [(fitBounds)]='location.viewport'>
+  <agm-marker [(latitude)]="location.marker.lat" [(longitude)]="location.marker.lng" [markerDraggable]="location.marker.draggable" (dragEnd)='markerDragEnd($event)'></agm-marker>
+
+    <agm-circle [latitude]="location.lat" [longitude]="location.lng"
+    [(radius)]="circleRadius"
+    [fillColor]="'blue'"
+    [circleDraggable]="true"
+    [editable]="true"></agm-circle>
+</agm-map>
+
+<div class="container-fluid">
+  <div class='row'>
+    <div class="form-group">
+      <label class='col-sm-2'>Address Line 1</label>
+      <input class='col-sm-10' type='text' [(ngModel)]='location.address_level_1' class="form-control" placeholder='Office, Apt, Home, Street'>
+    </div>
+    <div class="form-group">
+      <label class='col-sm-2'>Address Line 2</label>
+      <input class='col-sm-10'  [(ngModel)]='location.address_level_2' class='form-control' placeholder='City'/>
+    </div>
+
+    <div class="form-group">
+      <label class='col-sm-2'>State / Province / Region</label>
+      <input class='col-sm-10'  [(ngModel)]='location.address_state' class='form-control' placeholder='State'>
+    </div>
+
+    <div class="form-group">
+      <label class='col-sm-2'>Country</label>
+      <input class='col-sm-10'  [(ngModel)]='location.address_country' class='form-control' placeholder='State'>
+    </div>
+
+    <div class="form-group">
+      <label class='col-sm-2'>Postal / Zip code</label>
+      <input class='col-sm-10'  [(ngModel)]='location.address_zip' class='form-control' placeholder='Zip'>
+    </div>
+
+    <button (click)='updateOnMap()' type="submit" class="btn btn-primary">Search</button>
+  </div>
+</div>
+
+
+<div class="container-fluid">
+  <div class='row'>
+    <div class="form-group">
+      <label class='col-sm-2'>Circle radius in miles</label>
+        <input type='number' class='form-control' #miles  [value]='circleRadiusInMiles() | number:"0.0-2"'  (keyup)="milesToRadius(miles.value)"/>
+    </div>
+  </div>
+</div>

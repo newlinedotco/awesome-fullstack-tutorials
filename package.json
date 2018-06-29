@@ -11,6 +11,7 @@
   },
   "private": true,
   "dependencies": {
+    "@agm/core": "^1.0.0-beta.3",
     "@angular/animations": "^6.0.3",
     "@angular/common": "^6.0.3",
     "@angular/compiler": "^6.0.3",
@@ -20,6 +21,7 @@
     "@angular/platform-browser": "^6.0.3",
     "@angular/platform-browser-dynamic": "^6.0.3",
     "@angular/router": "^6.0.3",
+    "@ng-bootstrap/ng-bootstrap": "^2.1.2",
     "core-js": "^2.5.4",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
