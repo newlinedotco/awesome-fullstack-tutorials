@@ -1,11 +1,11 @@
 <agm-map [(latitude)]="location.lat" [(longitude)]="location.lng" [(zoom)]="location.zoom" [disableDefaultUI]="true" [zoomControl]="true" [(fitBounds)]='location.viewport'>
   <agm-marker [(latitude)]="location.marker.lat" [(longitude)]="location.marker.lng" [markerDraggable]="location.marker.draggable" (dragEnd)='markerDragEnd($event)'></agm-marker>
 
-    <agm-circle [latitude]="location.lat" [longitude]="location.lng"
-    [(radius)]="circleRadius"
-    [fillColor]="'blue'"
-    [circleDraggable]="true"
-    [editable]="true"></agm-circle>
+  <agm-circle [latitude]="location.lat" [longitude]="location.lng"
+  [(radius)]="circleRadius"
+  [fillColor]="'blue'"
+  [circleDraggable]="true"
+  [editable]="true"></agm-circle>
 </agm-map>
 
 <div class="container-fluid">
@@ -43,7 +43,7 @@
   <div class='row'>
     <div class="form-group">
       <label class='col-sm-2'>Circle radius in miles</label>
-        <input type='number' class='form-control' #miles  [value]='circleRadiusInMiles() | number:"0.0-2"'  (keyup)="milesToRadius(miles.value)"/>
+        <input type='text' class='form-control' #miles  [value]='circleRadiusInMiles() | number:"0.0-2"'  (keyup)="milesToRadius(miles.value)"/>
     </div>
   </div>
 </div>

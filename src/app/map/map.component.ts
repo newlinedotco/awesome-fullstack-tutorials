@@ -94,12 +94,7 @@ export class MapComponent implements OnInit {
           this.location.marker.draggable = true;
           this.location.viewport = results[0].geometry.viewport;
         }
-        this.wrapper.getZoom().then((zoom)=>{
-          //this.location.zoom = zoom;
-        });
-        this.wrapper.getBounds().then((viewport)=>{
-          //this.location.viewport = viewport;
-        });
+
         this.map.triggerResize()
       } else {
         alert("Sorry, this search produced no results.");
@@ -108,14 +103,12 @@ export class MapComponent implements OnInit {
   }
 
   findAddressByCoordinates() {
-    console.log('finding address by location coordinates');
     this.geocoder.geocode({
       'location': {
         lat: this.location.marker.lat,
         lng: this.location.marker.lng
       }
     }, (results, status) => {
-      console.log(status);
       this.decomposeAddressComponents(results);
     })
   }
@@ -179,7 +172,6 @@ export class MapComponent implements OnInit {
   markerDragEnd(m: any, $event: any) {
    this.location.marker.lat = m.coords.lat;
    this.location.marker.lng = m.coords.lng;
-   console.log(m.coords.lat);
    this.findAddressByCoordinates();
   }
 }
