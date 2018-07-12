@@ -1,0 +1,24 @@
+@import '~normalize.css/normalize';
+@import 'variables';
+@import 'button';
+
+html {
+    font-size: 18px;
+    font-family: Lato, sans-serif;
+    box-sizing: border-box;
+    background-color: $color-white-smoke;
+    color: $color-black-darken;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}

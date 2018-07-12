@@ -1,0 +1,37 @@
+<div
+    class="banner"
+    *ngIf="updateAvailable$ | async"
+>
+    We have published a new release!
+
+    <button
+        class="banner__link"
+        (click)="activateUpdate()"
+    >
+        Activate and reload
+    </button>
+
+    <button
+        class="banner__close"
+        (click)="closed$.next()"
+    >
+        <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="close">
+                    <g id="Outline_Icons_1_" stroke-linecap="round" stroke="#000000" stroke-linejoin="round">
+                        <g id="Outline_Icons">
+                            <g id="Group">
+                                <path d="M0.5,0.5 L23.5,23.5" id="Shape"></path>
+                                <path d="M23.5,0.5 L0.5,23.5" id="Shape"></path>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="Invisible_Shape" opacity="0">
+                        <rect id="Rectangle-path" x="0" y="0" width="24" height="24"></rect>
+                    </g>
+                </g>
+            </g>
+        </svg>
+
+    </button>
+</div>
