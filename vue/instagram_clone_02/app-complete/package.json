@@ -1,0 +1,12 @@
+{
+  "name": "instagram-clone-complete",
+  "version": "1.0.0",
+  "description":
+    "An Instagram clone built with Vue.js and CSSGram. Upload photos, pick filters, and like posts!\n\nA Fullstack Vue Tutorial 🦌",
+  "keywords": [],
+  "main": "index.js",
+  "dependencies": {
+    "vue": "2.5.3",
+    "vue-dragscroll": "1.4.2"
+  }
+}
