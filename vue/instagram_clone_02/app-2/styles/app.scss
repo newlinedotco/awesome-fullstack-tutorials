@@ -1,0 +1,124 @@
+$small: 520px;
+$medium: 768px;
+$large: 1216px;
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #e6ecf1;
+  font-family: "Roboto", sans-serif;
+}
+
+#app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app__phone {
+  background-color: white;
+  height: 620px;
+  width: 375px;
+  overflow: hidden;
+}
+
+.phone-header {
+  height: 50px;
+  width: 375px;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  background: #fafafa;
+  border-bottom: 1px solid #eeeeee;
+  z-index: 99;
+
+  img {
+    max-width: 120px;
+    display: block;
+    margin: 0 auto;
+    padding-top: 1px;
+  }
+
+  .cancel-cta,
+  .next-cta {
+    position: absolute;
+    top: 12px;
+    color: #209cee;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .cancel-cta {
+    left: 10px;
+  }
+
+  .next-cta {
+    right: 10px;
+  }
+}
+
+.phone-footer {
+  height: 35px;
+  width: 375px;
+  position: sticky;
+  position: -webkit-sticky;
+  bottom: 0;
+  background: #fafafa;
+  border-top: 1px solid #eeeeee;
+  z-index: 99;
+
+  .home-cta {
+    position: absolute;
+    left: 10px;
+    top: 6px;
+    cursor: pointer;
+  }
+
+  .upload-cta {
+    position: absolute;
+    right: 10px;
+    top: 6px;
+    p {
+      font-size: 0.63rem;
+      position: absolute;
+      left: -25px;
+      top: 5px;
+    }
+  }
+
+  input[name="file"] {
+    visibility: hidden;
+  }
+
+  label {
+    cursor: pointer;
+    z-index: 99;
+  }
+}
+
+// Media Queries
+@media (max-width: $small) {
+  #app {
+    height: 100% !important;
+    padding-top: 0 !important;
+  }
+
+  .app__phone__scroll__cover {
+    height: 100%;
+    width: 100%;
+  }
+
+  .phone-header,
+  .phone-footer {
+    width: 100%;
+  }
+}
+
+@media (max-height: $small) {
+  .app__phone {
+    transform: scale(0.6);
+  }
+}
