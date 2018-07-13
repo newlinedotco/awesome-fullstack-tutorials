@@ -1,13 +1,13 @@
 <div align="center">
   <p>
-    <img src="https://i.imgur.com/Zbaf4N1.png" width="550"/>
+    <img src="https://i.imgur.com/XPC8qRC.png" width="550"/>
   </p>
 </div>
 
-## Instagram Clone - Stage (1)
+## Instagram Clone - Starting Point
 
 > A [vue-cli](https://github.com/vuejs/vue-cli) scaffolded project.
-> Stage (1) of the application built in the article - [Tutorial - Build an Instagram clone with Vue.js and CSSGram](https://medium.com/@hassan.djirdeh/tutorial-build-an-instagram-clone-with-vue-js-and-cssgram-24a9f3de0408).
+> The initial scaffold for the article - [Tutorial - Build an Instagram clone with Vue.js and CSSGram](https://medium.com/@hassan.djirdeh/tutorial-build-an-instagram-clone-with-vue-js-and-cssgram-24a9f3de0408).
 
 ## Build Setup
 
@@ -21,4 +21,4 @@ npm run dev
 
 ## Live Example
 
-* <a href="https://codesandbox.io/s/5k9j5047nx" target="_blank">CodeSandbox</a>
+* <a href="https://codesandbox.io/s/kx1k010xlo" target="_blank">CodeSandbox</a>
