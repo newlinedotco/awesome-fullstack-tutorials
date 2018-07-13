@@ -1,11 +1,23 @@
 <template>
-	<div id="app">
-    <div class="app__phone">
+  <div id="app">
+    <div class="app-phone">
       <div class="phone-header">
-				<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1211695/vue_gram_logo_cp.png" />
-        <a class="cancel-cta" v-if="step === 2 || step === 3" @click="goToHome">Cancel</a>
-        <a class="next-cta" v-if="step === 2" @click="step++">Next</a>
-        <a class="next-cta" v-if="step === 3" @click="sharePost">Share</a>
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1211695/vue_gram_logo_cp.png" />
+        <a class="cancel-cta"
+           v-if="step === 2 || step === 3" 
+           @click="goToHome">
+            Cancel
+        </a>
+        <a class="next-cta"
+           v-if="step === 2"
+          @click="step++">
+            Next
+        </a>
+        <a class="next-cta"
+           v-if="step === 3"
+          @click="sharePost">
+            Share
+        </a>
       </div>
       <phone-body
         :step="step"
@@ -16,23 +28,24 @@
         v-model="caption"
       />
       <div class="phone-footer">
-				<div class="home-cta" @click="goToHome">
-					<i class="fas fa-home fa-lg"></i>
-				</div>
-        <div class="upload-cta">
+       <div class="home-cta" @click="goToHome">
+        <i class="fas fa-home fa-lg"></i>
+       </div>
+       <div class="upload-cta">
           <input type="file"
             name="file"
             id="file"
             class="inputfile"
             @change="uploadImage"
-            :disabled="step !== 1"/>
+            :disabled="step !== 1"
+          />
           <label for="file">
-					  <i class="far fa-plus-square fa-lg"></i>
+            <i class="far fa-plus-square fa-lg"></i>
           </label>
-				</div>
+        </div>
       </div>
     </div>
-	</div>
+  </div>
 </template>
 
 <script>
@@ -75,12 +88,6 @@ export default {
       // To enable reuploading of same files in Chrome
       document.querySelector("#file").value = "";
     },
-    goToHome() {
-      this.image = "";
-      this.selectedFilter = "";
-      this.caption = "";
-      this.step = 1;
-    },
     sharePost() {
       const post = {
         username: "fullstack_vue",
@@ -89,11 +96,16 @@ export default {
         postImage: this.image,
         likes: 0,
         caption: this.caption,
-        filter: this.selectedFilter
+        filter: this.filterType
       };
-
       this.posts.unshift(post);
       this.goToHome();
+    },
+    goToHome() {
+      this.image = "";
+      this.selectedFilter = "";
+      this.caption = "";
+      this.step = 1;
     }
   },
   components: {

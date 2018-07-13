@@ -1,10 +1,10 @@
 <template>
   <div class="phone-body">
     <div v-if="step === 1" class="feed" v-dragscroll.y>
-      <instagram-post v-for="post in posts"
-                      :post="post"
-                      :key="posts.indexOf(post)">
-      </instagram-post>
+      <vuegram-post v-for="post in posts"
+                    :post="post"
+                    :key="posts.indexOf(post)">
+      </vuegram-post>
     </div>
     <div v-if="step === 2">
       <div class="selected-image"
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import InstagramPost from "./InstagramPost";
+import VuegramPost from "./VuegramPost";
 import FilterType from "./FilterType";
 
 export default {
@@ -49,7 +49,7 @@ export default {
     value: String
   },
   components: {
-    "instagram-post": InstagramPost,
+    "vuegram-post": VuegramPost,
     "filter-type": FilterType
   }
 };

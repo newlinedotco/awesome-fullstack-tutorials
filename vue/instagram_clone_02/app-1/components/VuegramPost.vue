@@ -1,5 +1,5 @@
 <template>
-  <div class="instagram-post">
+  <div class="vuegram-post">
     <div class="header level">
         <div class="level-left">
           <figure class="image is-32x32">
@@ -15,8 +15,8 @@
     </div>
     <div class="content">
       <div class="heart">
-        <i class="far fa-heart fa-lg"
-           :class="{'fas': this.post.upVoted}"
+      <i class="far fa-heart fa-lg"
+           :class="{'fas': this.post.hasBeenLiked}"
            @click="like">
         </i>
       </div>
@@ -28,19 +28,19 @@
 
 <script>
 export default {
-  name: "InstagramPost",
+  name: "VuegramPost",
   props: {
     post: Object
   },
   methods: {
     like() {
-      this.post.upVoted ? this.post.likes-- : this.post.likes++;
-      this.post.upVoted = !this.post.upVoted;
+      this.post.hasBeenLiked ? this.post.likes-- : this.post.likes++;
+      this.post.hasBeenLiked = !this.post.hasBeenLiked;
     }
   }
 };
 </script>
 
-<style lang="scss" src="../styles/instagram-post.scss">
+<style lang="scss" src="../styles/vuegram-post.scss">
 // Styles from stylesheet
 </style>

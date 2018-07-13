@@ -18,7 +18,7 @@ body,
   justify-content: center;
 }
 
-.app__phone {
+.app-phone {
   background-color: white;
   height: 620px;
   width: 375px;
@@ -60,6 +60,46 @@ body,
   }
 }
 
+.feed {
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-right: -15px;
+}
+
+.caption-container {
+  height: 210px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  textarea {
+    border: 0;
+    font-size: 1rem;
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid #eeeeee;
+  }
+
+  textarea:focus {
+    outline: 0;
+  }
+}
+
+.selected-image {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  height: 330px;
+}
+
+.filter-container {
+  height: 210px;
+  padding: 30px 10px;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+
 .phone-footer {
   height: 35px;
   width: 375px;
@@ -99,6 +139,13 @@ body,
   }
 }
 
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-leave-to {
+  opacity: 0;
+}
+
 // Media Queries
 @media (max-width: $small) {
   #app {
@@ -106,7 +153,8 @@ body,
     padding-top: 0 !important;
   }
 
-  .app__phone__scroll__cover {
+  .app-phone,
+  .app-phone-scroll-cover {
     height: 100%;
     width: 100%;
   }
@@ -118,7 +166,7 @@ body,
 }
 
 @media (max-height: $small) {
-  .app__phone {
+  .app-phone {
     transform: scale(0.6);
   }
 }

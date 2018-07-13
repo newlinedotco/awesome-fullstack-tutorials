@@ -18,7 +18,7 @@ body,
   justify-content: center;
 }
 
-.app__phone {
+.app-phone {
   background-color: white;
   height: 620px;
   width: 375px;
@@ -36,10 +36,10 @@ body,
   z-index: 99;
 
   img {
-    max-width: 100px;
+    max-width: 120px;
     display: block;
     margin: 0 auto;
-    padding-top: 10px;
+    padding-top: 1px;
   }
 
   .cancel-cta,
@@ -153,7 +153,8 @@ body,
     padding-top: 0 !important;
   }
 
-  .app__phone__scroll__cover {
+  .app-phone,
+  .app-phone-scroll-cover {
     height: 100%;
     width: 100%;
   }
@@ -165,7 +166,7 @@ body,
 }
 
 @media (max-height: $small) {
-  .app__phone {
+  .app-phone {
     transform: scale(0.6);
   }
 }

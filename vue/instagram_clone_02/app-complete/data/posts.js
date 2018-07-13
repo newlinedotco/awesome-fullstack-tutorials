@@ -5,7 +5,7 @@ export default [
     postImage:
       "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1211695/tropical_beach.jpg",
     likes: 36,
-    upVoted: false,
+    hasBeenLiked: false,
     caption: "When you're ready for summer '18 ☀️",
     filter: "perpetua"
   },
@@ -15,7 +15,7 @@ export default [
     postImage:
       "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1211695/downtown.jpg",
     likes: 20,
-    upVoted: false,
+    hasBeenLiked: false,
     caption: "Views from the six...",
     filter: "clarendon"
   },
@@ -26,7 +26,7 @@ export default [
     postImage:
       "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1211695/puppers.jpg",
     likes: 49,
-    upVoted: false,
+    hasBeenLiked: false,
     caption: "Current mood 🐶",
     filter: "lofi"
   }

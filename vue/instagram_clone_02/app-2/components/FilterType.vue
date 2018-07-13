@@ -2,9 +2,9 @@
   <div class="filter-type">
     <p>{{filter.name}}</p>
     <div class="img"
-          :class="filter.name"
-          :style="{ backgroundImage: 'url(' + image + ')' }"
-          @click="selectFilter">
+         :class="filter.name"
+         :style="{ backgroundImage: 'url(' + image + ')' }"
+         @click="selectFilter">
     </div> 
   </div>
 </template>

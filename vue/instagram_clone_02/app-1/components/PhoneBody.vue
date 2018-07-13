@@ -1,16 +1,16 @@
 <template>
   <div class="phone-body">
     <div class="feed">
-      <instagram-post v-for="post in posts"
-                      :post="post"
-                      :key="posts.indexOf(post)">
-      </instagram-post>
+      <vuegram-post v-for="post in posts"
+                    :post="post"
+                    :key="posts.indexOf(post)">
+      </vuegram-post>
     </div>
   </div>
 </template>
 
 <script>
-import InstagramPost from "./InstagramPost";
+import VuegramPost from "./VuegramPost";
 
 export default {
   name: "PhoneBody",
@@ -19,7 +19,7 @@ export default {
     filters: Array
   },
   components: {
-    "instagram-post": InstagramPost
+    "vuegram-post": VuegramPost
   }
 };
 </script>
