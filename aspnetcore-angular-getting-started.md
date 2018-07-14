@@ -157,7 +157,22 @@ The code example above is what we get scaffolded from the template. We will modi
 
 ## Preparations and using the Dependency Injection
 
-For gettings things ready we need to install [AutoMapper](https://nuget.org/packages/automapper/), to map from a data transfer object to an entity and add a repository which encapsulates the data access and makes reading and writing easier. The repository implements an interface which we can together with the implementation register in our services container to provide it via dependency injection (DI).
+For gettings things ready we need to install [AutoMapper](https://nuget.org/packages/automapper/), to map from a data transfer object (DTO) to an entity. For the sake of simplicity we will create a DTO which has the same field as our normal entity and register the mapping in our Startup class `Configure` method.
+
+```
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+{
+    // ...
+    AutoMapper.Mapper.Initialize(mapper =>
+    {
+        mapper.CreateMap<Customer, CustomerDto>().ReverseMap();
+    });
+
+    app.UseMvc();
+}
+```
+
+Next we have to add a repository which encapsulates the data access and makes reading and writing easier. The repository implements an interface which we can together with the implementation register in our services container to provide it via dependency injection (DI).
 
 ```
 public interface ICustomerRepository
@@ -175,7 +190,11 @@ public interface ICustomerRepository
 Startup.cs
 
 ```
-services.AddSingleton<ICustomerRepository, CustomerRepository>();
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddSingleton<ICustomerRepository, CustomerRepository>();
+    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+}
 ```
 
 > We are using `AddSingleton` here which we would normally _not_ do when going into production. Better use `AddScoped` whenever you can to prevent the server from holding any state if no request is being worked on. With `AddScoped` you get a new instance per request and its going to be cleaned up when the response was sent out. HTTP is a stateless protocol so we should avoid holding state in any kind of way.
