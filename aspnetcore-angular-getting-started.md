@@ -9,16 +9,17 @@ In this article I want to describe the first steps to get started with ASP.NET C
 What we will cover:
 
 1.  Creating an ASP.NET Core WebAPI with the .NET CLI
-2.  Adding a Controller
-3.  Implementing CRUD Operations
-4.  Adding Swagger to you API
-5.  Adding Versioning to your API
-6.  Scaffold the client side application with the AngularCLI
-7.  Structure your Angular App
-8.  Requesting data from the server via http
-9.  Display data in your HTML-Templates via Databinding
-10. Sending data to the server
-11. Show success/error messages
+2.  Preparations and using the Dependency Injection
+3.  Adding a Controller
+4.  Implementing CRUD Operations
+5.  Adding Swagger to you API
+6.  Adding Versioning to your API
+7.  Scaffold the client side application with the AngularCLI
+8.  Structure your Angular App
+9.  Requesting data from the server via http
+10. Display data in your HTML-Templates via Databinding
+11. Sending data to the server
+12. Show success/error messages
 
 That should be it.
 
@@ -153,3 +154,21 @@ We can define the endpoint route with an RouteAttribute passed to that class whe
 With attributes above every method we can describe the HTTP method which should get invoked, when a specific request is coming in.
 
 The code example above is what we get scaffolded from the template. We will modify it during this article.
+
+## Preparations and using the Dependency Injection
+
+(Automapper) and Repository
+
+## Adding a Controller
+
+Let us add a new controller which is called `CustomersController` and implement the CRUD operations there.
+We a re creating a new class called `CustomersController.cs` which inherits from `ControllerBase` and we are adding the neeeded attributes to it. Beside of that we create a Customers class which has the properties `Name`, `Position` and `Age`.
+
+```
+public class Customer
+{
+    public string Name { get; set; }
+    public string Position { get; set; }
+    public int Age { get; set; }
+}
+```
