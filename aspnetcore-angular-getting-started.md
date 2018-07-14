@@ -519,7 +519,7 @@ public class CustomersController : ControllerBase
 }
 ```
 
-We still need to tell our application to use versioning in our API. In the Startup.cs add
+We still need to tell our application to use versioning in our API and define swagger to display all the versions. In the Startup.cs add
 
 ```
 public void ConfigureServices(IServiceCollection services)
@@ -533,7 +533,7 @@ public void ConfigureServices(IServiceCollection services)
         config.DefaultApiVersion = new ApiVersion(1, 0);
         config.ApiVersionReader = new HeaderApiVersionReader("api-version");
     });
-    
+
     services.AddSwaggerGen(
     options =>
     {
@@ -553,11 +553,28 @@ public void ConfigureServices(IServiceCollection services)
     });
 }
 
+public void Configure(..., IApiVersionDescriptionProvider provider)
+{
+    // ...
+    app.UseSwagger();
+    app.UseSwaggerUI(
+        options =>
+        {
+            foreach (var description in provider.ApiVersionDescriptions)
+            {
+                options.SwaggerEndpoint(
+                    $"/swagger/{description.GroupName}/swagger.json",
+                    description.GroupName.ToUpperInvariant());
+            }
+        });
+
+    app.UseMvc();
+}
 ```
 
+If you now open up swagger like we did before you can see the both versions and can switch with a dropdown. So with this we can fire requests to `/api/v1/customers` and `/api/v2/customers` and maybe improve the results.
 
-So with this we can fire requests to `/api/v1/customers` and `/api/v2/customers` and maybe improve the results. but we still have to get our swagger going to make it possible to display both versions.
-
+Although we can improve much much more on this API (Adding HATEOAS, Datashaping, Queryparameters, ...) we want to take a look now on the clientside and buidla corresponsing app with Angular and the Angular CLI.
 
 ## Scaffold the client side application with the AngularCLI
 
