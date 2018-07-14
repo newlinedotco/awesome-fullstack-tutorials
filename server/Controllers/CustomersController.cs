@@ -64,58 +64,53 @@ namespace server.Controllers
                 Mapper.Map<CustomerDto>(newCustomer));
         }
 
-        //[HttpDelete]
-        //[Route("{id:int}", Name = nameof(RemoveFood))]
-        //public ActionResult RemoveFood(int id)
-        //{
-        //    Customer Customer = _repository.GetSingle(id);
+        [HttpDelete]
+        [Route("{id:int}", Name = nameof(RemoveCustomer))]
+        public ActionResult RemoveCustomer(int id)
+        {
+            Customer Customer = _repository.GetSingle(id);
 
-        //    if (Customer == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (Customer == null)
+            {
+                return NotFound();
+            }
 
-        //    _repository.Delete(id);
+            _repository.Delete(id);
 
-        //    if (!_repository.Save())
-        //    {
-        //        throw new Exception("Deleting a Customer failed on save.");
-        //    }
+            if (!_repository.Save())
+            {
+                throw new Exception("Deleting a Customer failed on save.");
+            }
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
 
-        //[HttpPut]
-        //[Route("{id:int}", Name = nameof(UpdateFood))]
-        //public ActionResult<CustomerDto> UpdateFood(int id, [FromBody] FoodUpdateDto foodUpdateDto)
-        //{
-        //    if (foodUpdateDto == null)
-        //    {
-        //        return BadRequest();
-        //    }
+        [HttpPut]
+        [Route("{id:int}", Name = nameof(UpdateCustomer))]
+        public ActionResult<CustomerDto> UpdateCustomer(int id, [FromBody] CustomerUpdateDto updateDto)
+        {
+            if (updateDto == null)
+            {
+                return BadRequest();
+            }
 
-        //    var existingCustomer = _repository.GetSingle(id);
+            var existingCustomer = _repository.GetSingle(id);
 
-        //    if (existingCustomer == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (existingCustomer == null)
+            {
+                return NotFound();
+            }
+            
+            Mapper.Map(updateDto, existingCustomer);
 
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+            _repository.Update(id, existingCustomer);
 
-        //    Mapper.Map(foodUpdateDto, existingCustomer);
+            if (!_repository.Save())
+            {
+                throw new Exception("Updating a Customer failed on save.");
+            }
 
-        //    _repository.Update(id, existingCustomer);
-
-        //    if (!_repository.Save())
-        //    {
-        //        throw new Exception("Updating a Customer failed on save.");
-        //    }
-
-        //    return Ok(Mapper.Map<CustomerDto>(existingCustomer));
-        //}
+            return Ok(Mapper.Map<CustomerDto>(existingCustomer));
+        }
     }
 }
