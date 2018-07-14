@@ -256,4 +256,51 @@ public void ConfigureServices(IServiceCollection services)
 ## Adding a Controller
 
 Let us add a new controller which is called `CustomersController` and implement the CRUD operations there.
-We a re creating a new class called `CustomersController.cs` which inherits from `ControllerBase` and we are adding the needed attributes to it.
+We are creating a new class called `CustomersController.cs` which inherits from `ControllerBase` and we are adding the needed attributes to it. As we provided the repository in the DI container, we can simply inject it into the constructor.
+
+```
+[Route("api/[controller]")]
+[ApiController]
+public class CustomersController : ControllerBase
+{
+    private readonly ICustomerRepository _repository;
+
+    public CustomersController(ICustomerRepository repository)
+    {
+        _repository = repository;
+    }
+}
+```
+
+### Adding the GET Methods
+
+When receiving a GET call we need to send back all customers `api/customers/` or a single customer `api/customers/{id}` e.g. `api/customers/5` we can simply do that by defining two methods. One which listens to a get event sending back all the data from the repository and the other one receiving an id, asking for a specific person, returning a NOT FOUND 404 statuscode if not found and in case of a success it returns the found customer with a 200 statuscode
+
+> Always rememeber to send back the correct statuscodes. Frameworks on client side like angular rely on that code to decide wether the request was a success or not!
+
+```
+[HttpGet(Name = nameof(GetAll))]
+public ActionResult GetAll()
+{
+    List<Customer> customers = _repository.GetAll().ToList();
+    return Ok(customers);
+}
+
+[HttpGet]
+[Route("{id:int}", Name = nameof(GetSingle))]
+public ActionResult GetSingle(int id)
+{
+    Customer customer = _repository.GetSingle(id);
+
+    if (customer == null)
+    {
+        return NotFound();
+    }
+
+    return Ok(customer);
+}
+```
+
+We are defining a name to every method to be clean here and are using helper methods like `Ok(...)` or `NotFound()` to see which statuscode is being returned from that method easier. `Ok(...)` results in a 200 - OK statuscode automatically and `NotFound()` is a 404 - Not Found statuscode behind the scenes. This is going to be returned from the function and send to the client as a result then.
+
+We can pass parameters if we define them in the route attribute of that method. The routes on the methods are being concatinated with the route attribute we define on the class. Now we can request data from that API for all customers or for one single customer.

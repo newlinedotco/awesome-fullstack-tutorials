@@ -13,7 +13,6 @@ namespace server.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly ICustomerRepository _repository;
-        private readonly IUrlHelper _urlHelper;
 
         public CustomersController(ICustomerRepository repository)
         {
