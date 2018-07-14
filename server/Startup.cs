@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using server.Models;
 using server.Repositories;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace server
 {
@@ -28,6 +22,12 @@ namespace server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<ICustomerRepository, CustomerRepository>();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My First API", Version = "v1" });
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -46,9 +46,18 @@ namespace server
             AutoMapper.Mapper.Initialize(mapper =>
             {
                 mapper.CreateMap<Customer, CustomerDto>().ReverseMap();
+                mapper.CreateMap<Customer, CustomerCreateDto>().ReverseMap();
+                mapper.CreateMap<Customer, CustomerUpdateDto>().ReverseMap();
             });
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My First API");
+            });
+
             app.UseMvc();
         }
     }

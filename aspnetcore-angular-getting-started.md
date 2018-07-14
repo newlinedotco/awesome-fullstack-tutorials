@@ -272,9 +272,9 @@ public class CustomersController : ControllerBase
 }
 ```
 
-### Adding the GET Methods
+## Implementing CRUD Operations
 
-When receiving a GET call we need to send back all customers `api/customers/` or a single customer `api/customers/{id}` e.g. `api/customers/5` we can simply do that by defining two methods. One which listens to a get event sending back all the data from the repository and the other one receiving an id, asking for a specific person, returning a NOT FOUND 404 statuscode if not found and in case of a success it returns the found customer with a 200 statuscode
+When receiving a GET call we need to send back all customers `api/customers/` or a single customer `api/customers/{id}` e.g. GET `api/customers/5` we can simply do that by defining two methods. One which listens to a get event sending back all the data from the repository and the other one receiving an id, asking for a specific person, returning a NOT FOUND 404 statuscode if not found and in case of a success it returns the found customer with a 200 statuscode
 
 > Always rememeber to send back the correct statuscodes. Frameworks on client side like angular rely on that code to decide wether the request was a success or not!
 
@@ -303,4 +303,187 @@ public ActionResult GetSingle(int id)
 
 We are defining a name to every method to be clean here and are using helper methods like `Ok(...)` or `NotFound()` to see which statuscode is being returned from that method easier. `Ok(...)` results in a 200 - OK statuscode automatically and `NotFound()` is a 404 - Not Found statuscode behind the scenes. This is going to be returned from the function and send to the client as a result then.
 
-We can pass parameters if we define them in the route attribute of that method. The routes on the methods are being concatinated with the route attribute we define on the class. Now we can request data from that API for all customers or for one single customer.
+We can pass parameters if we define them in the route attribute of the method. The routes on the methods are being concatinated with the route attribute we define on the class. Now we can request data from that API for all customers or for one single customer.
+
+Next, before we can add a customer, we have to define a model the body of the request can get parsed into. We can sepcify the properties on that model which we want the client to allow to be entered. Things like `Id` should not be possible for the client to give. To be secure in that case we just add the properties we allow. In addition to that we are allowed to use [DataAnnotations](<https://msdn.microsoft.com/en-us/library/system.componentmodel.dataannotations(v=vs.110).aspx>) here. They will be automatically validated and return a `BadRequest()` (Statuscode 400) if they are not fulfilled.
+
+```
+public class CustomerCreateDto
+{
+    [Required]
+    public string Name { get; set; }
+    public string Position { get; set; }
+    public int Age { get; set; }
+}
+```
+
+As we have a new model now which should be mapped we also have to register a mapping for that.
+
+```
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+{
+    // ...
+    AutoMapper.Mapper.Initialize(mapper =>
+    {
+        mapper.CreateMap<Customer, CustomerDto>().ReverseMap();
+        mapper.CreateMap<Customer, CustomerCreateDto>().ReverseMap();
+    });
+
+    app.UseMvc();
+}
+```
+
+```
+[HttpPost(Name = nameof(AddCustomer))]
+public ActionResult<CustomerDto> AddCustomer([FromBody] CustomerCreateDto createDto)
+{
+    if (createDto == null)
+    {
+        return BadRequest();
+    }
+
+    Customer toAdd = Mapper.Map<Customer>(createDto);
+
+    _repository.Add(toAdd);
+
+    if (!_repository.Save())
+    {
+        throw new Exception("Creating a Customer failed on save.");
+    }
+
+    Customer newCustomer = _repository.GetSingle(toAdd.Id);
+
+    return CreatedAtRoute(nameof(GetSingle), new { id = newCustomer.Id }, Mapper.Map<CustomerDto>(newCustomer));
+}
+```
+
+As you can see we are parsing the body from the request into the `CustomerCreateDto` and working with that in our method. As a result we are returning a `201 - Created` statuscode. The `CreatedAtRoute` helper method again helps us to wrap the statuscode 201 in the reponse and in the body of the response we are returning the new customer we just created. But this method also allows us to add the link to the just created resource to the header of the response which has the advantage, that the client can decide wether he wants to follow the link or work further with the body of the repsonse which is the customer with an id. So the client has the full responsibility there which makes it the most flexible way.
+
+> To avoid magic strings you can see that we are using `nameof(...)` with the name of the method the resource can be reached with antoher request then. To do this, the method needs a `Name` attribute. That is why we add it to every method: To enable this feature and to be consistent and clean here.
+
+To update a customer we need again a seperate model which defines all the properties we want the client to allow to change. Again, for the sake of simplicity this is the same model as before, so we will not mention it here again. (Dont forget the mapping in the AutoMapper) The method itself reacts to a PUT call so its decorated with the `HttpPut` attribute. In addition to that it takes an id as parameter, as the call will go to PUT `/api/customers/{id}` which could be PUT `/api/customers/5`, meaining we want to update the customer with the id `5` with the values provided in the body of the request.
+
+```
+[HttpPut]
+[Route("{id:int}", Name = nameof(UpdateCustomer))]
+public ActionResult<CustomerDto> UpdateCustomer(int id, [FromBody] CustomerUpdateDto updateDto)
+{
+    if (updateDto == null)
+    {
+        return BadRequest();
+    }
+
+    var existingCustomer = _repository.GetSingle(id);
+
+    if (existingCustomer == null)
+    {
+        return NotFound();
+    }
+
+    Mapper.Map(updateDto, existingCustomer);
+
+    _repository.Update(id, existingCustomer);
+
+    if (!_repository.Save())
+    {
+        throw new Exception("Updating a Customer failed on save.");
+    }
+
+    return Ok(Mapper.Map<CustomerDto>(existingCustomer));
+}
+```
+
+We are checking again if the customer exists. If not we return a `404 - Not Found`. Otherwise we map and send back a 200 OK statuscode with the updated model in the body. We can simply pass it as a parameter to the `Ok()` method again.
+
+To delete a customer we only take the id as a parameter because the call would be to `/api/customers/{id}` with the DELETE verb.
+
+```
+[HttpDelete]
+[Route("{id:int}", Name = nameof(RemoveCustomer))]
+public ActionResult RemoveCustomer(int id)
+{
+    Customer Customer = _repository.GetSingle(id);
+
+    if (Customer == null)
+    {
+        return NotFound();
+    }
+
+    _repository.Delete(id);
+
+    if (!_repository.Save())
+    {
+        throw new Exception("Deleting a Customer failed on save.");
+    }
+
+    return NoContent();
+}
+```
+
+Again we are checking if the customer exists. If not a `NotFound()` is returned. If the resurce exists we delete it and in case of success we deliver a 204 No Content statuscode with the helper method `NoContent()` as it is a 200 statuscode which indicates a successful operation and to be more precise we tell the client that on this link `/api/customers/5` is not content anymore. So `NoContent()` is one of the most precise answer to return.
+
+Creating an ASP.NET Core WebAPI with the .NET CLI
+Preparations and using the Dependency Injection
+
+## Adding Swagger to you API
+
+If you want to share your API with a team which should get information about what can be done with your api and which resources to get how you can easily create a documentation of your API using a tool called 'Swagger'. Just install the [Nuget Package](https://www.nuget.org/packages/swashbuckle.aspnetcore/) and modify the following classes as the following.
+
+Startup.cs
+
+```
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddSwaggerGen(c =>
+    {
+        c.SwaggerDoc("v1", new Info { Title = "My First API", Version = "v1" });
+    });
+}
+```
+
+```
+public void Configure(IApplicationBuilder app)
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My First API");
+    });
+
+    app.UseMvc();
+}
+```
+
+So first we add the swagger generator into the services container. In the `Configure` method we now use the generated \*.json file and create a visual design out of it to display to consumers.
+
+In the `launchSettings.json` we can modify now the `launchUrl` url from `api/values` to `swagger`. If youre working in Visual Studio and press the "Play" button now a browser should open up displaying the swagger page. Using the command `dotnet run` on the command line should start the api as well. Browsing to `https://localhost:5001/swagger/` should now display a complete documentation of your api.
+
+![swagger](.github/swagger.png)
+
+## Adding Versioning to your API
+
+TBD
+
+## Scaffold the client side application with the AngularCLI
+
+TBD
+
+## Structure your Angular App
+
+TBD
+
+## Requesting data from the server via http
+
+TBD
+
+## Display data in your HTML-Templates via Databinding
+
+TBD
+
+## Sending data to the server
+
+TBD
+
+## Show success/error messages
+
+TBD
