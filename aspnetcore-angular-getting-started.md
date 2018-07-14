@@ -157,6 +157,17 @@ The code example above is what we get scaffolded from the template. We will modi
 
 ## Preparations and using the Dependency Injection
 
+As a class to deal with we create a Customers class which has the properties `Name`, `Position` and `Age`.
+
+```
+public class Customer
+{
+    public string Name { get; set; }
+    public string Position { get; set; }
+    public int Age { get; set; }
+}
+```
+
 For gettings things ready we need to install [AutoMapper](https://nuget.org/packages/automapper/), to map from a data transfer object (DTO) to an entity. For the sake of simplicity we will create a DTO which has the same field as our normal entity and register the mapping in our Startup class `Configure` method.
 
 ```
@@ -175,15 +186,57 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 Next we have to add a repository which encapsulates the data access and makes reading and writing easier. The repository implements an interface which we can together with the implementation register in our services container to provide it via dependency injection (DI).
 
 ```
-public interface ICustomerRepository
+public class CustomerRepository : ICustomerRepository
 {
-    Customer GetSingle(int id);
-    void Add(Customer item);
-    void Delete(int id);
-    Customer Update(int id, Customer item);
-    IQueryable<Customer> GetAll();
-    int Count();
-    bool Save();
+    private readonly ConcurrentDictionary<int, Customer> _storage = new ConcurrentDictionary<int, Customer>();
+
+    public Customer GetSingle(int id)
+    {
+        Customer item;
+        return _storage.TryGetValue(id, out item) ? item : null;
+    }
+
+    public void Add(Customer item)
+    {
+        item.Id = !_storage.Values.Any() ? 1 : _storage.Values.Max(x => x.Id) + 1;
+
+        if (!_storage.TryAdd(item.Id, item))
+        {
+            throw new Exception("Item could not be added");
+        }
+    }
+
+    public void Delete(int id)
+    {
+        Customer item;
+        if (!_storage.TryRemove(id, out item))
+        {
+            throw new Exception("Item could not be removed");
+        }
+    }
+
+    public Customer Update(int id, Customer item)
+    {
+        _storage.TryUpdate(id, item, GetSingle(id));
+        return item;
+    }
+
+    public IQueryable<Customer> GetAll()
+    {
+        IQueryable<Customer> _allItems = _storage.Values.AsQueryable();
+        return _allItems;
+    }
+
+    public int Count()
+    {
+        return _storage.Count;
+    }
+
+    public bool Save()
+    {
+        // To keep interface consistent with Controllers, Tests & EF Interfaces
+        return true;
+    }
 }
 ```
 
@@ -202,13 +255,4 @@ public void ConfigureServices(IServiceCollection services)
 ## Adding a Controller
 
 Let us add a new controller which is called `CustomersController` and implement the CRUD operations there.
-We a re creating a new class called `CustomersController.cs` which inherits from `ControllerBase` and we are adding the neeeded attributes to it. Beside of that we create a Customers class which has the properties `Name`, `Position` and `Age`.
-
-```
-public class Customer
-{
-    public string Name { get; set; }
-    public string Position { get; set; }
-    public int Age { get; set; }
-}
-```
+We a re creating a new class called `CustomersController.cs` which inherits from `ControllerBase` and we are adding the needed attributes to it.
