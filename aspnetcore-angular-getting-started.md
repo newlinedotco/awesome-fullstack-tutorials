@@ -157,7 +157,28 @@ The code example above is what we get scaffolded from the template. We will modi
 
 ## Preparations and using the Dependency Injection
 
-(Automapper) and Repository
+For gettings things ready we need to install [AutoMapper](https://nuget.org/packages/automapper/), to map from a data transfer object to an entity and add a repository which encapsulates the data access and makes reading and writing easier. The repository implements an interface which we can together with the implementation register in our services container to provide it via dependency injection (DI).
+
+```
+public interface ICustomerRepository
+{
+    Customer GetSingle(int id);
+    void Add(Customer item);
+    void Delete(int id);
+    Customer Update(int id, Customer item);
+    IQueryable<Customer> GetAll();
+    int Count();
+    bool Save();
+}
+```
+
+Startup.cs
+
+```
+services.AddSingleton<ICustomerRepository, CustomerRepository>();
+```
+
+> We are using `AddSingleton` here which we would normally _not_ do when going into production. Better use `AddScoped` whenever you can to prevent the server from holding any state if no request is being worked on. With `AddScoped` you get a new instance per request and its going to be cleaned up when the response was sent out. HTTP is a stateless protocol so we should avoid holding state in any kind of way.
 
 ## Adding a Controller
 

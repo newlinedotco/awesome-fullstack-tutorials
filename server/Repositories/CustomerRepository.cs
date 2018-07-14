@@ -6,7 +6,7 @@ using System.Linq.Dynamic.Core;
 
 namespace server.Repositories
 {
-    public class CustomersRepository : ICustomersRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly ConcurrentDictionary<int, Customer> _storage = new ConcurrentDictionary<int, Customer>();
 
