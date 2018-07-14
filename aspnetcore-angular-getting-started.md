@@ -162,6 +162,7 @@ As a class to deal with we create a Customers class which has the properties `Na
 ```
 public class Customer
 {
+    public int Id { get; set; }
     public string Name { get; set; }
     public string Position { get; set; }
     public int Age { get; set; }

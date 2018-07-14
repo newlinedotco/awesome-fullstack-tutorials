@@ -1,4 +1,7 @@
-namespace SampleWebApiAspNetCore.Repositories
+using server.Models;
+using System.Linq;
+
+namespace server.Repositories
 {
     public interface ICustomerRepository
     {
