@@ -519,6 +519,46 @@ public class CustomersController : ControllerBase
 }
 ```
 
+We still need to tell our application to use versioning in our API. In the Startup.cs add
+
+```
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMvcCore().AddVersionedApiExplorer(o => o.GroupNameFormat = "'v'VVV");
+    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+    services.AddApiVersioning(config =>
+    {
+        config.ReportApiVersions = true;
+        config.AssumeDefaultVersionWhenUnspecified = true;
+        config.DefaultApiVersion = new ApiVersion(1, 0);
+        config.ApiVersionReader = new HeaderApiVersionReader("api-version");
+    });
+    
+    services.AddSwaggerGen(
+    options =>
+    {
+        var provider = services.BuildServiceProvider()
+                            .GetRequiredService<IApiVersionDescriptionProvider>();
+
+        foreach (var description in provider.ApiVersionDescriptions)
+        {
+            options.SwaggerDoc(
+                description.GroupName,
+                new Info()
+                {
+                    Title = $"Sample API {description.ApiVersion}",
+                    Version = description.ApiVersion.ToString()
+                });
+        }
+    });
+}
+
+```
+
+
+So with this we can fire requests to `/api/v1/customers` and `/api/v2/customers` and maybe improve the results. but we still have to get our swagger going to make it possible to display both versions.
+
+
 ## Scaffold the client side application with the AngularCLI
 
 TBD
