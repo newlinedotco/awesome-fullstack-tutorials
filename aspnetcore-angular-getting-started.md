@@ -462,7 +462,62 @@ In the `launchSettings.json` we can modify now the `launchUrl` url from `api/val
 
 ## Adding Versioning to your API
 
-TBD
+Your API will grow with the time and maybe you need to do another version of one or multiple controllers. You can add versioning very easy into your ASP.NET core application.
+
+> Be aware that there are multiple ways of adding and using verioning in an API in general. We will take a look at the version in the route here So our routes will change. Other methods are to pass the version in a header or to pass it as a query parameter. Both methods are possible but have advantages and disadvantages. We will focus on the version in the route here as it can be seen in other big and common apis as well.
+
+Before we actually code lets take a step back and see what versioning means for our api and for our routes:
+
+1.  The route will change from `/api/customers` to `/api/v1/customers` or to be more general `/api/v{versionNumber}/{controller}`.
+2.  Our Swagger page should be handling those different versions that the comsumer can get information about version 1 as well as version 2, 3, ...
+3.  We need to pay attention to our `[customer]` wildcard as two controllers having the same name only have the version as a difference in one namespace do not work as the class would have the same name. So we need a solution for that.
+
+So we can start by adding the nuget packages
+
+-   [Microsoft.AspNetCore.Mvc.Versioning/](https://nuget.org/packages/Microsoft.AspNetCore.Mvc.Versioning/)
+-   [Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer](https://nuget.org/packages/microsoft.aspnetcore.mvc.versioning.apiexplorer/)
+
+Having done that we can add two folders in our `Controller` folder describing our versions. In this case this is `v1` and `v2`. We can move our `CustomersController.cs` into the folder `v1` for now.
+
+Now we have to specify the version into the route to catch all calls going to `/api/v1/customers`.
+
+```
+[Route("api/[controller]")]
+[ApiController]
+public class CustomersController : ControllerBase
+{
+    // ...
+}
+```
+
+can be changed to
+
+```
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
+[ApiController]
+public class CustomersController : ControllerBase
+{
+    // ...
+}
+```
+
+Like in the route attributes of the methds in the controller we can define the version as `{version:apiVersion}` here and give the version explicitly in the attribute above with `[ApiVersion("1.0")]`. We can keep the `[controller]` wildcard in the route because it will be replaced with the classname without the suffix `controller`.
+
+The `v2` namespace can get a class _with the same name_ as it is in a different namespace and it just changes the version attribute.
+
+```
+[ApiVersion("2.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
+public class CustomersController : ControllerBase
+{
+    [HttpGet]
+    public ActionResult Get()
+    {
+        return Ok("2.0");
+    }
+}
+```
 
 ## Scaffold the client side application with the AngularCLI
 
