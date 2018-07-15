@@ -14,12 +14,13 @@ What we will cover:
 4.  Implementing CRUD Operations
 5.  Adding Swagger to you API
 6.  Adding Versioning to your API
-7.  Scaffold the client side application with the AngularCLI
-8.  Structure your Angular App
-9.  Requesting data from the server via http
-10. Display data in your HTML-Templates via Databinding
-11. Sending data to the server
-12. Show success/error messages
+7.  Adding CORS to our API
+8.  Scaffold the client side application with the AngularCLI
+9.  Structure your Angular App
+10. Requesting data from the server via http
+11. Display data in your HTML-Templates via Databinding
+12. Sending data to the server
+13. Show success/error messages
 
 That should be it.
 
@@ -45,7 +46,7 @@ The command `dotnet new webapi` in that folder will run a command to scaffold al
 To try out if everything works we can simply run `dotnet run` in the same folder which should start the API for us.
 
 ```
-C:\Users\Fabian\Desktop\ngBook\server>dotnet run
+C:\_git\FabianGosebrink\ng-book-aspnetcore-angular-getting-started\server>dotnet run
 <a few outputs...>
 Now listening on: https://localhost:5001
 Now listening on: http://localhost:5000
@@ -576,13 +577,76 @@ If you now open up swagger like we did before you can see the both versions and 
 
 Although we can improve much much more on this API (Adding HATEOAS, Datashaping, Queryparameters, ...) we want to take a look now on the clientside and buidla corresponsing app with Angular and the Angular CLI.
 
-## Scaffold the client side application with the AngularCLI
+## Adding CORS to our API
 
-TBD
+With a look at the whole article we want one system to talk to another over HTTP. Currently our backend ASP.NET Core WebAPI is configured to receive requests only from the same domain where it is running on. But our client can run on every other server instance in the web, we as a backend, do not know where he lives. Maybe it is a mobile app, an ASP.NET Core MVC site etc. So to enable the communication from another domain we have to enable CORS in our backend. As we know that our frontend will run locally on port `4200` furhter in this article we can allow `http://localhost:4200` access to our backend with CORS.
+
+```
+public void ConfigureServices(IServiceCollection services)
+{
+    //...
+    services.AddCors();
+    //...
+}
+
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+{
+    app.UseCors(builder => builder.WithOrigins("http://localhost:4200"));
+}
+```
+
+With this we are allowing the adress `http://localhost:4200` acess to our backend. Of course you can configure much more but this is it for now.
+
+Lets see now the implementation of the client.
+
+## Scaffold the client side application with the Angular CLI
+
+Before we start building the client side application we need to install [nodejs](https://nodejs.org/), we already have an editor like [Visual Studio Code](https://code.visualstudio.com) and we need the [Angular CLI](https://cli.angular.io).
+
+We can check if all the versions are installed if we type `node -v` and see a version like
+
+```
+C:\Users\Fabian>node -v
+v8.9.1
+```
+
+and if we type `ng -v` we should see something like
+
+```
+C:\Users\Fabian>ng -v
+
+...
+
+Angular CLI: 6.0.8
+Node: 8.9.1
+OS: win32 x64
+Angular:
+...
+
+Package                      Version
+------------------------------------------------------
+@angular-devkit/architect    0.6.8
+@angular-devkit/core         0.6.8
+@angular-devkit/schematics   0.6.8
+@schematics/angular          0.6.8
+@schematics/update           0.6.8
+rxjs                         6.2.2
+typescript                   2.7.2
+```
+
+Now we can type `ng new client` in the root folder of your application. A new folder should be created automatically _beside_ the `server` folder. Let us keep our responsibilities separated here. The server is responsible for receiving the requests and does not know where they come from. The client however does not know anything from the server except its adress where he sends requests to. With this way the client and server can scale independently and we can switch frontend and backend like want to if we maybe switch technologies on one or the other side.
+
+Having done that we can start the application for the first time.
+
+Running `npm start` fires up our dev-server and is running our application
 
 ## Structure your Angular App
 
-TBD
+Core module
+
+Shared Module
+
+Customers Module
 
 ## Requesting data from the server via http
 
@@ -599,3 +663,7 @@ TBD
 ## Show success/error messages
 
 TBD
+
+```
+
+```
