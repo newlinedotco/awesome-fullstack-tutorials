@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from '../../../../../node_modules/rxjs';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { CustomerDataService } from '../../../core/customer/customer-data.service';
 import { Customer } from '../../../shared/models/customer.model';
 
@@ -14,5 +15,12 @@ export class CustomersComponent implements OnInit {
 
   ngOnInit() {
     this.allCustomers$ = this.customerDataService.getAll();
+  }
+
+  customerAdded(customerToAdd: Customer) {
+    console.log(customerToAdd);
+    this.allCustomers$ = this.customerDataService
+      .add(customerToAdd)
+      .pipe(switchMap(() => this.customerDataService.getAll()));
   }
 }

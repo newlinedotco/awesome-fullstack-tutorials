@@ -39,7 +39,7 @@ namespace server
                 options =>
                 {
                     var provider = services.BuildServiceProvider()
-                                        .GetRequiredService<IApiVersionDescriptionProvider>();
+                        .GetRequiredService<IApiVersionDescriptionProvider>();
 
                     foreach (var description in provider.ApiVersionDescriptions)
                     {
@@ -48,7 +48,7 @@ namespace server
                             new Info()
                             {
                                 Title = $"Sample API {description.ApiVersion}",
-                                Version = description.ApiVersion.ToString()
+                                    Version = description.ApiVersion.ToString()
                             });
                     }
                 });
@@ -75,7 +75,9 @@ namespace server
 
             app.UseHttpsRedirection();
 
-            app.UseCors(builder => builder.WithOrigins("http://localhost:4200"));
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
+                .AllowAnyMethod());
             app.UseSwagger();
             app.UseSwaggerUI(
                 options =>

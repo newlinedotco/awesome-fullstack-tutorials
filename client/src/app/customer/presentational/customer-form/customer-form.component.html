@@ -1,3 +1,13 @@
-<p>
-  customer-form works!
-</p>
+<form (ngSubmit)="addCustomer()" [formGroup]="form">
+  Name
+  <br>
+  <input type="text" formControlName="name">
+  <br> Position
+  <br>
+  <input type="text" formControlName="position">
+  <br> Age
+  <br>
+  <input type="number" formControlName="age">
+  <br>
+  <button [disabled]="form.invalid">Add Customer</button>
+</form>

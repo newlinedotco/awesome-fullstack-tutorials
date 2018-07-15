@@ -856,7 +856,7 @@ With its template:
 ```
 <h2>Customers List</h2>
 <ul *ngIf="allCustomers?.length > 0">
-  <li *ngFor="let customer of allCustomers">{{customer}}</li>
+  <li *ngFor="let customer of allCustomers">{{customer.name}} is {{customer.age}} years old</li>
 </ul>
 
 <div *ngIf="allCustomers?.length === 0">No data available</div>

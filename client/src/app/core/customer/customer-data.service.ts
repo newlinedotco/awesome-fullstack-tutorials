@@ -15,4 +15,10 @@ export class CustomerDataService {
       `${environment.endpoint}${this.controllerEndpoint}`
     );
   }
+  add(toAdd: Customer) {
+    return this.http.post<Customer>(
+      `${environment.endpoint}${this.controllerEndpoint}`,
+      toAdd
+    );
+  }
 }
