@@ -17,10 +17,11 @@ What we will cover:
 7.  Adding CORS to our API
 8.  Scaffold the client side application with the AngularCLI
 9.  Structure your Angular App
-10. Requesting data from the server via http
-11. Display data in your HTML-Templates via Databinding
-12. Sending data to the server
-13. Show success/error messages
+10. Create a core module, a data service and requesting data from the server via http
+11.
+12. Display data in your HTML-Templates via Databinding
+13. Sending data to the server
+14. Show success/error messages
 
 That should be it.
 
@@ -640,7 +641,7 @@ Having done that we can start the application for the first time if we `cd` into
 
 ![angularfirstrun](.github/angular-first-run.png)
 
-## Structure your Angular App
+## Thoughts about our application structure
 
 Before we start displaying values and adding forms to our application let us take a moment to think about how to structure our application. Angular is a platform which provides features like unit testing or dependency injection (DI) out of the box. That means not only that we can use this features right away but also that we can do client side architectures like we know them from the backend for example.
 Core module
@@ -652,7 +653,7 @@ Customers Module
 
 AppModule
 
-## Requesting data from the server via http
+## Create a core module, a data service and requesting data from the server via http
 
 To establish the first request to our data to receive all the customers we have to create a service which abstracts the communication to the backend and which we can inject and use inside our component via DI then.
 
@@ -702,6 +703,34 @@ export class CustomerDataService {
 
 So that is it. Calling the method `getAll()` will fire a call to our backend and give us back data or an empty array. Using the `providedIn: 'root'` in the `@Injectable(...)` decorator injects the service into our root injector.
 
+If you read the documentation about the [HttpClient](https://angular.io/guide/http) you can see that the methods abstracting the http interface take a generic type. As we know what to expect we can create an interface to be type safe also on client side and work with the data in a developer friendly way.
+
+So lets create a new module called `SharedModule` (`ng g module shared` on the commandline in the `client` folder) which has a folder called `models` where our interface can be layed in. With this we are able to consume it from every part of our application. The `customer.model.ts` can be a representation of our `CustomerDto.cs` from the backend
+
+```
+export interface Customer {
+  name: string;
+  id: number;
+  position: string;
+  age: string;
+}
+```
+
+> As the interfaces are only for type safety they can be placed anywhere else in the application. Let us assume for now that a sahred module is the correct place but keep in mind that interfaces are just a type safe container which get erased by javascript in the end. Importing the shared module is not necessary unless we place an angular related piece like a pipe/service/... etc. in it.
+
+```
+export class CustomerDataService {
+  private controllerEndpoint = `customers`;
+  constructor(private readonly http: HttpClient) {}
+
+  getAll() {
+    return this.http.get<Customer[]>(
+      `${environment.endpoint}${this.controllerEndpoint}`
+    );
+  }
+}
+```
+
 To make the `HttpClient` available we have to import the `HttpClientModule` in our `CoreModule`
 
 ```
@@ -715,6 +744,24 @@ import { NgModule } from '@angular/core';
 })
 export class CoreModule {}
 ```
+
+Last but not least we have to ensure that our `AppModule` imports our `CoreModule`
+
+```
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, CoreModule],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
+
+## Create a feature module with presentational and container components
+
+As we mentioned in the chapter _Thoughts about application structure_ we will work with feature modules. This gives us a better overview and architecture and makes our app understandable and readable.
+
+With `ng g module customer` we can scaffold our customer feature module.
 
 ## Display data in your HTML-Templates via Databinding
 
