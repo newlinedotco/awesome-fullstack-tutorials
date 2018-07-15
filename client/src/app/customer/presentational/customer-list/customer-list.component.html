@@ -1,0 +1,6 @@
+<h2>Customers List</h2>
+<ul>
+  <li *ngFor="let customer of allCustomers">{{customer}}</li>
+</ul>
+
+<div *ngIf="allCustomers?.length === 0">No data available</div>

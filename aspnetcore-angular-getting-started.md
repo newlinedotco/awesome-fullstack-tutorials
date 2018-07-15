@@ -636,27 +636,95 @@ typescript                   2.7.2
 
 Now we can type `ng new client` in the root folder of your application. A new folder should be created automatically _beside_ the `server` folder. Let us keep our responsibilities separated here. The server is responsible for receiving the requests and does not know where they come from. The client however does not know anything from the server except its adress where he sends requests to. With this way the client and server can scale independently and we can switch frontend and backend like want to if we maybe switch technologies on one or the other side.
 
-Having done that we can start the application for the first time.
+Having done that we can start the application for the first time if we `cd` into the client folder with `cd client` and run `npm start` which fires up our dev-server and is running our application. We can open up a browser, brwose to `http://localhost:4200/` and we should see something like this:
 
-Running `npm start` fires up our dev-server and is running our application
+![angularfirstrun](.github/angular-first-run.png)
 
 ## Structure your Angular App
 
+Before we start displaying values and adding forms to our application let us take a moment to think about how to structure our application. Angular is a platform which provides features like unit testing or dependency injection (DI) out of the box. That means not only that we can use this features right away but also that we can do client side architectures like we know them from the backend for example.
 Core module
 
 Shared Module
+models
 
 Customers Module
 
+AppModule
+
 ## Requesting data from the server via http
 
-TBD
+To establish the first request to our data to receive all the customers we have to create a service which abstracts the communication to the backend and which we can inject and use inside our component via DI then.
+
+By typing `ng g module core` on the commandline while being inside the client folder a new folder `core` gets scaffolded having two files `core.module.ts` and `core.module.spec.ts`. This folder will give all our services we need only one instance from in our appliaction a home. Let us create a new file called `customer-data.service.ts` with `ng g service core/customer/customer-data` in our client folder.
+
+```
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CustomerDataService {
+  constructor() {}
+}
+```
+
+Is what should got scaffolded until here. Next is to inject HttpClient and create a method which we can call to et some data from our backend. To ensure we always use the correct backend url we can outsource the endpoint in our environment files which also allows us to have different urls for different environments. To do this enter the `environments` folder and extend the object with a property called `endpoint` pointing to our backend url.
+
+```
+export const environment = {
+  production: false,
+  endpoint: `https://localhost:5001/api/v1/`
+};
+```
+
+> Do not forget to do the same for production, too.
+
+Our service on client side then looks like:
+
+```
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CustomerDataService {
+  private controllerEndpoint = `customers`;
+  constructor(private readonly http: HttpClient) {}
+
+  getAll() {
+    return this.http.get(`${environment.endpoint}${this.controllerEndpoint}`);
+  }
+}
+```
+
+So that is it. Calling the method `getAll()` will fire a call to our backend and give us back data or an empty array. Using the `providedIn: 'root'` in the `@Injectable(...)` decorator injects the service into our root injector.
+
+To make the `HttpClient` available we have to import the `HttpClientModule` in our `CoreModule`
+
+```
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+
+@NgModule({
+  imports: [CommonModule, HttpClientModule],
+  declarations: []
+})
+export class CoreModule {}
+```
 
 ## Display data in your HTML-Templates via Databinding
 
 TBD
 
 ## Sending data to the server
+
+TBD
+
+## Adding a details page with routing
 
 TBD
 
