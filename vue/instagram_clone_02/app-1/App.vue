@@ -1,7 +1,7 @@
 <template>
-	<div id="app">
+  <div id="app">
     Let's build an Instagram Clone!
-	</div>
+  </div>
 </template>
 
 <script>

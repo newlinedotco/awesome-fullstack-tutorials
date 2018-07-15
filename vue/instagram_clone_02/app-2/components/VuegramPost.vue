@@ -1,21 +1,21 @@
 <template>
   <div class="vuegram-post">
     <div class="header level">
-        <div class="level-left">
-          <figure class="image is-32x32">
-            <img :src="post.userImage" />
-          </figure>
-          <span class="username">{{post.username}}</span>
-        </div>
+      <div class="level-left">
+        <figure class="image is-32x32">
+          <img :src="post.userImage" />
+        </figure>
+        <span class="username">{{post.username}}</span>
+      </div>
     </div>
     <div class="image-container"
-          :class="post.filter"
-          :style="{ backgroundImage: 'url(' + post.postImage + ')' }"
-          @dblclick="like">
+      :class="post.filter"
+      :style="{ backgroundImage: 'url(' + post.postImage + ')' }"
+      @dblclick="like">
     </div>
     <div class="content">
       <div class="heart">
-      <i class="far fa-heart fa-lg"
+        <i class="far fa-heart fa-lg"
            :class="{'fas': this.post.hasBeenLiked}"
            @click="like">
         </i>

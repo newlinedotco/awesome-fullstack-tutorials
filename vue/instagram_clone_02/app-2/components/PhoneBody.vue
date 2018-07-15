@@ -2,8 +2,8 @@
   <div class="phone-body">
     <div class="feed">
       <vuegram-post v-for="post in posts"
-                    :post="post"
-                    :key="posts.indexOf(post)">
+        :post="post"
+        :key="posts.indexOf(post)">
       </vuegram-post>
     </div>
   </div>
