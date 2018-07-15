@@ -18,7 +18,7 @@ What we will cover:
 8.  Scaffold the client side application with the AngularCLI
 9.  Structure your Angular App
 10. Create a core module, a data service and requesting data from the server via http
-11.
+11. Create a feature module with presentational and container components
 12. Display data in your HTML-Templates via Databinding
 13. Sending data to the server
 14. Show success/error messages
