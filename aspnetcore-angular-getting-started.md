@@ -862,6 +862,12 @@ With its template:
 <div *ngIf="allCustomers?.length === 0">No data available</div>
 ```
 
+Don't forget to display the component in our container component and to wire all the things up:
+
+```
+<app-customer-list [allCustomers]="allCustomers$ | async"></app-customer-list>
+```
+
 So the dataflow is clear here: We first get data into our container component which passes the data down to the presentational component which displays the data via the databinding with the `{{...}}`
 
 ## Sending data to the server
