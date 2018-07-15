@@ -23,6 +23,7 @@ namespace server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddSingleton<ICustomerRepository, CustomerRepository>();
 
             services.AddMvcCore().AddVersionedApiExplorer(o => o.GroupNameFormat = "'v'VVV");
@@ -74,6 +75,7 @@ namespace server
 
             app.UseHttpsRedirection();
 
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200"));
             app.UseSwagger();
             app.UseSwaggerUI(
                 options =>
