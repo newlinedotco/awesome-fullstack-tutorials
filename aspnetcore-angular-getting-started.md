@@ -778,10 +778,34 @@ After this is safe we can create container and representational components.
 > In modern web frameworks or libraries like Angular or React we can separate our components in two categories 'presentational' and 'container'. Beside having a better architecture and overview again our separation of concerns is fullfilled here as presentational components "only" take care about _how_ things should be displayed and container components take care about the "work" like where the data gets from etc. You can read more about container vs. representaional components [here](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0)
 > and [here](https://blog.angular-university.io/angular-2-smart-components-vs-presentation-components-whats-the-difference-when-to-use-each-and-why/).
 
-What we need is a customer component (container) which takes care of getting the data and passing it to a component which displays a list of customers for now. Lets call
+What we need is a customer component (container) which takes care of getting the data and passing it to a component which displays a list of customers for now (presentational). Lets call
 `ng g component customer/container/customers` and `ng g component customer/presentational/customer-list` to scaffold all of these.
 
-Imagine now in a big application we have multiple
+Imagine now in a big application we have multiple container and presentation components. To seperate them we created folders for them. We can use the barrel pattern and create an `index.ts` file which exports an array of all presentational and container components.
+
+```
+import { CustomerListComponent } from './customer-list/customer-list.component';
+
+export const allPresentationalComponents = [CustomerListComponent];
+```
+
+![angulararchitecture](.github/angular-architecture-1.png)
+
+In our customer module we can then declare all the presentational components and container components like this:
+
+```
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { allContainerComponents } from './container';
+import { allPresentationalComponents } from './presentational';
+
+@NgModule({
+  imports: [CommonModule],
+  declarations: [...allPresentationalComponents, ...allContainerComponents],
+  exports: [...allContainerComponents]
+})
+export class CustomerModule {}
+```
 
 ## Display data in your HTML-Templates via Databinding
 
