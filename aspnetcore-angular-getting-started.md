@@ -761,7 +761,27 @@ export class AppModule {}
 
 As we mentioned in the chapter _Thoughts about application structure_ we will work with feature modules. This gives us a better overview and architecture and makes our app understandable and readable.
 
-With `ng g module customer` we can scaffold our customer feature module.
+With `ng g module customer` we can scaffold our customer feature module. We also have to ensure our `AppModule` imports our new module again:
+
+```
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, CoreModule, CustomerModule],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
+
+After this is safe we can create container and representational components.
+
+> In modern web frameworks or libraries like Angular or React we can separate our components in two categories 'presentational' and 'container'. Beside having a better architecture and overview again our separation of concerns is fullfilled here as presentational components "only" take care about _how_ things should be displayed and container components take care about the "work" like where the data gets from etc. You can read more about container vs. representaional components [here](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0)
+> and [here](https://blog.angular-university.io/angular-2-smart-components-vs-presentation-components-whats-the-difference-when-to-use-each-and-why/).
+
+What we need is a customer component (container) which takes care of getting the data and passing it to a component which displays a list of customers for now. Lets call
+`ng g component customer/container/customers` and `ng g component customer/presentational/customer-list` to scaffold all of these.
+
+Imagine now in a big application we have multiple
 
 ## Display data in your HTML-Templates via Databinding
 
