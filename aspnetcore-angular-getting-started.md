@@ -807,9 +807,62 @@ import { allPresentationalComponents } from './presentational';
 export class CustomerModule {}
 ```
 
+Lets now head to our `app.component.ts` and display the customers component:
+
+```
+<app-customers>
+</app-customers>
+```
+
+The customers component gets injected the already created dataservice and asks for the data to display in the future.
+
+```
+@Component({
+  selector: 'app-customers',
+  templateUrl: './customers.component.html',
+  styleUrls: ['./customers.component.css']
+})
+export class CustomersComponent implements OnInit {
+  allCustomers$: Observable<Customer[]>;
+  constructor(private readonly customerDataService: CustomerDataService) {}
+
+  ngOnInit() {
+    this.allCustomers$ = this.customerDataService.getAll();
+  }
+}
+```
+
 ## Display data in your HTML-Templates via Databinding
 
-TBD
+Now lets work on the presentational component `customer-list.component` to make it ready to receive a list of data via the `@Input()` decorator and display it. If we have no data we just display a small message.
+
+```
+@Component({
+  selector: 'app-customer-list',
+  templateUrl: './customer-list.component.html',
+  styleUrls: ['./customer-list.component.css']
+})
+export class CustomerListComponent implements OnInit {
+  @Input() allCustomers: Customer[] = [];
+
+  constructor() {}
+
+  ngOnInit() {}
+}
+```
+
+With its template:
+
+```
+<h2>Customers List</h2>
+<ul *ngIf="allCustomers?.length > 0">
+  <li *ngFor="let customer of allCustomers">{{customer}}</li>
+</ul>
+
+<div *ngIf="allCustomers?.length === 0">No data available</div>
+```
+
+So the dataflow is clear here: We first get data into our container component which passes the data down to the presentational component which displays the data via the databinding with the `{{...}}`
 
 ## Sending data to the server
 
