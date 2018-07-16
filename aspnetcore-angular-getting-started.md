@@ -987,6 +987,84 @@ After we added the customer we are calling the `this.customerDataService.getAll(
 
 > Of course if we call POST to the server we implemented the logic before that you get back the just created item. We could take it as a parameter here and add it maybe to a cached array of customers. but for the sake of simplicity we fire a new GET request to load the new data.
 
+![ng-book-animation-1](.github/ng-book-animation-1.gif)
+
 ## Adding a details page with routing
 
-TBD
+Now we see nearly all information in the list but we are missing the position. Let us do a details page where we can display all the details for a customer.
+
+Do add a new route we need to
+
+1.  import the routing module
+2.  define a route and pass the id with it
+3.  create a new component which takes the id out of the route, requests the data and loads it
+
+So let us do that next!
+
+Create a new file called `app-routing.module.ts` and place the following content
+
+```
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}
+```
+
+So we are importing the `RouterModule` here, configuring it and exporting it again to provide it to other modules.
+
+> You can read more about routing module [here](https://angular.io/guide/router#milestone-2-routing-module)
+
+We can define our specific routes in javascript objects and gather them together in an array which we pass to the `RouterModules` configuration method `forRoot(...)`.
+
+> Your application should only have one `forRoot(...)`. Child modules which bring their own routes always call `forChild(...)` to configure the routing system correctly.
+
+In our application we want our base route to be `/home`. So this rout should display what we see so far. The route `/details/{id}` or `/details/5` should display a single customer in another component. If none of the routes in the adress bar matches we want our `/home` route to catch the app and display the start page.
+
+With `ng g component customer/presentational/customer-details` we can create the new empty component which gets automatically added to the customers module and we build our routes now:
+
+```
+const routes: Routes = [
+  { path: 'details/:id', component: CustomerDetailsComponent },
+  { path: 'home', component: CustomersComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '**', redirectTo: '/home' }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}
+```
+
+Normally we can define a string which describes the route and define a component to show if that route matches the one in the adress bar: `{ path: 'home', component: CustomersComponent },`.
+
+For using parameters we can simply add the `id` parameter with a colon and name the parameter as we want to access it later: `path: 'details/:id'` defines a new route with a parameter called `id`.
+
+The two asterisks `**` mark a route where no mathicng string was found. in this case we are just redirecting to `/home` which displays our `CusotmersComponent` again.
+
+After that we are passing the array to the configuration method `forRoot(...)` and exporting the configured routing module again.
+
+In our `app.module.ts` we have to import that `AppRoutingModule` of course to make the routes public and accessable.
+
+```
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, CoreModule, CustomerModule, AppRoutingModule],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
+
+But where should these components be displayed? Right now we have hard coded our container component in our `app.component.html` which is displaying the `<app-customers></app-customers>`. As we are importing the `RouterModule` which we jsut configured we have access to the component `router-outlet` which we can use in our `app.component.ts`. So instead of hard coding the component the route is now pointing to the component to display and changes based on what we configured in our routes. So our AppComponent template becomes to
+
+```
+<router-outlet></router-outlet>
+```
