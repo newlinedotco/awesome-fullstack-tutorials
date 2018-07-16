@@ -10,18 +10,18 @@ What we will cover:
 
 1.  [Creating an ASP.NET Core WebAPI with the .NET CLI](#creating-an-aspnet-core-webapi-with-the-net-cli)
 2.  [Preparations and using the Dependency Injection](#preparations-and-using-the-dependency-injection)
-3.  Adding a Controller
-4.  Implementing CRUD Operations
-5.  Adding Swagger to you API
-6.  Adding Versioning to your API
-7.  Adding CORS to our API
-8.  Scaffold the client side application with the AngularCLI
-9.  Structure your Angular App
-10. Create a core module, a data service and requesting data from the server via http
-11. Create a feature module with presentational and container components
-12. Display data in your HTML-Templates via Databinding
-13. Sending data to the server
-14. Show success/error messages
+3.  [Adding a Controller](adding-a-controller)
+4.  [Implementing CRUD Operations](implementing-crud-operations)
+5.  [Adding Swagger to you API](adding-swagger-to-you-api)
+6.  [Adding Versioning to your API](adding-versioning-to-your-api)
+7.  [Adding CORS to our API](adding-cors-to-our-api)
+8.  [Scaffold the client side application with the AngularCLI](scaffold-the-client-side-application-with-the-angularcli)
+9.  [Structure your Angular App](structure-your-angular-app)
+10. [Create a core module, a data service and requesting data from the server via http](create-a-core-module-a-data-service-and-requesting-data-from-the-server-via-http)
+11. [Create a feature module with presentational and container components](create-a-feature-module-with-presentational-and-container-components)
+12. [Display data in your HTML-Templates via Databinding](display-data-in-your-html-templates-via-databinding)
+13. [Sending data to the server](sending-data-to-the-server)
+14. [Adding a details page with routing](adding-a-details-page-with-routing)
 
 That should be it.
 
@@ -1068,3 +1068,79 @@ But where should these components be displayed? Right now we have hard coded our
 ```
 <router-outlet></router-outlet>
 ```
+
+The app should look the same now with one little difference: The adressbar shows `http://localhost:4200/home` instead of `http://localhost:4200`. Fine, so our routing works!
+
+Now lets change the route in the adress bar with Angular routing and pass the Id as a parameter. To get this going we first need to import the RoutingModule fomr `@angular/router` in our customers component because we need access to routing functionality. Having done that in our html template of the `customers-list.component` we do not only iterate over all customers but also want to display a link which provides us access to the detailspage with the id being set automatically for us in the loop we already have.
+
+```
+<h2>Customers List</h2>
+<ul *ngIf="allCustomers?.length > 0">
+  <li *ngFor="let customer of allCustomers">{{customer.name}} is {{customer.age}} years old
+    <a [routerLink]="['/details', customer.id]">Details</a>
+  </li>
+</ul>
+
+<div *ngIf="allCustomers?.length === 0">No data available</div>
+```
+
+The `<a [routerLink]="['/details', customer.id]">Details</a>` creates a html link tag `a` and uses the directive `routerLink` we assign an array with the target route as the first item and the route parameters as the second item. This is our customer `id` in this case. Angular iterates over the customers and displays the link which getas automatically filles with the correct route including the parameter. If we click it we can see our rather emtpy details component saying `customer-details works!`. But more interesting is the route change saying something like `http://localhost:4200/details/1`.
+
+Let us pay more attention now to our details route which has to read the parameter and display the detailled data then. Before we can display anything we have to access the data and fire a GET call with an id to our backend this time. So let us prepare our data service first and extend it with a method called `getSingle(id: number)`
+
+customer-data.service.ts
+
+```
+getSingle(id: number) {
+    return this.http.get<Customer>(
+        `${environment.endpoint}${this.controllerEndpoint}/${id}`
+    );
+}
+```
+
+In our `customer-details.component` we can now inject the `CustomerDataService` and the current active route which is called `ActivatedRoute` from the `@angular/router` namespace. The route is providing access to the routing params which we can ask for the parameter `id` as we defined in the routing module.
+As this is an Observable we can use pipeable operators and simply call our new service method `getSingle(...)` in one go, passing it to an observable of a customer and let the `async` pipe do the subscription and fire the call in the end.
+
+```
+@Component({
+  selector: 'app-customer-details',
+  templateUrl: './customer-details.component.html',
+  styleUrls: ['./customer-details.component.css']
+})
+export class CustomerDetailsComponent implements OnInit {
+  customerDetails$: Observable<Customer>;
+
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly dataService: CustomerDataService
+  ) {}
+
+  ngOnInit() {
+    this.customerDetails$ = this.route.paramMap.pipe(
+      map((params: ParamMap) => params.get('id')),
+      switchMap((id: string) => this.dataService.getSingle(+id))
+    );
+  }
+}
+```
+
+Our template then displays all the values for the customer.
+
+```
+<div *ngIf="customerDetails$ | async as customerDetail; else loading">
+  <h3>Details for {{customerDetail.name}}</h3>
+  <ol>
+    <li>{{customerDetail.name}}</li>
+    <li>{{customerDetail.age}}</li>
+    <li>{{customerDetail.position}}</li>
+  </ol>
+</div>
+
+<ng-template #loading>loading...</ng-template>
+```
+
+If the observable has no data yet we can work with the `ng if/else` syntax to display a loading message. If it has data however we can pass the content of the observable (a `Custoemr` in this case) to a variable called `cusomterDetail` and work inside the scope of the `<div>...</div>` with that variable.
+
+> Remember that every async does a subscribe and so fires a call in our case. We only want to fire the call once.
+
+After this we can access our customer properties like normal.

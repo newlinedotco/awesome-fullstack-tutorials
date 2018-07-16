@@ -15,6 +15,13 @@ export class CustomerDataService {
       `${environment.endpoint}${this.controllerEndpoint}`
     );
   }
+
+  getSingle(id: number) {
+    return this.http.get<Customer>(
+      `${environment.endpoint}${this.controllerEndpoint}/${id}`
+    );
+  }
+
   add(toAdd: Customer) {
     return this.http.post<Customer>(
       `${environment.endpoint}${this.controllerEndpoint}`,

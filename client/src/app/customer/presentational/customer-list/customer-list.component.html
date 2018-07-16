@@ -1,6 +1,8 @@
 <h2>Customers List</h2>
 <ul *ngIf="allCustomers?.length > 0">
-  <li *ngFor="let customer of allCustomers">{{customer.name}} is {{customer.age}} years old</li>
+  <li *ngFor="let customer of allCustomers">{{customer.name}} is {{customer.age}} years old
+    <a [routerLink]="['/details', customer.id]">Details</a>
+  </li>
 </ul>
 
 <div *ngIf="allCustomers?.length === 0">No data available</div>
