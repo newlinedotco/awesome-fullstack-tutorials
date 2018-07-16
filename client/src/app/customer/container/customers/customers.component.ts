@@ -18,7 +18,6 @@ export class CustomersComponent implements OnInit {
   }
 
   customerAdded(customerToAdd: Customer) {
-    console.log(customerToAdd);
     this.allCustomers$ = this.customerDataService
       .add(customerToAdd)
       .pipe(switchMap(() => this.customerDataService.getAll()));

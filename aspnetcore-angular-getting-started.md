@@ -8,8 +8,8 @@ In this article I want to describe the first steps to get started with ASP.NET C
 
 What we will cover:
 
-1.  Creating an ASP.NET Core WebAPI with the .NET CLI
-2.  Preparations and using the Dependency Injection
+1.  [Creating an ASP.NET Core WebAPI with the .NET CLI](#creating-an-aspnet-core-webapi-with-the-net-cli)
+2.  [Preparations and using the Dependency Injection](#preparations-and-using-the-dependency-injection)
 3.  Adding a Controller
 4.  Implementing CRUD Operations
 5.  Adding Swagger to you API
@@ -592,7 +592,9 @@ public void ConfigureServices(IServiceCollection services)
 
 public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 {
-    app.UseCors(builder => builder.WithOrigins("http://localhost:4200"));
+      app.UseCors(builder => builder.WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
+                .AllowAnyMethod());
 }
 ```
 
@@ -872,12 +874,119 @@ So the dataflow is clear here: We first get data into our container component wh
 
 ## Sending data to the server
 
-TBD
+Wihtout the functionality to send data to the server we are not able to show some data to the user. In this chapter we will add data to our backend and display them to the user. Before we can create a form we have to import the `ReactiveFormsModule` in our `customer.module.ts`
+
+```
+@NgModule({
+  imports: [CommonModule, ReactiveFormsModule],
+  declarations: [
+    ...allPresentationalComponents,
+    ...allContainerComponents,
+    CustomerFormComponent
+  ],
+  exports: [...allContainerComponents]
+})
+export class CustomerModule {}
+```
+
+With `ng g component customer/presentational/customer-form` via the commandline in the client folder we can create a new component which is only responsible for holding the form. In the template we can define our form which is a normal HTML form for now.
+
+```
+<form (ngSubmit)="addCustomer()" [formGroup]="form">
+  Name
+  <br>
+  <input type="text" formControlName="name">
+  <br> Position
+  <br>
+  <input type="text" formControlName="position">
+  <br> Age
+  <br>
+  <input type="number" formControlName="age">
+  <br>
+  <button [disabled]="form.invalid">Add Customer</button>
+</form>
+```
+
+See that we call a method called `addCustomer()` on submit and bind a form called `form` to the formgroup. In the `addCustomer()` method we will throw an event out to our container component because we are a presentational component here and let the container component do the hard work. We can simply use an `@Output()` decorator here and throw an event.
+
+```
+@Component({
+  selector: 'app-customer-form',
+  templateUrl: './customer-form.component.html',
+  styleUrls: ['./customer-form.component.css']
+})
+export class CustomerFormComponent implements OnInit {
+  @Output() customerAdded = new EventEmitter();
+  form: FormGroup;
+  constructor() {}
+  ngOnInit() {
+    this.form = new FormGroup({
+      name: new FormControl('', Validators.required),
+      position: new FormControl('', Validators.required),
+      age: new FormControl('', Validators.required)
+    });
+  }
+  addCustomer() {
+    const customerToAdd = this.form.value;
+    this.customerAdded.emit(customerToAdd);
+  }
+}
+```
+
+Notice that the forms object
+
+```
+{
+    name: new FormControl('', Validators.required),
+    position: new FormControl('', Validators.required),
+    age: new FormControl('', Validators.required)
+}
+```
+
+has the same properties as our customerCreateDto in the backend. This object is what we are going to send over the wire to our backend and which is getting stored then.
+
+```
+addCustomer() {
+    const customerToAdd = this.form.value;
+    this.customerAdded.emit(customerToAdd);
+}
+```
+
+Now we can modify our containe component servign the form component as well
+
+```
+<app-customer-form (customerAdded)="customerAdded($event)"></app-customer-form>
+
+<app-customer-list [allCustomers]="allCustomers$ | async"></app-customer-list>
+```
+
+and register on the output event with passing the argument to a method on the container component. Remember that we already have access to the dataservice in that component as we already fire a GET call to the backend. We can reuse this service firing a POST call now and send the data to the backend. Before we can do that we have to enhance the service a bit providding us a POST Method which takes care of the HTTP communication.
+
+In our `customer-data.service.ts` we can add this method
+
+```
+add(toAdd: Customer) {
+    return this.http.post<Customer>(
+        `${environment.endpoint}${this.controllerEndpoint}`,
+        toAdd
+    );
+}
+```
+
+and call this method in our container component if we catch the event of a customer being added.
+
+```
+customerAdded(customerToAdd: Customer) {
+    this.allCustomers$ = this.customerDataService
+        .add(customerToAdd)
+        .pipe(switchMap(() => this.customerDataService.getAll()));
+}
+```
+
+After we added the customer we are calling the `this.customerDataService.getAll()` method again to get the latest data from the server.
+
+> Of course if we call POST to the server we implemented the logic before that you get back the just created item. We could take it as a parameter here and add it maybe to a cached array of customers. but for the sake of simplicity we fire a new GET request to load the new data.
 
 ## Adding a details page with routing
-
-TBD
-
-## Show success/error messages
 
 TBD
