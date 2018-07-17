@@ -1,2 +1,4 @@
 /server/bin
 /server/obj/
+
+/server/.vs
