@@ -54,3 +54,33 @@ Now, let’s open the `launchSettings.json` file to modify the endpoint url addr
 }
 ```
 
+Because the server side and the client side projects will run on different domains we need to enable CORS on the server side project. To do that we need to open the `Startup.cs` class and to modify the `ConfigureServices` and `Configure` methods:
+
+```
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddCors(options =>
+    {
+        options.AddPolicy("CorsPolicy",
+            builder => builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
+    });
+
+    services.AddMvc();
+}
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+{
+    if (env.IsDevelopment())
+    {
+        app.UseDeveloperExceptionPage();
+    }
+
+    app.UseCors("CorsPolicy");
+
+    app.UseMvc();
+}
+```
+
+To learn more about CORS configuration and the project configuration overall, you can check out the [NET Core Project Configuration article](https://code-maze.com/net-core-web-development-part2/).
