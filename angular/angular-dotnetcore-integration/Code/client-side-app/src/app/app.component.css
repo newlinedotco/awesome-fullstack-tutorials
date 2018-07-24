@@ -1,0 +1,39 @@
+.container{
+    width: 100%;
+}
+
+.content{
+    width: 70%;
+    margin: 0 auto;
+    border:1px solid gray;
+    padding: 10px;
+    box-shadow: 1px 1px 1px gray;
+}
+
+.headerText{
+    color: #2795ca;
+    text-align: center;
+}
+
+p{
+    text-align: center;
+}
+span{
+    font-size: 18px;
+    margin-right: 15px;
+}
+
+button{
+    background-color: #2795ca;
+    color:white;
+    height: 35px;
+    border: 1px solid #2795ca;
+    border-radius: 3px;
+}
+button:hover{
+    cursor: pointer;
+}
+
+.table-center{
+    margin: 20px auto;
+}
