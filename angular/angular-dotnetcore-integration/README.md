@@ -232,4 +232,181 @@ After some time, our project is ready. Let’s open it inside the Visual Studio 
 
 ![Client side app](https://github.com/MarinkoSpasojevic/awesome-fullstack-tutorials/blob/master/angular/angular-dotnetcore-integration/Images/06-Client-Side-App.png)
 
+## Modifying the App Component
+Let’s modify the `app.component.html` file first:
 
+```
+<div class="container">
+  <div class="content">
+    <h1 class="headerText">Welcome to the movies presentation!!!</h1>
+    <p>
+      <span>Click this button to see the movie list:</span> 
+      <button type="button" name="show" (click)="getMovies()">Show Movies</button>
+    </p>
+  </div>
+</div>
+```
+
+Then, the `app.component.css` file as well:
+
+```
+.container{
+    width: 100%;
+}
+
+.content{
+    width: 70%;
+    margin: 0 auto;
+    border:1px solid gray;
+    padding: 10px;
+    box-shadow: 1px 1px 1px gray;
+}
+
+.headerText{
+    color: #2795ca;
+    text-align: center;
+}
+
+p{
+    text-align: center;
+}
+span{
+    font-size: 18px;
+    margin-right: 15px;
+}
+
+button{
+    background-color: #2795ca;
+    color:white;
+    height: 35px;
+    border: 1px solid #2795ca;
+    border-radius: 3px;
+}
+button:hover{
+    cursor: pointer;
+}
+```
+
+If we start our application by typing ng serve in the console window of Visual Studio Code, we will get this result:
+
+![App component](https://github.com/MarinkoSpasojevic/awesome-fullstack-tutorials/blob/master/angular/angular-dotnetcore-integration/Images/07-App_Component_Page.png)
+
+When we click on the Show Movies button we should be able to see all of our movie entities on the page. So, let’s start working on that feature.
+
+## Using Services and HttpClientModule
+To send a request to our endpoint, we are going to introduce the `HttpClientModule` in our app. So we need to import it inside the `app.module.ts` file and to place it in the `imports` array:
+
+```
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule} from '@angular/common/http';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+After the module modification, we are going to create a new folder `_interfaces` and to create one interface file `movie.model.ts` inside that folder:
+
+```
+export interface Movie{
+    id: string,
+    name: string,
+    genre: string,
+    director: string
+}
+```
+
+Then, we are going to create a new service file http-service by using the Angular CLI command:
+
+![Created service](https://github.com/MarinkoSpasojevic/awesome-fullstack-tutorials/blob/master/angular/angular-dotnetcore-integration/Images/08-Created-service.png)
+
+That looks great. 
+
+So, let’s modify that service file:
+
+```
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class HttpService {
+
+  constructor(private httpService: HttpClient) { }
+
+  public getData = (route: string) =>{
+    return this.httpService.get(route);
+  }
+}
+```
+
+We have the `getData` function, which we are going to call once we require a data from a certain endpoint from the server. You can read [here](https://code-maze.com/net-core-web-development-part9/) in more detail about services and HTTP calls.
+
+The `getData` function will return an `Observable` as a response, so if we want to fetch that data from a response we need to subscribe on this function. So, let’s do exactly that.
+
+## Fetching and Displaying Data from the Server
+Let’s modify the app.component.ts file first:
+
+```
+import { Component } from '@angular/core';
+import { HttpService } from './services/http.service';
+import { Movie } from './_interfaces/movie.model';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  public movies: Movie[];
+
+  constructor(private httpService: HttpService){}
+
+  public getMovies = () => {
+    let route: string = 'http://localhost:5000/api/movies';
+    this.httpService.getData(route)
+    .subscribe((result) => {
+      this.movies = result as Movie[];
+    },
+    (error) => {
+      console.error(error);
+    });
+  }
+ }
+```
+
+In order to display our data, we need to modify the app.component.html file by adding this code below the p tag:
+
+```
+<div *ngIf="movies" class="table-center">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Genre</th>
+            <th>Director</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor='let movie of movies'>
+            <td>{{movie?.name}}</td>
+            <td>{{movie?.genre}}</td>
+            <td>{{movie?.director}}</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+```
