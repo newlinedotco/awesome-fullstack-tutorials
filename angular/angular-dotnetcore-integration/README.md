@@ -160,6 +160,11 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
+Excellent.
+We have finished with the EF Core configuration in our application. We didn’t dive any deeper than we should into the configuration logic, but if you like to read about it in more detail you can check out this article [.NET Core 2.0, Angular and MySQL. Repository Pattern](https://code-maze.com/net-core-web-development-part4/)
 
+## Creating Controller and the Get Action
+Now let’s create our action that will represent an endpoint for the client request. In the `SolutionExplorer` we can find the Controllers folder and one class inside it. We are going to rename that class to `MoviesController` and to remove all the code except the first Get action:
 
+![MovieController](https://github.com/MarinkoSpasojevic/awesome-fullstack-tutorials/blob/master/angular/angular-dotnetcore-integration/Images/04-MoviesController.png)
 
