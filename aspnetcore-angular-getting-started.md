@@ -1,6 +1,6 @@
 # Getting started with Angular and ASP.NET Core step by step
 
-Building distributed systems nowadays is challenging and impacted by a lot of tools and frameowrks you can build your front- and backend with.
+Building distributed systems nowadays is challenging and impacted by a lot of tools and frameworks you can build your front- and backend with.
 
 In this article I want to describe the first steps to get started with ASP.NET Core, the .NET CLI, Angular and the AngularCLI.
 
@@ -31,9 +31,9 @@ Lets get started!
 
 As a first step you can download the .NET CLI on [https://dot.net](https://dot.net).
 
-Typing `dotnet --version` on you commandline shuld give you a version description like
+Typing `dotnet --version` on your commandline should give you a version description like
 
-```
+```bash
 C:\Users\Fabian>dotnet --version
 2.1.300
 ```
@@ -46,7 +46,7 @@ The command `dotnet new webapi` in that folder will run a command to scaffold al
 
 To try out if everything works we can simply run `dotnet run` in the same folder which should start the API for us.
 
-```
+```bash
 C:\_git\FabianGosebrink\ng-book-aspnetcore-angular-getting-started\server>dotnet run
 <a few outputs...>
 Now listening on: https://localhost:5001
@@ -58,9 +58,9 @@ So simply doing a `dotnet new webapi` and a `dotnet run` brings us a WebAPI up a
 
 Let us examine what we have got so far:
 
-The `Program.cs` file is the starting point for our application which starts the webserver "Kestrel" so server our application, our WebAPI in this case. It also configures our application with values you can give from the outside. So any configuration via an \*.json, \*.xml or even \*.ini file can be read here.
+The `Program.cs` file is the starting point for our application which starts the webserver "Kestrel" to serve our application, our WebAPI in this case. It also configures our application with values you can give from the outside. So any configuration via an \*.json, \*.xml or even \*.ini file can be read here.
 
-```
+```csharp
 public class Program
 {
     public static void Main(string[] args)
@@ -76,7 +76,7 @@ public class Program
 
 The `Startup.cs` file is configuring our specific WebAPI with a given configuration we can inject over the build in dependency injection system which gets provided by ASP.NET Core. The method `Configure` and `ConfigureServices` are used to build up a pipeline every request has to pass before getting process by the controller (`Configure`) and to add all the services we need into the dependency injection system `ConfigureServices`.
 
-```
+```csharp
 public class Startup
 {
     public Startup(IConfiguration configuration)
@@ -112,7 +112,7 @@ public class Startup
 
 Our `Controllers` folder specifies the point where our WebAPI finally reacts to incomming requests like GET/POST/PUT/DELETE or others.
 
-```
+```csharp
 [Route("api/[controller]")]
 [ApiController]
 public class ValuesController : ControllerBase
@@ -153,7 +153,7 @@ public class ValuesController : ControllerBase
 
 We can define the endpoint route with an RouteAttribute passed to that class where the `[controller]` stands for the name of the class without the suffix `Controller`. Inheriting from `ControllerBase` takes away the ViewSupport which we would need building an MVC solution where Views get rendered on the server side. For a WebAPI we only have to give back data as JSON. We already added the JSON formatter implicitly by calling `services.AddMvc()` and `app.UseMvc()` in the Startup.cs file.
 
-With attributes above every method we can describe the HTTP method which should get invoked, when a specific request is coming in.
+With attributes above every method we can describe the HTTP method which should get invoked if a specific request is coming in.
 
 The code example above is what we get scaffolded from the template. We will modify it during this article.
 
@@ -161,7 +161,7 @@ The code example above is what we get scaffolded from the template. We will modi
 
 As a class to deal with we create a Customers class which has the properties `Name`, `Position` and `Age`.
 
-```
+```csharp
 public class Customer
 {
     public int Id { get; set; }
@@ -173,7 +173,7 @@ public class Customer
 
 For gettings things ready we need to install [AutoMapper](https://nuget.org/packages/automapper/), to map from a data transfer object (DTO) to an entity. For the sake of simplicity we will create a DTO which has the same field as our normal entity and register the mapping in our Startup class `Configure` method.
 
-```
+```csharp
 public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 {
     // ...
@@ -186,9 +186,9 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 }
 ```
 
-Next we have to add a repository which encapsulates the data access and makes reading and writing easier. The repository implements an interface which we can together with the implementation register in our services container to provide it via dependency injection (DI).
+Next we have to add a repository which encapsulates the data access and makes reading and writing easier. The repository implements an interface which we can - together with the implementation - register in our services container to provide it via dependency injection (DI).
 
-```
+```csharp
 public class CustomerRepository : ICustomerRepository
 {
     private readonly ConcurrentDictionary<int, Customer> _storage = new ConcurrentDictionary<int, Customer>();
@@ -245,7 +245,7 @@ public class CustomerRepository : ICustomerRepository
 
 Startup.cs
 
-```
+```csharp
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddSingleton<ICustomerRepository, CustomerRepository>();
@@ -253,14 +253,14 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-> We are using `AddSingleton` here which we would normally _not_ do when going into production. Better use `AddScoped` whenever you can to prevent the server from holding any state if no request is being worked on. With `AddScoped` you get a new instance per request and its going to be cleaned up when the response was sent out. HTTP is a stateless protocol so we should avoid holding state in any kind of way.
+> We are using `AddSingleton` here which we would normally _not_ do when going into production. Better use `AddScoped` whenever you can to prevent the server from holding any state if no request is being worked on. With `AddScoped` you get a new instance per request and its going to be cleaned up when the response was sent out. HTTP is a stateless protocol so we should avoid holding state in any kind of way. You can also use the in memory database provider like descirbes [here](https://docs.microsoft.com/en-us/ef/core/providers/in-memory/)
 
 ## Adding a Controller
 
 Let us add a new controller which is called `CustomersController` and implement the CRUD operations there.
 We are creating a new class called `CustomersController.cs` which inherits from `ControllerBase` and we are adding the needed attributes to it. As we provided the repository in the DI container, we can simply inject it into the constructor.
 
-```
+```csharp
 [Route("api/[controller]")]
 [ApiController]
 public class CustomersController : ControllerBase
@@ -276,11 +276,11 @@ public class CustomersController : ControllerBase
 
 ## Implementing CRUD Operations
 
-When receiving a GET call we need to send back all customers `api/customers/` or a single customer `api/customers/{id}` e.g. GET `api/customers/5` we can simply do that by defining two methods. One which listens to a get event sending back all the data from the repository and the other one receiving an id, asking for a specific person, returning a NOT FOUND 404 statuscode if not found and in case of a success it returns the found customer with a 200 statuscode
+When receiving a GET call we need to send back all customers `api/customers/` or a single customer `api/customers/{id}` e.g. GET `api/customers/5` we can simply do that by defining two methods. One which listens to a get event sending back all the data from the repository and the other one receiving an id, asking for a specific person, returning a Not Found 404 statuscode if not found and in case of a success it returns the found customer with a 200 statuscode
 
 > Always rememeber to send back the correct statuscodes. Frameworks on client side like angular rely on that code to decide wether the request was a success or not!
 
-```
+```csharp
 [HttpGet(Name = nameof(GetAll))]
 public ActionResult GetAll()
 {
@@ -307,9 +307,9 @@ We are defining a name to every method to be clean here and are using helper met
 
 We can pass parameters if we define them in the route attribute of the method. The routes on the methods are being concatinated with the route attribute we define on the class. Now we can request data from that API for all customers or for one single customer.
 
-Next, before we can add a customer, we have to define a model the body of the request can get parsed into. We can sepcify the properties on that model which we want the client to allow to be entered. Things like `Id` should not be possible for the client to give. To be secure in that case we just add the properties we allow. In addition to that we are allowed to use [DataAnnotations](<https://msdn.microsoft.com/en-us/library/system.componentmodel.dataannotations(v=vs.110).aspx>) here. They will be automatically validated and return a `BadRequest()` (Statuscode 400) if they are not fulfilled.
+Next, before we can add a customer, we have to define a model the body of the request can get parsed into. We can sepcify the properties on that model which we want the client to allow to be entered. Things like `Id` should not be possible for the client to modify. To be secure in that case we just add the properties we want to be allowed to change. In addition to that we are allowed to use [DataAnnotations](<https://msdn.microsoft.com/en-us/library/system.componentmodel.dataannotations(v=vs.110).aspx>) here. They will be automatically validated and return a `BadRequest(...)` (Statuscode 400) if they are not fulfilled.
 
-```
+```csharp
 public class CustomerCreateDto
 {
     [Required]
@@ -321,7 +321,7 @@ public class CustomerCreateDto
 
 As we have a new model now which should be mapped we also have to register a mapping for that.
 
-```
+```csharp
 public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 {
     // ...
@@ -335,7 +335,7 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 }
 ```
 
-```
+```csharp
 [HttpPost(Name = nameof(AddCustomer))]
 public ActionResult<CustomerDto> AddCustomer([FromBody] CustomerCreateDto createDto)
 {
@@ -350,7 +350,7 @@ public ActionResult<CustomerDto> AddCustomer([FromBody] CustomerCreateDto create
 
     if (!_repository.Save())
     {
-        throw new Exception("Creating a Customer failed on save.");
+        throw new Exception("Creating a Customer failed.");
     }
 
     Customer newCustomer = _repository.GetSingle(toAdd.Id);
@@ -359,13 +359,13 @@ public ActionResult<CustomerDto> AddCustomer([FromBody] CustomerCreateDto create
 }
 ```
 
-As you can see we are parsing the body from the request into the `CustomerCreateDto` and working with that in our method. As a result we are returning a `201 - Created` statuscode. The `CreatedAtRoute` helper method again helps us to wrap the statuscode 201 in the reponse and in the body of the response we are returning the new customer we just created. But this method also allows us to add the link to the just created resource to the header of the response which has the advantage, that the client can decide wether he wants to follow the link or work further with the body of the repsonse which is the customer with an id. So the client has the full responsibility there which makes it the most flexible way.
+As you can see we are parsing the body from the request into the `CustomerCreateDto` and working with that in our method. As a result we are returning a `201 - Created` statuscode. The `CreatedAtRoute` helper method again helps us to wrap the statuscode 201 in the response and in the body of the response we are returning the new customer we just created. But this method also allows us to add the link to the just created resource to the header of the response which has the advantage, that the client can decide wether he wants to follow the link or work further with the body of the response which is the customer with an id. So the client has the full responsibility there which makes it the most flexible way.
 
 > To avoid magic strings you can see that we are using `nameof(...)` with the name of the method the resource can be reached with antoher request then. To do this, the method needs a `Name` attribute. That is why we add it to every method: To enable this feature and to be consistent and clean here.
 
 To update a customer we need again a seperate model which defines all the properties we want the client to allow to change. Again, for the sake of simplicity this is the same model as before, so we will not mention it here again. (Dont forget the mapping in the AutoMapper) The method itself reacts to a PUT call so its decorated with the `HttpPut` attribute. In addition to that it takes an id as parameter, as the call will go to PUT `/api/customers/{id}` which could be PUT `/api/customers/5`, meaining we want to update the customer with the id `5` with the values provided in the body of the request.
 
-```
+```csharp
 [HttpPut]
 [Route("{id:int}", Name = nameof(UpdateCustomer))]
 public ActionResult<CustomerDto> UpdateCustomer(int id, [FromBody] CustomerUpdateDto updateDto)
@@ -399,7 +399,7 @@ We are checking again if the customer exists. If not we return a `404 - Not Foun
 
 To delete a customer we only take the id as a parameter because the call would be to `/api/customers/{id}` with the DELETE verb.
 
-```
+```csharp
 [HttpDelete]
 [Route("{id:int}", Name = nameof(RemoveCustomer))]
 public ActionResult RemoveCustomer(int id)
@@ -433,7 +433,7 @@ If you want to share your API with a team which should get information about wha
 
 Startup.cs
 
-```
+```csharp
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddSwaggerGen(c =>
@@ -443,7 +443,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-```
+```csharp
 public void Configure(IApplicationBuilder app)
 {
     app.UseSwagger();
@@ -458,7 +458,7 @@ public void Configure(IApplicationBuilder app)
 
 So first we add the swagger generator into the services container. In the `Configure` method we now use the generated \*.json file and create a visual design out of it to display to consumers.
 
-In the `launchSettings.json` we can modify now the `launchUrl` url from `api/values` to `swagger`. If youre working in Visual Studio and press the "Play" button now a browser should open up displaying the swagger page. Using the command `dotnet run` on the command line should start the api as well. Browsing to `https://localhost:5001/swagger/` should now display a complete documentation of your api.
+In the `launchSettings.json` we can modify now the `launchUrl` url from `api/values` to `swagger`. If you're working in Visual Studio and press the "Play" button now a browser should open up displaying the swagger page. Using the command `dotnet run` on the command line should start the api as well. Browsing to `https://localhost:5001/swagger/` should now display a complete documentation of your api.
 
 ![swagger](.github/swagger.png)
 
@@ -466,12 +466,12 @@ In the `launchSettings.json` we can modify now the `launchUrl` url from `api/val
 
 Your API will grow with the time and maybe you need to do another version of one or multiple controllers. You can add versioning very easy into your ASP.NET core application.
 
-> Be aware that there are multiple ways of adding and using verioning in an API in general. We will take a look at the version in the route here So our routes will change. Other methods are to pass the version in a header or to pass it as a query parameter. Both methods are possible but have advantages and disadvantages. We will focus on the version in the route here as it can be seen in other big and common apis as well.
+> Be aware that there are multiple ways of adding and using verioning in an API in general. We will take a look at the version in the route here so our routes will change. Other methods are to pass the version in a header or to pass it as a query parameter. Both methods are possible and have advantages as well as disadvantages. We will focus on the version in the route here as it can be seen in other big and common apis as well.
 
 Before we actually code lets take a step back and see what versioning means for our api and for our routes:
 
 1.  The route will change from `/api/customers` to `/api/v1/customers` or to be more general `/api/v{versionNumber}/{controller}`.
-2.  Our Swagger page should be handling those different versions that the comsumer can get information about version 1 as well as version 2, 3, ...
+2.  Our Swagger page should be able to handle those different versions that the comsumer can get information about version 1 as well as version 2, 3, ...
 3.  We need to pay attention to our `[customer]` wildcard as two controllers having the same name only have the version as a difference in one namespace do not work as the class would have the same name. So we need a solution for that.
 
 So we can start by adding the nuget packages
@@ -483,7 +483,7 @@ Having done that we can add two folders in our `Controller` folder describing ou
 
 Now we have to specify the version into the route to catch all calls going to `/api/v1/customers`.
 
-```
+```csharp
 [Route("api/[controller]")]
 [ApiController]
 public class CustomersController : ControllerBase
@@ -494,7 +494,7 @@ public class CustomersController : ControllerBase
 
 can be changed to
 
-```
+```csharp
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
@@ -504,11 +504,11 @@ public class CustomersController : ControllerBase
 }
 ```
 
-Like in the route attributes of the methds in the controller we can define the version as `{version:apiVersion}` here and give the version explicitly in the attribute above with `[ApiVersion("1.0")]`. We can keep the `[controller]` wildcard in the route because it will be replaced with the classname without the suffix `controller`.
+Like in the route attributes of the methods in the controller we can define the version as `{version:apiVersion}` here and give the version explicitly in the attribute above with `[ApiVersion("1.0")]`. We can keep the `[controller]` wildcard in the route because it will be replaced with the classname without the suffix `controller`.
 
 The `v2` namespace can get a class _with the same name_ as it is in a different namespace and it just changes the version attribute.
 
-```
+```csharp
 [ApiVersion("2.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
 public class CustomersController : ControllerBase
@@ -523,7 +523,7 @@ public class CustomersController : ControllerBase
 
 We still need to tell our application to use versioning in our API and define swagger to display all the versions. In the Startup.cs add
 
-```
+```csharp
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddMvcCore().AddVersionedApiExplorer(o => o.GroupNameFormat = "'v'VVV");
@@ -576,13 +576,13 @@ public void Configure(..., IApiVersionDescriptionProvider provider)
 
 If you now open up swagger like we did before you can see the both versions and can switch with a dropdown. So with this we can fire requests to `/api/v1/customers` and `/api/v2/customers` and maybe improve the results.
 
-Although we can improve much much more on this API (Adding HATEOAS, Datashaping, Queryparameters, ...) we want to take a look now on the clientside and buidla corresponsing app with Angular and the Angular CLI.
+Although we can improve much much more on this API (Adding HATEOAS, Datashaping, Queryparameters, ...) we want to take a look now on the clientside and build a corresponsing app with Angular and the Angular CLI. But before we do that we have to modify our api to accept requests from our client side development server.
 
 ## Adding CORS to our API
 
-With a look at the whole article we want one system to talk to another over HTTP. Currently our backend ASP.NET Core WebAPI is configured to receive requests only from the same domain where it is running on. But our client can run on every other server instance in the web, we as a backend, do not know where he lives. Maybe it is a mobile app, an ASP.NET Core MVC site etc. So to enable the communication from another domain we have to enable CORS in our backend. As we know that our frontend will run locally on port `4200` furhter in this article we can allow `http://localhost:4200` access to our backend with CORS.
+With a look at the whole article we want one system to talk to another over HTTP. Currently our backend ASP.NET Core WebAPI is configured to receive requests only from the same domain where it is running on. But our client can run on every other server instance in the web, we as a backend, do not know where he lives. Maybe it is a mobile app, an ASP.NET Core MVC site etc. So to enable the communication from another domain we have to enable CORS in our backend. As we know that our frontend will run locally on port `4200` further in this article we can allow `http://localhost:4200` access to our backend with CORS.
 
-```
+```csharp
 public void ConfigureServices(IServiceCollection services)
 {
     //...
@@ -608,16 +608,15 @@ Before we start building the client side application we need to install [nodejs]
 
 We can check if all the versions are installed if we type `node -v` and see a version like
 
-```
+```bash
 C:\Users\Fabian>node -v
 v8.9.1
 ```
 
 and if we type `ng -v` we should see something like
 
-```
+```bash
 C:\Users\Fabian>ng -v
-
 ...
 
 Angular CLI: 6.0.8
@@ -646,6 +645,8 @@ Having done that we can start the application for the first time if we `cd` into
 ## Thoughts about our application structure
 
 Before we start displaying values and adding forms to our application let us take a moment to think about how to structure our application. Angular is a platform which provides features like unit testing or dependency injection (DI) out of the box. That means not only that we can use this features right away but also that we can do client side architectures like we know them from the backend for example.
+
+TODO:
 Core module
 
 Shared Module
