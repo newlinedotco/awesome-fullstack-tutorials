@@ -168,3 +168,68 @@ Now let’s create our action that will represent an endpoint for the client req
 
 ![MovieController](https://github.com/MarinkoSpasojevic/awesome-fullstack-tutorials/blob/master/angular/angular-dotnetcore-integration/Images/04-MoviesController.png)
 
+```
+[Route("api/[controller]")]
+public class MoviesController : Controller
+{
+    // GET api/values
+    [HttpGet]
+    public IEnumerable<string> Get()
+    {
+        return new string[] { "value1", "value2" };
+    }
+}
+```
+
+Let’s modify our MoviesController class to fetch the data from the database by using our previously created context class:
+
+```
+[Route("api/[controller]")]
+public class MoviesController : Controller
+{
+    private readonly MovieContext _context;
+
+    public MoviesController(MovieContext context)
+    {
+        _context = context;
+    }
+
+    // GET api/values
+    [HttpGet]
+    public IActionResult Get()
+    {
+        try
+        {
+            var movies = _context.Movies.ToList();
+
+            return Ok(movies);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Something went wrong: {ex.Message}");
+        }
+    }
+}
+```
+
+Awesome. 
+
+With this code in place, we have finished with the server side. Of course, we didn’t haven’t gone too deep inside the action logic due to the sake of simplicity, but to read in more detail about all this stuff you can read [.NET Core 2.0, Angular and MySQL. Get Requests](https://code-maze.com/net-core-web-development-part5/).
+
+Now we can test our Web API by sending a request from Postman or any other tool you like:
+![Result Server Side](https://github.com/MarinkoSpasojevic/awesome-fullstack-tutorials/blob/master/angular/angular-dotnetcore-integration/Images/05-ResultServerSide.png)
+
+Now we are ready to move on the Angular part.
+
+## Creating an Angular Project
+We are going to use Angular CLI to help us with the project creation and the creation of our components. To learn more about Angular CLI, you can read [Angular CLI Installation and Starting a New Project](https://code-maze.com/net-core-web-development-part7/#installationAngularCLI).
+
+Let’s open the command prompt window, navigate to the location we want our application in and type the command:
+```
+ng new client-side-app
+```
+After some time, our project is ready. Let’s open it inside the Visual Studio Code editor and start working on it:
+
+![Client side app](https://github.com/MarinkoSpasojevic/awesome-fullstack-tutorials/blob/master/angular/angular-dotnetcore-integration/Images/06-Client-Side-App.png)
+
+
