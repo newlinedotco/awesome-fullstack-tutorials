@@ -392,21 +392,181 @@ In order to display our data, we need to modify the app.component.html file by a
 
 ```
 <div *ngIf="movies" class="table-center">
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Genre</th>
-            <th>Director</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor='let movie of movies'>
-            <td>{{movie?.name}}</td>
-            <td>{{movie?.genre}}</td>
-            <td>{{movie?.director}}</td>
-          </tr>
-        </tbody>
-      </table>
+   <table>
+     <thead>
+       <tr>
+         <th>Name</th>
+         <th>Genre</th>
+         <th>Director</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr *ngFor='let movie of movies'>
+         <td>{{movie?.name}}</td>
+         <td>{{movie?.genre}}</td>
+         <td>{{movie?.director}}</td>
+       </tr>
+     </tbody>
+   </table>
 </div>
 ```
+
+Finally, let's modify our app.component.css file:
+
+```
+.table-center{
+    margin: 20px auto;
+}
+
+table{
+    width: 100%;
+}
+
+table, th, td{
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+th {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background-color: #2795ca;
+    color: white;
+}
+
+th, td{
+    padding: 8px;
+}
+```
+
+Excellent.
+Now if we start our application again and click on the Show Movies button, we will see this result:
+
+![Data shown](https://github.com/MarinkoSpasojevic/awesome-fullstack-tutorials/blob/master/angular/angular-dotnetcore-integration/Images/09-Data-shown.png)
+
+Everything works great, and our application is almost finished. 
+
+We should always try to extract part of a component into another reusable component. Maybe later on, we would like to reuse our movie list in some other component, therefore, extracting the movie list into its own component is a good solution.
+
+## Extracting the MovieList Component
+First, let’s create the `MovieList` component:
+
+![Movie list component](https://github.com/MarinkoSpasojevic/awesome-fullstack-tutorials/blob/master/angular/angular-dotnetcore-integration/Images/10-Creating-movie-list-component.png)
+
+Then, let’s move complete table code from the `app.component.html` file to the `movie-list.component.html` file:
+
+```
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Genre</th>
+      <th>Director</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let movie of movies'>
+      <td>{{movie?.name}}</td>
+      <td>{{movie?.genre}}</td>
+      <td>{{movie?.director}}</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+After that, we are going to move the css code from the `app.component.css` file to the `movie-list.component.css` file:
+
+```
+table{
+    width: 100%;
+}
+
+table, th, td{
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+th {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background-color: #2795ca;
+    color: white;
+}
+
+th, td{
+    padding: 8px;
+}
+```
+
+After the css modification, let’s modify the `movie-list.component.ts` file by adding the `@Input` decorator:
+
+```
+import { Movie } from './../../_interfaces/movie.model';
+import { Component, OnInit, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-movie-list',
+  templateUrl: './movie-list.component.html',
+  styleUrls: ['./movie-list.component.css']
+})
+export class MovieListComponent implements OnInit {
+  @Input() public movies: Movie[];
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+```
+
+The `@Input` decorator is used to accept the data sent from the parent component and it must have the same name as the movies parameter inside the `*ngFor` statement:
+
+```
+<tr *ngFor='let movie of movies'>
+```
+
+Finally, we need to inject this component into the parent component, the `app.component.ts` file:
+
+```
+div class="container">
+  <div class="content">
+    <h1 class="headerText">Welcome to the movies presentation!!!</h1>
+    <p>
+      <span>Click this button to see the movie list:</span>
+      <button type="button" name="show" (click)="getMovies()">Show Movies</button>
+    </p>
+    <div *ngIf="movies" class="table-center">
+      <app-movie-list [movies]='movies'></app-movie-list>
+    </div>
+  </div>
+</div>
+```
+
+As we can see, we are using a selector from our movies-list component to inject it into the parent component. Furthermore, to send our data to the `@Input` movies decorator, we must place its name inside square brackets. Now, as soon as we fetch data into the movies property in the app component, the data will be transferred to the movies-list component via the movies attribute.
+
+If we start our project again and click the Show Movies button, we are going to see the same result, but this time, we have much readable and reusable code.
+
+## Conclusion
+In this article, we have learned how to create the Angular project and to integrate it with the .NET Core Web API project. 
+
+Furthermore, we have learned:
+*	How to enable communication between the projects on different domains
+*	The way to use Entity Framework Core to access our database
+*	How to create an endpoint for our client requests 
+*	To prepare an Angular application
+*	How to fetch data from the server by using the HttpClientModule
+*	The way to display our data by using @Input decorator in a reusable component
+
+That is all. We hope that you have enjoyed reading this article and that you have found many useful pieces of information.
+
+
+
+
