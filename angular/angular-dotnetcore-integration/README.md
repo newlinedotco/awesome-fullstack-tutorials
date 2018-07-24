@@ -84,3 +84,82 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 ```
 
 To learn more about CORS configuration and the project configuration overall, you can check out the [NET Core Project Configuration article](https://code-maze.com/net-core-web-development-part2/).
+
+## Configuring Entity Framework Core
+We are going to use EF Core library to enable access to a database from our server application. It was installed automatically during the application creation process.
+
+So, let’s create a new folder Models and a new class Movie inside it:
+
+```
+[Table("Movie")]
+public class Movie
+{
+    [Key]
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public string Genre { get; set; }
+    public string Director { get; set; }
+}
+```
+This class represents our Movie table inside a database.
+Now, we need to create a context class `MovieContext.cs` in our project, which will be a middleware for a database communication:
+
+```
+public class MovieContext : DbContext
+{
+    public MovieContext(DbContextOptions options)
+        : base(options)
+    {
+    }
+
+    public DbSet<Movie> Movies { get; set; }
+}
+```
+
+After that, we need to provide a database connection string inside the appsettings.json file:
+
+```
+{
+  "Logging": {
+    "IncludeScopes": false,
+    "Debug": {
+      "LogLevel": {
+        "Default": "Warning"
+      }
+    },
+    "Console": {
+      "LogLevel": {
+        "Default": "Warning"
+      }
+    }
+  },
+  "ConnectionStrings": {
+    "sqlConString": "Server=.;Database=CodeMaze;Trusted_Connection=True;"
+  }
+}
+```
+
+Finally, we need to register our context class in the Startup.cs class:
+
+```
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddCors(options =>
+    {
+        options.AddPolicy("CorsPolicy",
+            builder => builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
+    });
+
+    services.AddDbContext<MovieContext>(options =>
+        options.UseSqlServer(Configuration.GetConnectionString("sqlConString")));
+
+    services.AddMvc();
+}
+```
+
+
+
+
