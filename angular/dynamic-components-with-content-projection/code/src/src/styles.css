@@ -1,0 +1,49 @@
+.modal-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  padding: 30px;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-backdrop {
+  content: "";
+  background: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.modal-body {
+  max-height: 100%;
+  max-width: 100%;
+  background: white;
+  min-height: 160px;
+  position: relative;
+  transform: none;
+  opacity: 1;
+  animation: open 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  min-width: 200px;
+  padding: 1em;
+  z-index: 10000;
+}
+
+
+@keyframes open {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 25%, 0) scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
