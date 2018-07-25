@@ -50,6 +50,10 @@ After I encountered this error, I called `ng g service-worker` and the CLI gener
 
 I reformatted these changes and commited them as the next step. You can try running the commands yourself or call `git checkout step1` to move to the next step.
 
+<div class="notice excerpt">
+  If you'd like to become an Angular expert in a few hours, then checkout <a href="https://ng-book.com/2"><em>ng-book: The Complete Guide to Angular</em></a>. Find out why hundreds of other developers love ng-book.
+</div>
+
 ### Service Worker Module
 
 If you open the `app.module.ts` file, you can see that the CLI added the `ServiceWorkerModule` and enabled it for production only. The module also refers to a file called `ngsw-worker.js`. This file is built by the CLI in production mode. Angular uses the configuration file for this process. In development mode, however, this file is not served so you should not enable the service worker for the development mode.
@@ -234,8 +238,12 @@ When the user clicks on the *Activate* button, the component calls `SwUpdate.act
 
 ## Links to more content
 
-- https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
-- https://angular.io/guide/service-worker-intro
-- https://angular.io/guide/service-worker-devops
+- [Service Worker API at MDN](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
+- [Angular Documentation: Introduction to Service Workers](https://angular.io/guide/service-worker-intro)
+- [Angular Documentation: Service Worker Devops](https://angular.io/guide/service-worker-devops)
 
+## About the Author: Martin Jakubík
 
+![Martin](https://raw.githubusercontent.com/fullstackio/awesome-fullstack-tutorials/master/angular/service-workers/images/martin.jpg)
+
+> Martin is a Frontend Engineer at Exponea and he has been working with Angular for over two years now. You can find [his medium blog here](https://medium.com/@martindzejky)
