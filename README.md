@@ -39,7 +39,9 @@ Angular
 =================
 
 ## Articles
-* 👷<strong><a href="http://blog.ng-book.com/service-workers-and-angular/" target="_blank">The Beginners Guide to Service Workers and Angular</a></strong> ([Source](./angular/service-workers/))
+* 👷<strong><a href="https://blog.ng-book.com/service-workers-and-angular/" target="_blank">The Beginners Guide to Service Workers and Angular</a></strong> ([Source](./angular/service-workers/))
+* 📽<strong><a href="https://blog.ng-book.com/dynamic-components-with-content-projection-in-angular/" target="_blank">Dynamic Components with Content Projection in Angular</a></strong> ([Source](./angular/dynamic-components-with-content-projection/))
+* 🗺<strong><a href="https://http://blog.ng-book.com/angular-and-google-maps-a-tutorial/" target="_blank">Angular and Google Maps: A Tutorial</a></strong> ([Source](./angular/google-maps-and-angular/))
 
 <sub>Read more on <a href="https://blog.ng-book.com" target="_blank">ng-book blog</a></sub>
 
