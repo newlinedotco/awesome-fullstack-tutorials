@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="content">
+    <h1 class="headerText">Welcome to the movies presentation!!!</h1>
+    <p>
+      <span>Click this button to see the movie list:</span>
+      <button type="button" name="show" (click)="getMovies()">Show Movies</button>
+    </p>
+    <div *ngIf="movies" class="table-center">
+      <app-movie-list [movies]='movies'></app-movie-list>
+    </div>
+  </div>
+</div>

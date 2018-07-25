@@ -1,0 +1,16 @@
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Genre</th>
+      <th>Director</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let movie of movies'>
+      <td>{{movie?.name}}</td>
+      <td>{{movie?.genre}}</td>
+      <td>{{movie?.director}}</td>
+    </tr>
+  </tbody>
+</table>
