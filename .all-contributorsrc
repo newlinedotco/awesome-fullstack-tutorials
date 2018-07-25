@@ -8,7 +8,8 @@
   ],
   "imageSize": 140,
   "commit": true,
-  "contributorTemplate": "[<img src='<%= contributor.avatar_url %>' width='<%= options.imageSize %>px;'/><br /><sub><b><%= contributor.name %></b></sub>](<%= contributor.profile %>)",
+  "contributorTemplate": "[<img src='<%= contributor.avatar_url %>' width='<%= options.imageSize %>px;'/><br /><h4 align='center'><%= contributor.name %></h4>](<%= contributor.profile %>)",
+  "contributorsPerLine": 5,
   "contributors": [
     {
       "login": "jashmenn",
