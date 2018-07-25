@@ -17,11 +17,12 @@ What we will cover:
 7.  [Adding CORS to our API](#adding-cors-to-our-api)
 8.  [Scaffold the client side application with the AngularCLI](#scaffold-the-client-side-application-with-the-angularcli)
 9.  [Structure your Angular App](#structure-your-angular-app)
-10. [Create a core module, a data service and requesting data from the server via http](#create-a-core-module-a-data-service-and-requesting-data-from-the-server-via-http)
-11. [Create a feature module with presentational and container components](#create-a-feature-module-with-presentational-and-container-components)
-12. [Display data in your HTML-Templates via Databinding](#display-data-in-your-html-templates-via-databinding)
-13. [Sending data to the server](#sending-data-to-the-server)
-14. [Adding a details page with routing](#adding-a-details-page-with-routing)
+10. [Thoughts about our application structure](#thoughts-about-our-application-structure)
+11. [Create a core module, a data service and requesting data from the server via http](#create-a-core-module-a-data-service-and-requesting-data-from-the-server-via-http)
+12. [Create a feature module with presentational and container components](#create-a-feature-module-with-presentational-and-container-components)
+13. [Display data in your HTML-Templates via Databinding](#display-data-in-your-html-templates-via-databinding)
+14. [Sending data to the server](#sending-data-to-the-server)
+15. [Adding a details page with routing](#adding-a-details-page-with-routing)
 
 That should be it.
 
@@ -646,15 +647,7 @@ Having done that we can start the application for the first time if we `cd` into
 
 Before we start displaying values and adding forms to our application let us take a moment to think about how to structure our application. Angular is a platform which provides features like unit testing or dependency injection (DI) out of the box. That means not only that we can use this features right away but also that we can do client side architectures like we know them from the backend for example.
 
-TODO:
-Core module
-
-Shared Module
-models
-
-Customers Module
-
-AppModule
+According to the stylehuide on [angular.io](https://angular.io/) we will create a core module as a point where we can register our services in. We will create a shared module for things that are shared over the whole application like model classes or shared components. After this we will create a feature module for our customers where we will seperate our components in container and representational components (more on that later). Everything will be wired up in the AppModule, the main module for our application.
 
 ## Create a core module, a data service and requesting data from the server via http
 
@@ -662,23 +655,23 @@ To establish the first request to our data to receive all the customers we have 
 
 By typing `ng g module core` on the commandline while being inside the client folder a new folder `core` gets scaffolded having two files `core.module.ts` and `core.module.spec.ts`. This folder will give all our services we need only one instance from in our appliaction a home. Let us create a new file called `customer-data.service.ts` with `ng g service core/customer/customer-data` in our client folder.
 
-```
+```javascript
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class CustomerDataService {
-  constructor() {}
+    constructor() {}
 }
 ```
 
-Is what should got scaffolded until here. Next is to inject HttpClient and create a method which we can call to et some data from our backend. To ensure we always use the correct backend url we can outsource the endpoint in our environment files which also allows us to have different urls for different environments. To do this enter the `environments` folder and extend the object with a property called `endpoint` pointing to our backend url.
+Is what should got scaffolded until here. Next is to inject HttpClient and create a method which we can call to get some data from our backend. To ensure we always use the correct backend url we can outsource the endpoint in our environment files which also allows us to have different urls for different environments. To do this enter the `environments` folder and extend the object with a property called `endpoint` pointing to our backend url.
 
-```
+```javascript
 export const environment = {
-  production: false,
-  endpoint: `https://localhost:5001/api/v1/`
+    production: false,
+    endpoint: `https://localhost:5001/api/v1/`
 };
 ```
 
@@ -686,7 +679,7 @@ export const environment = {
 
 Our service on client side then looks like:
 
-```
+```javascript
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
@@ -710,18 +703,18 @@ If you read the documentation about the [HttpClient](https://angular.io/guide/ht
 
 So lets create a new module called `SharedModule` (`ng g module shared` on the commandline in the `client` folder) which has a folder called `models` where our interface can be layed in. With this we are able to consume it from every part of our application. The `customer.model.ts` can be a representation of our `CustomerDto.cs` from the backend
 
-```
+```javascript
 export interface Customer {
-  name: string;
-  id: number;
-  position: string;
-  age: string;
+    name: string;
+    id: number;
+    position: string;
+    age: string;
 }
 ```
 
-> As the interfaces are only for type safety they can be placed anywhere else in the application. Let us assume for now that a sahred module is the correct place but keep in mind that interfaces are just a type safe container which get erased by javascript in the end. Importing the shared module is not necessary unless we place an angular related piece like a pipe/service/... etc. in it.
+> As the interfaces are only for type safety they can be placed anywhere else in the application. Let us assume for now that a shared module is the correct place but keep in mind that interfaces are just a type safe container which get erased in the end. Importing the shared module is not necessary unless we place an angular related piece like a pipe/service/... etc. in it.
 
-```
+```javascript
 export class CustomerDataService {
   private controllerEndpoint = `customers`;
   constructor(private readonly http: HttpClient) {}
@@ -736,42 +729,42 @@ export class CustomerDataService {
 
 To make the `HttpClient` available we have to import the `HttpClientModule` in our `CoreModule`
 
-```
+```javascript
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule],
-  declarations: []
+    imports: [CommonModule, HttpClientModule],
+    declarations: []
 })
 export class CoreModule {}
 ```
 
 Last but not least we have to ensure that our `AppModule` imports our `CoreModule`
 
-```
+```javascript
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, CoreModule],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent],
+    imports: [BrowserModule, CoreModule],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
 ```
 
 ## Create a feature module with presentational and container components
 
-As we mentioned in the chapter _Thoughts about application structure_ we will work with feature modules. This gives us a better overview and architecture and makes our app understandable and readable.
+As we mentioned in the chapter [Thoughts about our application structure](#thoughts-about-our-application-structure) we will work with feature modules. This gives us a better overview and architecture and makes our app understandable and readable.
 
 With `ng g module customer` we can scaffold our customer feature module. We also have to ensure our `AppModule` imports our new module again:
 
-```
+```javascript
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, CoreModule, CustomerModule],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent],
+    imports: [BrowserModule, CoreModule, CustomerModule],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
 ```
@@ -781,12 +774,11 @@ After this is safe we can create container and representational components.
 > In modern web frameworks or libraries like Angular or React we can separate our components in two categories 'presentational' and 'container'. Beside having a better architecture and overview again our separation of concerns is fullfilled here as presentational components "only" take care about _how_ things should be displayed and container components take care about the "work" like where the data gets from etc. You can read more about container vs. representaional components [here](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0)
 > and [here](https://blog.angular-university.io/angular-2-smart-components-vs-presentation-components-whats-the-difference-when-to-use-each-and-why/).
 
-What we need is a customer component (container) which takes care of getting the data and passing it to a component which displays a list of customers for now (presentational). Lets call
-`ng g component customer/container/customers` and `ng g component customer/presentational/customer-list` to scaffold all of these.
+What we need is a customer component (container) which takes care of getting the data and passing it to a component which displays a list of customers for now (presentational). Lets call `ng g component customer/container/customers` and `ng g component customer/presentational/customer-list` to scaffold all of these.
 
 Imagine now in a big application we have multiple container and presentation components. To seperate them we created folders for them. We can use the barrel pattern and create an `index.ts` file which exports an array of all presentational and container components.
 
-```
+```javascript
 import { CustomerListComponent } from './customer-list/customer-list.component';
 
 export const allPresentationalComponents = [CustomerListComponent];
@@ -796,30 +788,29 @@ export const allPresentationalComponents = [CustomerListComponent];
 
 In our customer module we can then declare all the presentational components and container components like this:
 
-```
+```javascript
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { allContainerComponents } from './container';
 import { allPresentationalComponents } from './presentational';
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: [...allPresentationalComponents, ...allContainerComponents],
-  exports: [...allContainerComponents]
+    imports: [CommonModule],
+    declarations: [...allPresentationalComponents, ...allContainerComponents],
+    exports: [...allContainerComponents]
 })
 export class CustomerModule {}
 ```
 
 Lets now head to our `app.component.ts` and display the customers component:
 
-```
-<app-customers>
-</app-customers>
+```html
+<app-customers></app-customers>
 ```
 
 The customers component gets injected the already created dataservice and asks for the data to display in the future.
 
-```
+```javascript
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
@@ -839,24 +830,24 @@ export class CustomersComponent implements OnInit {
 
 Now lets work on the presentational component `customer-list.component` to make it ready to receive a list of data via the `@Input()` decorator and display it. If we have no data we just display a small message.
 
-```
+```javascript
 @Component({
-  selector: 'app-customer-list',
-  templateUrl: './customer-list.component.html',
-  styleUrls: ['./customer-list.component.css']
+    selector: 'app-customer-list',
+    templateUrl: './customer-list.component.html',
+    styleUrls: ['./customer-list.component.css']
 })
 export class CustomerListComponent implements OnInit {
-  @Input() allCustomers: Customer[] = [];
+    @Input() allCustomers: Customer[] = [];
 
-  constructor() {}
+    constructor() {}
 
-  ngOnInit() {}
+    ngOnInit() {}
 }
 ```
 
 With its template:
 
-```
+```html
 <h2>Customers List</h2>
 <ul *ngIf="allCustomers?.length > 0">
   <li *ngFor="let customer of allCustomers">{{customer.name}} is {{customer.age}} years old</li>
@@ -867,7 +858,7 @@ With its template:
 
 Don't forget to display the component in our container component and to wire all the things up:
 
-```
+```html
 <app-customer-list [allCustomers]="allCustomers$ | async"></app-customer-list>
 ```
 
@@ -875,24 +866,24 @@ So the dataflow is clear here: We first get data into our container component wh
 
 ## Sending data to the server
 
-Wihtout the functionality to send data to the server we are not able to show some data to the user. In this chapter we will add data to our backend and display them to the user. Before we can create a form we have to import the `ReactiveFormsModule` in our `customer.module.ts`
+Without the functionality to send data to the server we are not able to show some data to the user because we dont have any data yet :). In this chapter we will add data to our backend and display them to the user. Before we can create a form we have to import the `ReactiveFormsModule` in our `customer.module.ts`
 
-```
+```javascript
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule],
-  declarations: [
-    ...allPresentationalComponents,
-    ...allContainerComponents,
-    CustomerFormComponent
-  ],
-  exports: [...allContainerComponents]
+    imports: [CommonModule, ReactiveFormsModule],
+    declarations: [
+        ...allPresentationalComponents,
+        ...allContainerComponents,
+        CustomerFormComponent
+    ],
+    exports: [...allContainerComponents]
 })
 export class CustomerModule {}
 ```
 
 With `ng g component customer/presentational/customer-form` via the commandline in the client folder we can create a new component which is only responsible for holding the form. In the template we can define our form which is a normal HTML form for now.
 
-```
+```html
 <form (ngSubmit)="addCustomer()" [formGroup]="form">
   Name
   <br>
@@ -910,33 +901,33 @@ With `ng g component customer/presentational/customer-form` via the commandline 
 
 See that we call a method called `addCustomer()` on submit and bind a form called `form` to the formgroup. In the `addCustomer()` method we will throw an event out to our container component because we are a presentational component here and let the container component do the hard work. We can simply use an `@Output()` decorator here and throw an event.
 
-```
+```javascript
 @Component({
-  selector: 'app-customer-form',
-  templateUrl: './customer-form.component.html',
-  styleUrls: ['./customer-form.component.css']
+    selector: 'app-customer-form',
+    templateUrl: './customer-form.component.html',
+    styleUrls: ['./customer-form.component.css']
 })
 export class CustomerFormComponent implements OnInit {
-  @Output() customerAdded = new EventEmitter();
-  form: FormGroup;
-  constructor() {}
-  ngOnInit() {
-    this.form = new FormGroup({
-      name: new FormControl('', Validators.required),
-      position: new FormControl('', Validators.required),
-      age: new FormControl('', Validators.required)
-    });
-  }
-  addCustomer() {
-    const customerToAdd = this.form.value;
-    this.customerAdded.emit(customerToAdd);
-  }
+    @Output() customerAdded = new EventEmitter();
+    form: FormGroup;
+    constructor() {}
+    ngOnInit() {
+        this.form = new FormGroup({
+            name: new FormControl('', Validators.required),
+            position: new FormControl('', Validators.required),
+            age: new FormControl('', Validators.required)
+        });
+    }
+    addCustomer() {
+        const customerToAdd = this.form.value;
+        this.customerAdded.emit(customerToAdd);
+    }
 }
 ```
 
 Notice that the forms object
 
-```
+```javascript
 {
     name: new FormControl('', Validators.required),
     position: new FormControl('', Validators.required),
@@ -946,7 +937,7 @@ Notice that the forms object
 
 has the same properties as our customerCreateDto in the backend. This object is what we are going to send over the wire to our backend and which is getting stored then.
 
-```
+```javascript
 addCustomer() {
     const customerToAdd = this.form.value;
     this.customerAdded.emit(customerToAdd);
@@ -955,7 +946,7 @@ addCustomer() {
 
 Now we can modify our containe component servign the form component as well
 
-```
+```html
 <app-customer-form (customerAdded)="customerAdded($event)"></app-customer-form>
 
 <app-customer-list [allCustomers]="allCustomers$ | async"></app-customer-list>
@@ -965,7 +956,7 @@ and register on the output event with passing the argument to a method on the co
 
 In our `customer-data.service.ts` we can add this method
 
-```
+```javascript
 add(toAdd: Customer) {
     return this.http.post<Customer>(
         `${environment.endpoint}${this.controllerEndpoint}`,
@@ -976,7 +967,7 @@ add(toAdd: Customer) {
 
 and call this method in our container component if we catch the event of a customer being added.
 
-```
+```javascript
 customerAdded(customerToAdd: Customer) {
     this.allCustomers$ = this.customerDataService
         .add(customerToAdd)
@@ -986,7 +977,7 @@ customerAdded(customerToAdd: Customer) {
 
 After we added the customer we are calling the `this.customerDataService.getAll()` method again to get the latest data from the server.
 
-> Of course if we call POST to the server we implemented the logic before that you get back the just created item. We could take it as a parameter here and add it maybe to a cached array of customers. but for the sake of simplicity we fire a new GET request to load the new data.
+> Of course if we call POST to the server we implemented the logic before that you get back the just created item. We could take it as a parameter here and add it maybe to a cached array of customers. But for the sake of simplicity we fire a new GET request to load the new data.
 
 ![ng-book-animation-1](.github/ng-book-animation-1.gif)
 
@@ -1004,15 +995,15 @@ So let us do that next!
 
 Create a new file called `app-routing.module.ts` and place the following content
 
-```
+```javascript
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule {}
 ```
@@ -1029,17 +1020,17 @@ In our application we want our base route to be `/home`. So this rout should dis
 
 With `ng g component customer/presentational/customer-details` we can create the new empty component which gets automatically added to the customers module and we build our routes now:
 
-```
+```javascript
 const routes: Routes = [
-  { path: 'details/:id', component: CustomerDetailsComponent },
-  { path: 'home', component: CustomersComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '**', redirectTo: '/home' }
+    { path: 'details/:id', component: CustomerDetailsComponent },
+    { path: 'home', component: CustomersComponent },
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
+    { path: '**', redirectTo: '/home' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule {}
 ```
@@ -1048,33 +1039,33 @@ Normally we can define a string which describes the route and define a component
 
 For using parameters we can simply add the `id` parameter with a colon and name the parameter as we want to access it later: `path: 'details/:id'` defines a new route with a parameter called `id`.
 
-The two asterisks `**` mark a route where no mathicng string was found. in this case we are just redirecting to `/home` which displays our `CusotmersComponent` again.
+The two asterisks `**` mark a route where no matching string was found. In this case we are just redirecting to `/home` which displays our `CusotmersComponent` again.
 
 After that we are passing the array to the configuration method `forRoot(...)` and exporting the configured routing module again.
 
 In our `app.module.ts` we have to import that `AppRoutingModule` of course to make the routes public and accessable.
 
-```
+```javascript
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, CoreModule, CustomerModule, AppRoutingModule],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent],
+    imports: [BrowserModule, CoreModule, CustomerModule, AppRoutingModule],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
 ```
 
-But where should these components be displayed? Right now we have hard coded our container component in our `app.component.html` which is displaying the `<app-customers></app-customers>`. As we are importing the `RouterModule` which we jsut configured we have access to the component `router-outlet` which we can use in our `app.component.ts`. So instead of hard coding the component the route is now pointing to the component to display and changes based on what we configured in our routes. So our AppComponent template becomes to
+But where should these components be displayed? Right now we have hard coded our container component in our `app.component.html` which is displaying the `<app-customers></app-customers>`. As we are importing the `RouterModule` which we just configured we have access to the component `router-outlet` which we can use in our `app.component.ts`. So instead of hard coding the component the route is now pointing to the component to display and changes based on what we configured in our routes. So our AppComponent template becomes to
 
-```
+```html
 <router-outlet></router-outlet>
 ```
 
 The app should look the same now with one little difference: The adressbar shows `http://localhost:4200/home` instead of `http://localhost:4200`. Fine, so our routing works!
 
-Now lets change the route in the adress bar with Angular routing and pass the Id as a parameter. To get this going we first need to import the RoutingModule fomr `@angular/router` in our customers component because we need access to routing functionality. Having done that in our html template of the `customers-list.component` we do not only iterate over all customers but also want to display a link which provides us access to the detailspage with the id being set automatically for us in the loop we already have.
+Now lets change the route in the adress bar with Angular routing and pass the Id as a parameter. To get this going we first need to import the RoutingModule from `@angular/router` in our customers component because we need access to routing functionality. Having done that in our html template of the `customers-list.component` we do not only iterate over all customers but also want to display a link which provides us access to the detailspage with the id being set automatically for us in the loop we already have.
 
-```
+```html
 <h2>Customers List</h2>
 <ul *ngIf="allCustomers?.length > 0">
   <li *ngFor="let customer of allCustomers">{{customer.name}} is {{customer.age}} years old
@@ -1085,13 +1076,13 @@ Now lets change the route in the adress bar with Angular routing and pass the Id
 <div *ngIf="allCustomers?.length === 0">No data available</div>
 ```
 
-The `<a [routerLink]="['/details', customer.id]">Details</a>` creates a html link tag `a` and uses the directive `routerLink` we assign an array with the target route as the first item and the route parameters as the second item. This is our customer `id` in this case. Angular iterates over the customers and displays the link which getas automatically filles with the correct route including the parameter. If we click it we can see our rather emtpy details component saying `customer-details works!`. But more interesting is the route change saying something like `http://localhost:4200/details/1`.
+The `<a [routerLink]="['/details', customer.id]">Details</a>` creates a html link tag `a` and uses the directive `routerLink` we assign an array with the target route as the first item and the route parameters as the second item. This is our customer `id` in this case. Angular iterates over the customers and displays the link which gets automatically filled with the correct route including the parameter. If we click it we can see our rather empty details component saying `customer-details works!`. But more interesting is the route change saying something like `http://localhost:4200/details/1`.
 
 Let us pay more attention now to our details route which has to read the parameter and display the detailled data then. Before we can display anything we have to access the data and fire a GET call with an id to our backend this time. So let us prepare our data service first and extend it with a method called `getSingle(id: number)`
 
 customer-data.service.ts
 
-```
+```javascript
 getSingle(id: number) {
     return this.http.get<Customer>(
         `${environment.endpoint}${this.controllerEndpoint}/${id}`
@@ -1102,7 +1093,7 @@ getSingle(id: number) {
 In our `customer-details.component` we can now inject the `CustomerDataService` and the current active route which is called `ActivatedRoute` from the `@angular/router` namespace. The route is providing access to the routing params which we can ask for the parameter `id` as we defined in the routing module.
 As this is an Observable we can use pipeable operators and simply call our new service method `getSingle(...)` in one go, passing it to an observable of a customer and let the `async` pipe do the subscription and fire the call in the end.
 
-```
+```javascript
 @Component({
   selector: 'app-customer-details',
   templateUrl: './customer-details.component.html',
@@ -1127,7 +1118,7 @@ export class CustomerDetailsComponent implements OnInit {
 
 Our template then displays all the values for the customer.
 
-```
+```html
 <div *ngIf="customerDetails$ | async as customerDetail; else loading">
   <h3>Details for {{customerDetail.name}}</h3>
   <ol>
@@ -1140,7 +1131,7 @@ Our template then displays all the values for the customer.
 <ng-template #loading>loading...</ng-template>
 ```
 
-If the observable has no data yet we can work with the `ng if/else` syntax to display a loading message. If it has data however we can pass the content of the observable (a `Custoemr` in this case) to a variable called `cusomterDetail` and work inside the scope of the `<div>...</div>` with that variable.
+If the observable has no data yet we can work with the `ng if/else` syntax to display a loading message. If it has data however we can pass the content of the observable (a `Customer` in this case) to a variable called `customerDetail` and work inside the scope of the `<div>...</div>` with that variable.
 
 > Remember that every async does a subscribe and so fires a call in our case. We only want to fire the call once.
 
