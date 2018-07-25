@@ -24,7 +24,7 @@ Now, let’s open the `launchSettings.json` file to modify the endpoint url addr
 
 ![WebAPI_Project](https://github.com/MarinkoSpasojevic/awesome-fullstack-tutorials/blob/master/angular/angular-dotnetcore-integration/Images/03-LaunchSettings.png)
 
-```
+```json
 {
   "iisSettings": {
     "windowsAuthentication": false,
@@ -56,7 +56,7 @@ Now, let’s open the `launchSettings.json` file to modify the endpoint url addr
 
 Because the server side and the client side projects will run on different domains we need to enable CORS on the server side project. To do that we need to open the `Startup.cs` class and to modify the `ConfigureServices` and `Configure` methods:
 
-```
+```csharp
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddCors(options =>
@@ -90,7 +90,7 @@ We are going to use EF Core library to enable access to a database from our serv
 
 So, let’s create a new folder Models and a new class Movie inside it:
 
-```
+```csharp
 [Table("Movie")]
 public class Movie
 {
@@ -104,7 +104,7 @@ public class Movie
 This class represents our Movie table inside a database.
 Now, we need to create a context class `MovieContext.cs` in our project, which will be a middleware for a database communication:
 
-```
+```csharp
 public class MovieContext : DbContext
 {
     public MovieContext(DbContextOptions options)
@@ -118,7 +118,7 @@ public class MovieContext : DbContext
 
 After that, we need to provide a database connection string inside the appsettings.json file:
 
-```
+```json
 {
   "Logging": {
     "IncludeScopes": false,
@@ -141,7 +141,7 @@ After that, we need to provide a database connection string inside the appsettin
 
 Finally, we need to register our context class in the Startup.cs class:
 
-```
+```csharp
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddCors(options =>
@@ -168,7 +168,7 @@ Now let’s create our action that will represent an endpoint for the client req
 
 ![MovieController](https://github.com/MarinkoSpasojevic/awesome-fullstack-tutorials/blob/master/angular/angular-dotnetcore-integration/Images/04-MoviesController.png)
 
-```
+```csharp
 [Route("api/[controller]")]
 public class MoviesController : Controller
 {
@@ -183,7 +183,7 @@ public class MoviesController : Controller
 
 Let’s modify our MoviesController class to fetch the data from the database by using our previously created context class:
 
-```
+```csharp
 [Route("api/[controller]")]
 public class MoviesController : Controller
 {
@@ -225,7 +225,7 @@ Now we are ready to move on the Angular part.
 We are going to use Angular CLI to help us with the project creation and the creation of our components. To learn more about Angular CLI, you can read [Angular CLI Installation and Starting a New Project](https://code-maze.com/net-core-web-development-part7/#installationAngularCLI).
 
 Let’s open the command prompt window, navigate to the location we want our application in and type the command:
-```
+```bash
 ng new client-side-app
 ```
 After some time, our project is ready. Let’s open it inside the Visual Studio Code editor and start working on it:
@@ -235,7 +235,7 @@ After some time, our project is ready. Let’s open it inside the Visual Studio 
 ## Modifying the App Component
 Let’s modify the `app.component.html` file first:
 
-```
+```html
 <div class="container">
   <div class="content">
     <h1 class="headerText">Welcome to the movies presentation!!!</h1>
@@ -249,7 +249,7 @@ Let’s modify the `app.component.html` file first:
 
 Then, the `app.component.css` file as well:
 
-```
+```css
 .container{
     width: 100%;
 }
@@ -296,7 +296,7 @@ When we click on the Show Movies button we should be able to see all of our movi
 ## Using Services and HttpClientModule
 To send a request to our endpoint, we are going to introduce the `HttpClientModule` in our app. So we need to import it inside the `app.module.ts` file and to place it in the `imports` array:
 
-```
+```typescript
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule} from '@angular/common/http';
@@ -319,7 +319,7 @@ export class AppModule { }
 
 After the module modification, we are going to create a new folder `_interfaces` and to create one interface file `movie.model.ts` inside that folder:
 
-```
+```typescript
 export interface Movie{
     id: string,
     name: string,
@@ -336,7 +336,7 @@ That looks great.
 
 So, let’s modify that service file:
 
-```
+```typescript
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -360,7 +360,7 @@ The `getData` function will return an `Observable` as a response, so if we want 
 ## Fetching and Displaying Data from the Server
 Let’s modify the app.component.ts file first:
 
-```
+```typescript
 import { Component } from '@angular/core';
 import { HttpService } from './services/http.service';
 import { Movie } from './_interfaces/movie.model';
@@ -390,7 +390,7 @@ export class AppComponent {
 
 In order to display our data, we need to modify the app.component.html file by adding this code below the p tag:
 
-```
+```html
 <div *ngIf="movies" class="table-center">
    <table>
      <thead>
@@ -413,7 +413,7 @@ In order to display our data, we need to modify the app.component.html file by a
 
 Finally, let's modify our app.component.css file:
 
-```
+```css
 .table-center{
     margin: 20px auto;
 }
@@ -460,7 +460,7 @@ First, let’s create the `MovieList` component:
 
 Then, let’s move complete table code from the `app.component.html` file to the `movie-list.component.html` file:
 
-```
+```html
 <table>
   <thead>
     <tr>
@@ -481,7 +481,7 @@ Then, let’s move complete table code from the `app.component.html` file to the
 
 After that, we are going to move the css code from the `app.component.css` file to the `movie-list.component.css` file:
 
-```
+```css
 table{
     width: 100%;
 }
@@ -509,7 +509,7 @@ th, td{
 
 After the css modification, let’s modify the `movie-list.component.ts` file by adding the `@Input` decorator:
 
-```
+```typescript
 import { Movie } from './../../_interfaces/movie.model';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -529,14 +529,14 @@ export class MovieListComponent implements OnInit {
 
 The `@Input` decorator is used to accept the data sent from the parent component and it must have the same name as the movies parameter inside the `*ngFor` statement:
 
-```
+```html
 <tr *ngFor='let movie of movies'>
 ```
 
 Finally, we need to inject this component into the parent component, the `app.component.ts` file:
 
-```
-div class="container">
+```html
+<div class="container">
   <div class="content">
     <h1 class="headerText">Welcome to the movies presentation!!!</h1>
     <p>
