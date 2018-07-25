@@ -8,5 +8,15 @@
   ],
   "imageSize": 140,
   "commit": true,
-  "contributors": []
+  "contributors": [
+    {
+      "login": "jashmenn",
+      "name": "Nate Murray",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/4318?v=4",
+      "profile": "https://newline.co",
+      "contributions": [
+        "blog"
+      ]
+    }
+  ]
 }
