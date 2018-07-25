@@ -45,6 +45,15 @@
       "contributions": [
         "blog"
       ]
+    },
+    {
+      "login": "you",
+      "name": "and you?",
+      "avatar_url": "https://raw.githubusercontent.com/fullstackio/awesome-fullstack-tutorials/wip/readme/doc/img/and-you-profile-image.png",
+      "profile": "#",
+      "contributions": [
+        "blog"
+      ]
     }
   ]
 }
