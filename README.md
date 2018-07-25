@@ -14,10 +14,15 @@ Written by <a href="https://fullstack.io">Fullstack.io</a> and <a href="#contrib
 
 This repository is a collection of tutorials, blog posts, and code that teach fullstack web development topics.
 
+The code and posts are from the blogs: 
+
+* [Fullstack Vue](https://medium.com/fullstackio/)
+* [Fullstack React](https://fullstackreact.com/)
+* [ng-book](https://blog.ng-book.com)
 
 Vue
 =================
-<img src="doc/img/vue.png" width="275"/>
+<img src="doc/img/vue.png" align="right" width="275"/>
 
 <h3>The source code for articles & tutorials in <a href="https://www.fullstack.io/vue/" target="_blank">Fullstack Vue</a></h3>
 
@@ -25,11 +30,15 @@ Vue
 * 💠 <strong><a href="https://medium.com/fullstackio/managing-state-in-vue-js-23a0352b1c87" target="_blank">Managing State in Vue.js</a></strong> | ([Source](./vue/managing_state_01/))
 * 📷 <strong><a href="https://medium.com/fullstackio/tutorial-build-an-instagram-clone-with-vue-js-and-cssgram-24a9f3de0408" target="_blank">Tutorial - Build an Instagram clone with Vue.js and CSSGram</a></strong> | ([Source](./vue/instagram_clone_02/))
 
+<div style="clear:both"></div>
+
 Angular
 =================
-<img src="doc/img/angular.png" width="275"/>
+<img src="doc/img/angular.png" align="right" width="275"/>
 
 <h3>The source code for articles & tutorials in  <a href="https://www.fullstack.io/vue/" target="_blank">ng-book blog</a></h3>
+
+<div style="clear:both"></div>
 
 ## Articles
 * 👷<strong><a href="http://blog.ng-book.com/service-workers-and-angular/" target="_blank">The Beginners Guide to Service Workers and Angular</a></strong> | ([Source ](./angular/service-workers/))
