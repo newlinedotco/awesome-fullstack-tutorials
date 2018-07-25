@@ -21,9 +21,9 @@ The code and posts are from the blogs:
 * [ng-book](https://blog.ng-book.com)
 
 <img src="doc/img/vue.png" align="right" width="200"/>
+
 Vue
 =================
-
 
 ## Articles
 * 💠 <strong><a href="https://medium.com/fullstackio/managing-state-in-vue-js-23a0352b1c87" target="_blank">Managing State in Vue.js</a></strong> | ([Source](./vue/managing_state_01/))
@@ -34,6 +34,7 @@ Vue
 <div style="clear:both"></div>
 
 <img src="doc/img/angular.png" align="right" width="200"/>
+
 Angular
 =================
 
