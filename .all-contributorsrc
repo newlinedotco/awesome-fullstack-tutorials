@@ -1,0 +1,12 @@
+{
+  "projectName": "awesome-fullstack-tutorials",
+  "projectOwner": "fullstackio",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 140,
+  "commit": true,
+  "contributors": []
+}
