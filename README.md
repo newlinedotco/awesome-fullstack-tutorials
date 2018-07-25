@@ -22,7 +22,7 @@ The code and posts are from the blogs:
 
 Vue
 =================
-<img src="doc/img/vue.png" align="right" width="275"/>
+<img src="doc/img/vue.png" align="right" width="200"/>
 
 <h3>The source code for articles & tutorials in <a href="https://www.fullstack.io/vue/" target="_blank">Fullstack Vue</a></h3>
 
@@ -34,7 +34,7 @@ Vue
 
 Angular
 =================
-<img src="doc/img/angular.png" align="right" width="275"/>
+<img src="doc/img/angular.png" align="right" width="200"/>
 
 <h3>The source code for articles & tutorials in  <a href="https://www.fullstack.io/vue/" target="_blank">ng-book blog</a></h3>
 
