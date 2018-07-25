@@ -2,7 +2,7 @@
 
 <hr />
 <h2 align="center">
-  ✨ Tutorial blog posts with **complete runnable code** ✨
+  ✨ Tutorial blog posts with <b>complete, runnable code</b> ✨
 </h2>
 <p align="center">
 Written by <a href="https://fullstack.io">Fullstack.io</a> and <a href="#contributors">friends</a>
@@ -53,3 +53,10 @@ Angular
 | :---: | :---: | :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
+## Contributing
+
+We're looking for tutorial-style, code-driven blog posts on **Vue**, **React**, **Angular**, and **Ethereum**. If you'd like to write with us [reach out](mailto:nate@fullstack.io).
+
+If selected, we'll collaborate on a topic and promote the post across our channels. We have over 100k active email subscribers, mainly web developers, who would love to learn what you have to teach.
+
+Interested? [Shoot me an email!](mailto:nate@fullstack.io)
