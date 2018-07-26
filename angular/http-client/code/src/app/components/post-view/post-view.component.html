@@ -1,0 +1,19 @@
+<h2 class="ui header">
+  Post View
+</h2>
+<hr>
+<div class="ui segment">
+  <sui-dimmer class="inverted" [(isDimmed)]="loading">
+    <div class="ui text loader">Loading...</div>
+  </sui-dimmer>
+  <div class="ui negative message {{ error ? 'visible' : 'hidden'}}">
+    <i class="close icon"></i>
+    <div class="header">Something went wrong!...</div>
+    <p>{{error}}</p>
+  </div>
+  <h3 class="ui header">
+    {{ post?.title }}
+  </h3>
+  <hr>
+  <p>{{ post?.body }}</p>
+</div>

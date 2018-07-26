@@ -1,0 +1,39 @@
+<h2 class="ui header">
+  Post Form
+</h2>
+<hr>
+<div class="ui basic segment">
+  <sui-dimmer class="inverted" [(isDimmed)]="loading">
+    <div class="ui text loader">Please wait...</div>
+  </sui-dimmer>
+  <form class="ui form {{error ? 'error' : error}}" (ngSubmit)="onSubmit()" #postForm="ngForm" *ngIf="post">
+    <div class="fields">
+      <div class="field">
+        <label>Id</label>
+        <input type="number" [(ngModel)]="post.id" id="id" name="id" disabled>
+      </div>
+      <div class="field">
+        <label>User Id</label>
+        <input type="number" [(ngModel)]="post.userId" id="userId" name="userId" required>
+      </div>
+    </div>
+    <div class="field">
+      <label>Title</label>
+      <input type="text" [(ngModel)]="post.title" id="title" name="title" required>
+    </div>
+    <div class="field">
+      <label>Body</label>
+      <textarea rows="5" [(ngModel)]="post.body" id="body" name="body" required></textarea>
+    </div>
+    <div class="ui error message">
+      <div class="header">An Error Occurred!</div>
+      <p>{{error}}</p>
+    </div>
+    <div class="ui buttons">
+      <button type="submit" class="ui button green" [disabled]="!postForm.form.valid">{{submitText}}</button>
+      <div class="or"></div>
+      <button type="button" class="ui button" (click)="goBack()">Cancel</button>
+    </div>
+    <button *ngIf="post.id" type="button" class="ui button red right floated" (click)="onDelete()">Delete</button>
+  </form>
+</div>
