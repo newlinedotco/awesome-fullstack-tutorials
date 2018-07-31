@@ -75,6 +75,16 @@
         "blog",
         "code"
       ]
+    },
+    {
+      "login": "bodrovis",
+      "name": "Ilya Bodrov-Krukowski",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/646942?v=4",
+      "profile": "http://bodrovis.tech",
+      "contributions": [
+        "blog",
+        "code"
+      ]
     }
   ]
 }
