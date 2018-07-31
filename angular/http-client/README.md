@@ -1,8 +1,8 @@
 # Angular 6 HttpClient
 
-The HttpClient is an Angular module that allows your application to communicate with backend services over the HTTP protocol. You can perform all HTTP requests including GET, POST, PUT, PATCH and DELETE. You can also modify headers in order to insert authorization parameters, or to specify the type of content your application needs e.g. JSON, XML e.t.c.
+The HttpClient is an Angular module that allows your application to communicate with backend services over the HTTP protocol. You can perform all HTTP requests including GET, POST, PUT, PATCH and DELETE. You can also modify headers to insert authorization parameters, or to specify the type of content your application needs, e.g., JSON, XML e.t.c.
 
-The module also provides features such as testability, typed request and response objects, interception, Observable apis and error handling. If you are wondering what all those terms mean, don't worry. We'll cover them in this chapter. In order to use HttpClient in your application, you'll need to activate it in the project's root `AppModule`. Here is an example:
+The module also provides features such as testability, typed request and response objects, interception, Observable APIs and error handling. If you are wondering what all those terms mean, don't worry. We'll cover them in this chapter. To use HttpClient in your application, you'll need to activate it in the project's root `AppModule`. Here is an example:
 
 ```ts
 import { NgModule }         from '@angular/core';
@@ -41,11 +41,11 @@ Why do we need this?
 
 Well, about 20 years ago, the Internet had about 280 million users. The web technology used at that time was quite capable of handling the traffic then.
 
-Fast forward to 2018. We now have over 4 billion Internet users. Facebook alone deals with 2 billion active users per month. That's like the entire Internet of 2010. Dealing with such massive traffic requires spreading our application across multiple servers. The problem with that is that each server is manipulating data concurrently. This makes it difficult to ensure data remains consistent among all servers at any given time. Definitely new technology is needed to solve modern problems.
+Fast forward to 2018. We now have over 4 billion Internet users. Facebook alone deals with 2 billion active users per month. That's like the entire Internet of 2010. Dealing with such massive traffic requires spreading our application across multiple servers. The problem with that is that each server is manipulating data concurrently. This makes it difficult to ensure data remains consistent among all servers at any given time. Definitely, new technology is needed to solve modern problems.
 
 Today, we have what is known as **Reactive Programming**, also known as **Reactive Architecture**. The goal of this technology to help developers build applications that are responsive, resilient, scalable and message-driven.
 
-As an Angular developer, you have access to this technology via the open-source RxJS library. This comes already shipped in your project. You don't have to install anything. This means you can easily build an application that is easy to scale, and will always remain consistent whether traffic is high or low.
+As an Angular developer, you have access to this technology via the open-source RxJS library. This comes already shipped in your project. You don't have to install anything. This means you can easily build an application that is easy to scale and will remain consistent whether traffic is high or low.
 
 Reactive programming is a comprehensive topic that needs a chapter of its own. For the sake of clarity, I'll just mention only the RxJS classes and operators that we'll use to build the application.
 
@@ -55,7 +55,7 @@ An [Observable](https://angular.io/guide/observables) is a class that provides s
 
 ### Pipe
 
-A [pipe](https://angular.io/guide/pipes) is a class that takes input data and transforms it into a desired output. In our case, we'll pipe received data through an error handler. We can also call a [retry()](https://angular.io/guide/http#retry) operation within a pipe to deal with network interruptions. Here is an example:
+A [pipe](https://angular.io/guide/pipes) is a class that takes input data and transforms it into the desired output. In our case, we'll pipe received data through an error handler. We can also call a [retry()](https://angular.io/guide/http#retry) operation within a pipe to deal with network interruptions. Here is an example:
 
 ```ts
  getPosts(): Observable<Post[]> {
@@ -71,7 +71,7 @@ Take note that `retry()` is placed before the error handler.
 
 ### Tap
 
-This is simply a mechanism for wiretapping data passing through an Observable without causing disturbance. It's often used for logging.
+This is a mechanism for wiretapping data passing through an Observable without causing a disturbance. It's often used for logging.
 
 ### Error Operators
 
@@ -80,7 +80,7 @@ We have two operators that can help us manage errors that may be caused either b
 - `catchError` - we'll use this to call our custom error handler
 - `throwError` - we'll use this to pass a custom error message to the view
 
-That's enough RxJS for now. You can check out their [reference](https://rxjs-dev.firebaseapp.com/api) api page for a complete list.
+That's enough RxJS for now. You can check out their [reference](https://rxjs-dev.firebaseapp.com/api) API page for a complete list.
 
 ## Semantic UI CSS Framework
 
@@ -111,7 +111,7 @@ npm i -g @angular/cli
 npm i -g json-server
 ```
 
-Next, let's setup the project and install semantic-ui.
+Next, let's set up the project and install semantic-ui.
 
 ```bash
 # Generate Angular Project
@@ -167,7 +167,7 @@ ng generate component components/post-view
 ng generate component components/post-form
 ```
 
-Let's now setup routes. The `PostForm` component will be shared by the `CREATE` and `EDIT` routes. Open `app.module.ts` and insert the following code at the correct locations:
+Let's now set up routes. The `PostForm` component will be shared by the `CREATE` and `EDIT` routes. Open `app.module.ts` and insert the following code at the correct locations:
 
 ```ts
 import { RouterModule, Routes } from '@angular/router';
@@ -195,9 +195,9 @@ const appRoutes: Routes = [
 ...
 ```
 
- Open `app.component.html` and delete all existing code. Replace it with this one which contains a Navigation menu:
+Open `app.component.html` and delete all existing code. Replace it with this one which contains a Navigation menu:
 
- ```html
+```html
  <div class="ui menu">
   <div class="header item">
     Angular 6 Http Client
@@ -225,7 +225,7 @@ Click on `Create Posts` menu to ensure it works. It should output 'post-form wor
 
 ### Display List of Posts
 
-As mentioned earlier, we'll be using a free online JSON server. We'll use the route [https://jsonplaceholder.typicode.com/posts](https://jsonplaceholder.typicode.com/posts) to access posts json data. Here is a small sample:
+As mentioned earlier, we'll be using a free online JSON server. We'll use the route [https://jsonplaceholder.typicode.com/posts](https://jsonplaceholder.typicode.com/posts) to access posts JSON data. Here is a small sample:
 
 ```json
 [
@@ -263,7 +263,7 @@ export class Post {
 
 We are creating a class instead of an interface since we'll need to instantiate it when we want to create a new post.
 
-Next, we'll need a Http Client service that will fetch data from the JSON site for our app. First close the running server with `Ctrl+C` and generate the service like this:
+Next, we'll need a Http Client service that will fetch data from the JSON site for our app. First, close the running server with `Ctrl+C` and generate the service like this:
 
 ```bash
 ng generate service services/post
@@ -420,7 +420,7 @@ Now that we have `PostList` working, we need to write some error handling code. 
 1. Network interruption
 2. Server sends an error response i.e. 404, 500
 
-Currently, if either of the two happens, our application will continue display the spinning icon forever with no indication to the user that something has gone wrong. To fix this, open `post.service.ts` and update the code as follows:
+Currently, if either of the two happens, our application will continue to display the spinning icon forever with no indication to the user that something has gone wrong. To fix this, open `post.service.ts` and update the code as follows:
 
 ```ts
 import { Observable, throwError } from 'rxjs';
@@ -455,7 +455,7 @@ import { tap, catchError } from 'rxjs/operators';
   ...
 ```
 
-Now our service is capable of handling errors. The `handleError` function simply constructs a custom error message which it sends back to the view layer. We need to update our html to display this error message. First update `post.list.component.ts`:
+Now our service is capable of handling errors. The `handleError` function simply constructs a custom error message which it sends back to the view layer. We need to update our HTML to display this error message. First update `post.list.component.ts`:
 
 ```ts
 error: String; // <- Add this to the variables sections
@@ -478,7 +478,7 @@ getPosts(): void {
 
 ```
 
-Next add an element to display an error message in `post.list.component.html`. Place this section above the `table` tag.
+Next, add an element to display an error message in `post.list.component.html`. Place this section above the `table` tag.
 
 ```html
     ...
@@ -557,7 +557,7 @@ export class PostViewComponent implements OnInit {
 
 ```
 
-The way `PostView` works is that it expects a URL in the format `post/{id}`. The `id` is extracted from the URL and is used to call the `getPost(id)` function we defined in `post.service.ts`. If a post is found, it gets displayed. Otherwise an error message is displayed if the post is not found. Let's replace the code in `post-view.component.html` first before we test the new code:
+The way `PostView` works is that it expects a URL in the format `post/{id}`. The `id` is extracted from the URL and is used to call the `getPost(id)` function we defined in `post.service.ts`. If a post is found, it gets displayed. Otherwise, an error message is displayed if the post is not found. Let's replace the code in `post-view.component.html` first before we test the new code:
 
 ```html
 <h2 class="ui header">
@@ -593,7 +593,7 @@ This link will take us to the `post-view` component page. Now refresh the page a
 
 ![post-view](https://github.com/brandiqa/awesome-fullstack-tutorials/blob/master/angular/http-client/images/05-post-view.png?raw=true)
 
-Try entering a non-existent id in the URL such as: `http://localhost:4200/post/500`. An error message should get displayed. However, it's a little cryptic for casual end users. You can customize the `post.service` error handling code  in order to send a simpler error message. You can use the following error status codes to determine an appropriate error message.
+Try entering a non-existent id in the URL such as: `http://localhost:4200/post/500`. An error message should get displayed. However, it's a little cryptic for casual end users. You can customize the `post.service` error handling code in order to send a simpler error message. You can use the following error status codes to determine an appropriate error message.
 
 - 404 : Post not found
 - Unknown error : Network interruption
@@ -617,7 +617,7 @@ import { FormsModule } from '@angular/forms';
   ],
 ```
 
-Now we're ready to build Angular forms. The Create, Update and Delete features will all be implemented within the `PostForm` component and the `PostService` class. Let's start by updating the html file first. Open `post-form.component.html` and replace the existing code with this:
+Now we're ready to build Angular forms. The Create, Update and Delete features will all be implemented within the `PostForm` component and the `PostService` class. Let's start by updating the HTML file first. Open `post-form.component.html` and replace the existing code with this:
 
 ```html
 <h2 class="ui header">
@@ -812,7 +812,7 @@ The service code is simple and self-explanatory. For Update and Delete functions
 
 ![post-edit-form](https://github.com/brandiqa/awesome-fullstack-tutorials/blob/master/angular/http-client/images/06-post-edit-form.png?raw=true)
 
-The Create, Update, Delete operations should sort of work. The reason am saying sort of is because the backend server is actually returning fake responses to those requests. Nothing has actually changed. Later, we'll setup a local JSON server where actual changes will occur when we make those requests. First, let's look at interceptors.
+The Create, Update, Delete operations should sort of work. The reason am saying sort of is because the backend server is actually returning fake responses to those requests. Nothing has actually changed. Later, we'll set up a local JSON server where actual changes will occur when we make those requests. First, let's look at interceptors.
 
 ### Interceptors - Logging
 
@@ -936,7 +936,7 @@ For this section, we are going to create a local database right inside our proje
 }
 ```
 
-Next open `package.json` and add the following scripts:
+Next, open `package.json` and add the following scripts:
 
 ```json
 "scripts": {
@@ -945,7 +945,7 @@ Next open `package.json` and add the following scripts:
 }
 ```
 
-The json script is what we'll use to launch the `json server`. But what is the `local` script for?
+The JSON script is what we'll use to launch the `json server`. But what is the `local` script for?
 
 Well, we are going to create a special environment where our application uses the local json server instead of the online one. To do this, we need to make some changes starting from `post.service.ts` file. Update the file as follows:
 
@@ -955,7 +955,7 @@ import { environment } from '../../environments/environment';
 private postsUrl = environment.postsUrl;
 ```
 
-Next open the file `environments/environment.ts` and update as follows:
+Next, open the file `environments/environment.ts` and update as follows:
 
 ```ts
 export const environment = {
@@ -997,7 +997,7 @@ Next, look for the second "configurations" node which should be under the "serve
 
 Don't forget to separate nodes with a comma.
 
-Change `ng-http-sui` to match your project name in case you named it differently. Otherwise the command will fail. Now we are ready to launch the application with the new local environment. First, in a new terminal, start the local JSON server like this:
+Change `ng-http-sui` to match your project name in case you named it differently. Otherwise, the command will fail. Now we are ready to launch the application with the new local environment. First, in a new terminal, start the local JSON server like this:
 
 ```bash
 npm run json
@@ -1081,7 +1081,7 @@ export const httpInterceptorProviders = [
 
 ```
 
-Next refresh the post and try updating an existing post. For example, rename the title of the last post to 'Just Another Post'. Hit the update button. You should be redirected to this view:
+Next, refresh the post and try updating an existing post. For example, rename the title of the last post to 'Just Another Post'. Hit the update button. You should be redirected to this view:
 
 ![cache-fix](https://github.com/brandiqa/awesome-fullstack-tutorials/blob/master/angular/http-client/images/15-cache-fix.png?raw=true)
 
@@ -1092,3 +1092,11 @@ Awesome! The fix has worked. That's all for this chapter. Feel free to modify th
 - [Angular Http Client](https://angular.io/guide/http)
 - [Angular Observables](https://angular.io/guide/observables)
 - [RxJS Library](https://angular.io/guide/rx-library)
+
+## About the Author
+
+### Michael Wanyoike
+
+![](./images/michael-wanyoike.jpg)
+
+I like keeping it simple. I write clean, readable and modular code. I love learning new technologies that bring efficiencies and increased productivity to my workflow.
