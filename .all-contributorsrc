@@ -65,6 +65,16 @@
         "code",
         "blog"
       ]
+    },
+    {
+      "login": "FabianGosebrink",
+      "name": "Fabian Gosebrink",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/11268349?v=4",
+      "profile": "https://offering.solutions/",
+      "contributions": [
+        "blog",
+        "code"
+      ]
     }
   ]
 }
