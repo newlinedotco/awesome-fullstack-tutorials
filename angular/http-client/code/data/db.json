@@ -1,0 +1,22 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "userId": 1,
+      "title": "First Post",
+      "body": "This is my first post!"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "title": "Second Post",
+      "body": "This is my second post!"
+    },
+    {
+      "id": 3,
+      "userId": 2,
+      "title": "Awesome Day",
+      "body": "This is an article on how awesome my day is"
+    }
+  ]
+}

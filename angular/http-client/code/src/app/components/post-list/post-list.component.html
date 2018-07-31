@@ -1,0 +1,47 @@
+<h2 class="ui header">
+  Post List
+</h2>
+<hr>
+<div class="ui segment">
+  <sui-dimmer class="inverted" [(isDimmed)]="loading">
+    <div class="ui text loader">Loading</div>
+  </sui-dimmer>
+  <div class="ui negative message {{ error ? 'visible' : 'hidden'}}">
+    <i class="close icon"></i>
+    <div class="header">An Error Occurred!</div>
+    <p>{{error}}</p>
+  </div>
+  <table class="ui celled table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>UserId</th>
+        <th>Title</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of posts">
+        <td>{{ p.id }}</td>
+        <td>{{ p.userId }}</td>
+        <td>
+          <a href="post/{{p.id}}">{{ p.title }}</a>
+        </td>
+        <td>
+          <a href="post/edit/{{p.id}}">
+            <i class="edit icon"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="4">
+          <sui-pagination [collectionSize]="total" [pageSize]="limit" [hasNavigationLinks]="true" [hasBoundaryLinks]="true" [(page)]="selectedPage"
+            (pageChange)="pageChange()">
+          </sui-pagination>
+        </th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
