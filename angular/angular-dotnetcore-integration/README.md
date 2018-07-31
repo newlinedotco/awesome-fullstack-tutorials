@@ -1,4 +1,5 @@
 # How to Integrate Angular with .NET Core Project
+
 In this article, we are going to show you how to integrate a server-side .NET Core project with a client side Angular project. We are going to start with the server side first by creating a layer to fetch data from a database and creating an endpoint that will process the client side request and return the fetched data from the database.
 
 After we are finished with the server side of the application, we are going to continue our work on the client part. We are going to create components to process and display the data fetched from the server with a simple interface. For that purpose, we are going to use a service to create a centralized place to handle our HTTP requests.
@@ -9,7 +10,12 @@ To download the complete source code check out [GitHub](https://github.com/Marin
 
 So, let's get to the action.
 
+<blockquote><em>
+This post is a guest post by Marinko Spasojevic. You can read more of his work on the <a href="https://code-maze.com/">CodeMaze blog</a>.
+</em></blockquote>
+
 ## Project Preparation
+
 Let’s start by creating a new ASP.NET Core Web Application:
 
 ![Creating_Project](https://github.com/MarinkoSpasojevic/awesome-fullstack-tutorials/blob/master/angular/angular-dotnetcore-integration/Images/01-Creating_Project.png)
@@ -555,9 +561,11 @@ As we can see, we are using a selector from our movies-list component to inject 
 If we start our project again and click the Show Movies button, we are going to see the same result, but this time, we have much readable and reusable code.
 
 ## Conclusion
+
 In this article, we have learned how to create the Angular project and to integrate it with the .NET Core Web API project. 
 
 Furthermore, we have learned:
+
 *	How to enable communication between the projects on different domains
 *	The way to use Entity Framework Core to access our database
 *	How to create an endpoint for our client requests 
@@ -568,5 +576,16 @@ Furthermore, we have learned:
 That is all. We hope that you have enjoyed reading this article and that you have found many useful pieces of information.
 
 
+## About the Author
+
+![Marinko Spasojevic](marinko.jpg)
+
+Hi, my name is Marinko Spasojevic. Currently, I work as a full time .NET developer and my passion is web application development.
+
+Just getting something to work is not enough for me. To make it just how I like it, it must be readable, reusable and easy to maintain.
+
+Prior to being an author on [the CodeMaze blog](https://code-maze.com/), I had been working as a professor of Computer Science for several years. So sharing knowledge while working as a full-time developer comes naturally to me.
+
+My hope is that the experience and knowledge I share will help you improve your own and that you will learn something new by reading my articles.
 
 
