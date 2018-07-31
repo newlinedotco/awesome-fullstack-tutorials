@@ -85,6 +85,16 @@
         "blog",
         "code"
       ]
+    },
+    {
+      "login": "brandiqa",
+      "name": "Michael Wanyoike",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/14043400?v=4",
+      "profile": "https://www.sitepoint.com/author/mwanyoike/",
+      "contributions": [
+        "blog",
+        "code"
+      ]
     }
   ]
 }
