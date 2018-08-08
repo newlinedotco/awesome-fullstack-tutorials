@@ -1,0 +1,7 @@
+<div class="container">
+  <div *ngIf="book$ | async as book">
+    <h1>{{book.name}}</h1>
+    <p>{{book.description}}</p>
+  </div>
+  <button type="button" class="btn btn-link" routerLink="">← All books</button>
+</div>
