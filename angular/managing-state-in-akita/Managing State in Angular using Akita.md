@@ -1,16 +1,16 @@
-Managing State in Angular using Akita
+# Managing State in Angular using Akita
 
-# What is Akita?
+## What is Akita?
 
 Akita is a simple and effective state management for Angular applications. Akita is built on top of RxJS and inspired by models like Flux and Redux.
 
 Akita encourages simplicity. It saves you the hassle of creating boilerplate code and offers powerful tools with a moderate learning curve, suitable for both experienced and inexperienced developers alike.
 
-# Akita's Architecture
+## Akita's Architecture
 
 The heart of Akita is the Store and the Query.
 
-![Akita](https://cdn-images-1.medium.com/max/2000/1*ZvboOQwyeAjPVKdYmaA1dA.png)
+![Akita](./img/akita-design.png)
 
 A Store is a single object which contains the store state and serves as the "single source of truth."
 
@@ -24,7 +24,7 @@ In this article, we'll build a books application and focus on the entities store
 
 <hr />
 
-# Creating Books Application
+## Creating Books Application
 
 ### The Book Model
 
@@ -181,7 +181,7 @@ export class BooksComponent implements OnInit {
 }
 ```
 
-The `selectAll()` method supports sorting the entities collection based on an enitity key. We can listen to the control
+The `selectAll()` method supports sorting the entities collection based on an entity key. We can listen to the control
 value changes and according to it let Akita sorting the collection.
 
 We have one more requirement - when the user clicks on a book, we need to navigate to the book page, showing the full content.
@@ -216,9 +216,9 @@ export class BookComponent implements OnInit {
 }
 ```
 
-We have a `book$` observable that returns reactivly the current book entity based on the ID we get from the router.
+We have a `book$` observable that returns reactively the current book entity based on the ID we get from the router.
 
-A user has the ability to navigate directly to a page in a book, so we need to check if that book entity exists in the the bookstore (via the query’s `hasEntity()` method). If the store doesn’t have the book, we need to fetch it from the server and update the store.
+A user has the ability to navigate directly to a page in a book, so we need to check if that book entity exists in the bookstore (via the query’s `hasEntity()` method). If the store doesn’t have the book, we need to fetch it from the server and update the store.
 
 ```ts
 // books.service
@@ -234,8 +234,16 @@ export class BooksService {
 }
 ```
 
-# Summary
+## Summary
 
-We’ve seen here how the various core concepts of Akita work together to give us an easy way to manage a bookstore. This is only a small taste of Akita; it has many more additional features, such as powerful plugins, devtools, cli, support for active state, transactions, web workers, etc.
+We’ve seen here how the various core concepts of Akita work together to give us an easy way to manage a bookstore. This is only a small taste of Akita; it has many more additional features, such as powerful plugins, dev tools, cli, support for active state, transactions, web workers, etc.
 
 I encourage you to explore the API by reading the docs and the source code of the demo application.
+
+## Complete Code Example
+
+You can view the [complete runnable example here](https://akita-books.stackblitz.io) and the [source code here](https://stackblitz.com/edit/akita-books)
+
+## About the Author
+
+Netanel is a Frontend Architect who works at Datorama, blogs at [https://netbasal.com](netbasal.com), open source maintainer, creator of [Akita](https://github.com/datorama/akita) and Spectator, Husband, Father and the Co-founder of HotJS.
