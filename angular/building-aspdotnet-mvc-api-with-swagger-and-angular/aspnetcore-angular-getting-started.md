@@ -160,7 +160,7 @@ The code example above is what we get scaffolded from the template. We will modi
 
 ## Preparations and using the Dependency Injection
 
-As a class to deal with we create a Customers class which has the properties `Name`, `Position` and `Age`.
+As a class to deal with we create a Customers class which has the properties `Id`, `Name`, `Position` and `Age`.
 
 ```csharp
 public class Customer
@@ -172,7 +172,7 @@ public class Customer
 }
 ```
 
-For gettings things ready we need to install [AutoMapper](https://nuget.org/packages/automapper/), to map from a data transfer object (DTO) to an entity. For the sake of simplicity, we will create a DTO which has the same field as our normal entity and register the mapping in our Startup class `Configure` method.
+For gettings things ready we need to install [AutoMapper](https://nuget.org/packages/automapper/), to map from a data transfer object (DTO) to an entity and back. For the sake of simplicity, we will create a DTO which has the same fields as our normal entity and register the mapping in our Startup class `Configure` method.
 
 ```csharp
 public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -254,7 +254,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-> We are using `AddSingleton` here which we would normally _not_ do when going into production. It is better use `AddScoped` when you can, to prevent the server from holding any state if no request is being worked on. With `AddScoped` you get a new instance per request and it's going to be cleaned up when the response was sent out. HTTP is a stateless protocol so we should avoid holding state in any kind of way. You can also use the in memory database provider like described [here](https://docs.microsoft.com/en-us/ef/core/providers/in-memory/)
+> We are using `AddSingleton` here which we would normally _not_ do when going into production. It is better to use `AddScoped` when you can, to prevent the server from holding any state if no request is being worked on. With `AddScoped` you get a new instance per request and it's going to be cleaned up when the response was sent out. HTTP is a stateless protocol so we should avoid holding state in any kind of way. You can also use the in memory database provider like described [here](https://docs.microsoft.com/en-us/ef/core/providers/in-memory/)
 
 ## Adding a Controller
 
@@ -277,9 +277,9 @@ public class CustomersController : ControllerBase
 
 ## Implementing CRUD Operations
 
-When receiving a GET call we need to send back all customers `api/customers/` or a single customer `api/customers/{id}` e.g. GET `api/customers/5` we can do that by defining two methods. One which listens to a get event sending back all the data from the repository and the other one receiving an id, asking for a specific person, returning a Not Found 404 status code if not found and in case of a success it returns the found customer with a 200 status code
+When receiving a GET call we need to send back all customers `api/customers/` or a single customer `api/customers/{id}` e.g. GET `api/customers/5` we can do that by defining two methods. One which listens to a GET request sending back all the data from the repository and the other one receiving an id, asking for a specific person, returning a Not Found 404 status code if not found and in case of a success it returns the found customer with a 200 status code
 
-> Always remember to send back the correct status codes. Frameworks on client side like angular rely on that code to decide whether the request was a success or not!
+> Always remember to send back the correct status codes. Frameworks on client side like Angular rely on that code to decide whether the request was a success or not!
 
 ```csharp
 [HttpGet(Name = nameof(GetAll))]
@@ -308,7 +308,7 @@ We are defining a name to every method to be clean here and are using helper met
 
 We can pass parameters if we define them in the route attribute of the method. The routes on the methods are being concatenated with the route attribute we define on the class. Now we can request data from that API for all customers or one single customer.
 
-Next, before we can add a customer, we have to define a model the body of the request will be parsed into. We can specify the properties on that model which we want the client to allow to be entered. Things like `Id` should not be possible for the client to modify. To be secure in that case we add the properties we want to be allowed to change. In addition to that we are allowed to use [DataAnnotations](<https://msdn.microsoft.com/en-us/library/system.componentmodel.dataannotations(v=vs.110).aspx>) here. They will be automatically validated and return a `BadRequest(...)` (Statuscode 400) if they are not fulfilled.
+Next, before we can add a customer, we have to define a model the body of the request will be parsed into. We can specify the properties on that model which we want the client to allow to be entered. Things like `Id` should not be possible for the client to modify. To be secure in that case we add the properties we want to be allowed to change. In addition to that we are allowed to use [DataAnnotations](https://msdn.microsoft.com/en-us/library/system.componentmodel.dataannotations(v=vs.110).aspx) here. They will be automatically validated and return a `BadRequest(...)` (status code 400) if they are not fulfilled.
 
 ```csharp
 public class CustomerCreateDto
@@ -425,9 +425,6 @@ public ActionResult RemoveCustomer(int id)
 
 Again we are checking if the customer exists. If not a `NotFound()` is returned. If the resource exists we delete it and in case of success we deliver a 204 No Content status code with the helper method `NoContent()` as it is a 200 status code which indicates a successful operation and to be more precise we tell the client that on this link `/api/customers/5` is not content anymore. So `NoContent()` is one of the most precise answers to return.
 
-Creating an ASP.NET Core WebAPI with the .NET CLI
-Preparations and using the Dependency Injection
-
 ## Adding Swagger to your API
 
 If you want to share your API with a team which should get information about what can be done with your API and which resources to get how you can easily create a documentation of your API using a tool called 'Swagger'. Just install the [Nuget Package](https://www.nuget.org/packages/swashbuckle.aspnetcore/) and modify the following classes as the following.
@@ -465,7 +462,7 @@ In the `launchSettings.json` we can modify now the `launchUrl` URL from `api/val
 
 ## Adding Versioning to your API
 
-Your API will grow with the time and maybe you need to do another version of one or multiple controllers. You can add versioning very easily into your ASP.NET core application.
+Your API will grow with the time and maybe you need to do another version of one or multiple controllers. You can add versioning to your ASP.NET core application in a very easy way.
 
 > Be aware that there are multiple ways of adding and using versioning in an API in general. We will take a look at the version in the route here so our routes will change. Other methods are to pass the version in a header or to pass it as a query parameter. Both methods are possible and have advantages as well as disadvantages. We will focus on the version in the route here as it can be seen in other big and common APIs as well.
 
@@ -581,7 +578,7 @@ Although we can improve much much more on this API (Adding HATEOAS, Datashaping,
 
 ## Adding CORS to our API
 
-With a look at the whole article, we want one system to talk to another over HTTP. Currently, our backend ASP.NET Core WebAPI is configured to receive requests only from the same domain where it is running on. But our client can run on every other server instance in the web, we as a backend, do not know where he lives. Maybe it is a mobile app, an ASP.NET Core MVC site etc. So to enable the communication from another domain we have to enable CORS in our backend. As we know that our frontend will run locally on port `4200` further in this article we can allow `http://localhost:4200` access to our backend with CORS.
+With a look at the whole article, we want one system to talk to another over HTTP. Currently our backend ASP.NET Core WebAPI is configured to receive requests only from the same domain where it is running on. But our client can run on every other server instance in the web. We as a backend do not know where he lives. Maybe it is a mobile app, an ASP.NET Core MVC site etc. So to enable the communication from another domain we have to enable CORS in our backend. As we know that our frontend will run locally on port `4200` further in this article we can allow `http://localhost:4200` access to our backend with CORS.
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
