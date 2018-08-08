@@ -29,7 +29,7 @@ The code and posts are from the blogs:
 * 📷 <strong><a href="https://medium.com/fullstackio/tutorial-build-an-instagram-clone-with-vue-js-and-cssgram-24a9f3de0408" target="_blank">Tutorial - Build an Instagram clone with Vue.js and CSSGram</a></strong> ([Source](./vue/instagram_clone_02/))
 * 🃏 <strong><a href="https://medium.com/fullstackio/tutorial-shuffle-a-deck-of-cards-in-vue-js-b65da4c59b1" target="_blank">Tutorial - Shuffle a Deck of Cards in Vue.js</a></strong> ([Source](./vue/deck_of_cards_03//))
 
-<sub>Read more on <a href=https://www.fullstack.io/vue/" target="\_blank">Fullstack Vue</a></sub>
+<sub>Read more on <a href="https://www.fullstack.io/vue/" target="_blank">Fullstack Vue</a></sub>
 
 <div style="clear:both"></div>
 
@@ -44,6 +44,7 @@ The code and posts are from the blogs:
 * 🗺<strong><a href="https://http://blog.ng-book.com/angular-and-google-maps-a-tutorial/" target="_blank">Angular and Google Maps: A Tutorial</a></strong> ([Source](./angular/google-maps-and-angular/))
 * ☂️<strong><a href="https://blog.ng-book.com/beginners-guide-to-using-httpclient-in-angular/" target="_blank">Beginners Guide to Using HttpClient in Angular</a></strong> ([Source](./angular/http-client/))
 * 🎥<strong><a href="https://blog.ng-book.com/how-to-integrate-angular-with-a-net-core-project-lets-go-to-the-movies/" target="_blank">How to Integrate Angular with a .NET Core Project – Let’s go to the movies!</a></strong> ([Source](./angular/angular-dotnetcore-integration/))
+* 🐶<strong><a href="https://http://blog.ng-book.com/managing-state-in-angular-using-akita/" target="_blank">Managing State in Angular using Akita</a></strong> ([Source](./angular/managing-state-in-akita/))
 
 <sub>Read more on <a href="https://blog.ng-book.com" target="_blank">ng-book blog</a></sub>
 
