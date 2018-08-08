@@ -26,6 +26,8 @@ What we will cover:
 
 Let's get started!
 
+> This guest post is by Fabian Gosebrink a Microsoft MVP, Google Developer Expert and Angular & ASP.NET Core web developer. He runs a course and learning platform [Developer Academy](https://developer-academy.ch).
+
 ## Creating an ASP.NET Core WebAPI with the .NET CLI
 
 As a first step, you can download the .NET CLI on [https://dot.net](https://dot.net).
@@ -1134,3 +1136,10 @@ If the observable has no data yet we can work with the `ng if/else` syntax to di
 > Remember that every async does a subscribe and so fires a call in our case. We only want to fire the call once.
 
 After this, we can access our customer properties as normal.
+
+## About the Author
+
+![Fabian](.github/fabian-gosebrink-speaker.jpg)
+
+Fabian Gosebrink is Microsoft MVP, Google Developer Expert and Angular & ASP.NET Core web developer. As a software engineer, consultant, speaker and trainer, he supports customers building web applications with more than 10 years of experience. Fabian is very active in the community such as leading the swiss angular community "SwissAngular", the .NET user group in Zurich, leading the largest german speaking C#-Community (mycsharp.de) as well as running his own company with [a course and learning platform](https://developer-academy.ch) and is speaking at local user groups and international conferences.
+
