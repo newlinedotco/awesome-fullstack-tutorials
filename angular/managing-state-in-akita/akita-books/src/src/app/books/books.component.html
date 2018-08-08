@@ -1,0 +1,28 @@
+<div class="container">
+  <h1>Books</h1>
+
+  <div class="alert alert-info" role="alert" *ngIf="selectLoading$ | async; else books">
+    Fetching Books...
+  </div>
+
+  <ng-template #books>
+    <select class="custom-select" [formControl]="sortControl">
+      <option>Sort By</option>
+      <option value="name">Name</option>
+      <option value="price">Price</option>
+    </select>
+
+    <section class="flex">
+      <div class="card" *ngFor="let book of books$ | async">
+        <div class="card-body">
+          <h5 class="card-title">{{ book.name }}
+            <span class="badge badge-info">{{book.price}}$</span>
+          </h5>
+          <a class="btn btn-outline-info btn-sm" [routerLink]="[ '/books', book.id]">See More</a>
+        </div>
+      </div>
+    </section>
+
+  </ng-template>
+
+</div>

@@ -1,0 +1,31 @@
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.container {
+  margin-top: 2em;
+}
+
+.btn-link {
+  padding-left: 0;
+}
+
+.custom-select {
+  margin-bottom: 2em;
+}
+
+h1 {
+  margin-bottom: 1em;
+}
