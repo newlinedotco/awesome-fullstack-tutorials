@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import Home from './Home'
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Home from "./Home";
+import logo from "./logo.svg";
+import "./App.css";
 
 class App extends Component {
   render() {
@@ -12,7 +12,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <section className="App-intro">
-            <Home />
+          <Home />
         </section>
       </div>
     );
