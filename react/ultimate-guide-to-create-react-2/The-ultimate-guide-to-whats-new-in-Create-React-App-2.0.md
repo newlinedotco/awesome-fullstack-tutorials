@@ -16,6 +16,8 @@ In this article, we’ll explore some of the things that’s changed in this new
 
 ## SASS support out of the box
 
+![Sass](https://i.imgur.com/xyMfxDV.png)
+
 [SASS](https://sass-lang.com/) is a CSS preprocessor that allows the usage of special features such as variables, nested rules and mixins in regular CSS. This results in a simpler and efficient coding process. A CSS preprocessor is a scripting language that extends CSS by allowing developers to write code in one language and then compile it into CSS.
 
 Some of the features that SASS offers includes:
@@ -211,7 +213,7 @@ What this means is that, all imported `.scss` or `.sass` files will be automatic
         transform: rotate(360deg);
       }
     }
-    
+
 
 As seen in the code block above, all of the CSS selectors all share a prefix of `App`, let’s make this more structured by using SASS nesting. This will result in the code block below.
 
@@ -245,7 +247,7 @@ As seen in the code block above, all of the CSS selectors all share a prefix of 
         transform: rotate(360deg);
       }
     }
-    
+
 
 We’re using the Sass ****Ampersand to create better nesting rules and a better readable code. This also means we’d have to update our classnames in `App.js`.
 
@@ -342,6 +344,8 @@ React Fragment [documentation](https://reactjs.org/docs/fragments.html).
 
 ## Intelligent code splitting via webpack 4
 
+![webpack](https://i.imgur.com/aqQ9T1g.png)
+
 When building React applications, it's very common to see the size of the app grow largely due to the number of dependencies in use. This happens when a section of the app (or route) might import a large number of components that are not necessary when it first loads. This can reduce the initial load time of the app.
 
 So how do we approach this? How do we make sure that the app only loads what is needed thereby avoiding bloat in the code?
@@ -432,6 +436,8 @@ React’s documentation on [code splitting](https://reactjs.org/docs/code-splitt
 Create React App’s documentation on [code splitting](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#code-splitting).
 ****
 ## Interactive mode for Jest 23
+
+![Jest](https://i.imgur.com/k2nHOVI.png)
 
 [Jest](https://github.com/facebook/jest)  is a JavaScript testing tool created by Facebook to test React apps or basically any JavaScript app. It comes with a test runner, assertion library, and has support for [mocking](https://stackoverflow.com/questions/2665812/what-is-mocking). The latest version, Jest 23 is a major upgrade and includes the interactive Snapshot mode which allows you to step through each failing snapshot in each failing suite to review your failed snapshots and choose to update or skip each individually.
 
@@ -531,6 +537,8 @@ Create React App’s documentation on [testing](https://github.com/facebook/crea
 
 ## Support for PostCSS
 
+![PostCSS](https://i.imgur.com/NbErLTz.jpg)
+
 PostCSS is a tool for transforming styles with JS plugins. These include plugins that can help lint your CSS, support variables and mixins, transpile future CSS syntax, inline images, and more.
 
 One of the most popular PostCSS plugin is Autoprefixer. It allows us to write modern CSS because it helps to make sure the CSS is compatible with browsers as it adds vendor prefixes to CSS declarations.
@@ -547,6 +555,8 @@ PostCSS on [GitHub](https://github.com/postcss/postcss)
 
 
 ## Babel Macros transforms
+
+![Babel](https://i.imgur.com/TGIDJWl.png)
 
 Babel macros transforms are a way of writing Babel transforms right in your project’s code without having to create a `babel.rc` file or make changes to a webpack config file. This allows us to import Babel plugins directly in code and use them. This results in a more explicit transformation and a zero config way of using babel plugins.
 
@@ -596,7 +606,7 @@ To use the babel transform for emotion, all you have to do is add `/macro` to th
       }
     }
     export default App;
-    
+
 
 The advantage of using emotion’s babel transform is that it doesn’t require processing the css declaration strings into a AST, which will inevitably add to the startup time of your application, especially if you have many css declarations.
 
@@ -643,7 +653,7 @@ Let’s look at an example below. Open up the `src/App.js` file and edit with th
       }
     }
     export default App;
-    
+
 
 The `ReactComponent` import name used in the code block tells React that we’d like to import the SVG as a React component.
 
@@ -775,6 +785,8 @@ The codebase for this example above can be seen on GitHub [here](https://github.
 [Create React App’s documentation](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#configuring-the-proxy-manually) on API proxying.
 
 ## Service workers with Google’s Workbox
+
+![Google Workbox](https://i.imgur.com/9OdabwC.png)
 
 A service worker is a script that your browser runs in the background, separate from the web page, opening the door to features that don’t need a web page or user interaction. 
 
