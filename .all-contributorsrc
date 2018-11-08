@@ -95,6 +95,16 @@
         "blog",
         "code"
       ]
+    },
+    {
+      "login": "yomete",
+      "name": "Yomi Eluwande",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/9016992?v=4",
+      "profile": "http://yomieluwande.me",
+      "contributions": [
+        "blog",
+        "code"
+      ]
     }
   ]
 }
