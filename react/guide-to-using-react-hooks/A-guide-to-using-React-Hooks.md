@@ -499,7 +499,7 @@ In order to write tests for the hooks, we'll be using the [`react-testing-librar
 
 The testing story for hooks is, as of writing, a bit under-developed. You currently [can't test a hook in isolation](https://twitter.com/dan_abramov/status/1060315729524936706). Instead, you need to attach your hook to a component and test that component.
 
-So below, we'll be writing tests for our Hooks, by interacting with our _components_ and not the hooks directly. The good news is that means that our tests look like normal React tests.
+So below, we'll be writing tests for our [React Hooks](https://buttercms.com/blog/learn-react-hooks-by-writing-your-first-hook), by interacting with our _components_ and not the hooks directly. The good news is that means that our tests look like normal React tests.
 
 ### Writing tests for useState() Hook
 
