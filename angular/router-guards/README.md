@@ -70,7 +70,7 @@ ng generate component dashboard
 
 The CLI will automatically add our components to the appModule.
 
-```
+```typescript
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -113,7 +113,7 @@ ng generate module app-routing --flat --module=app
 
 The generated file `app-routing.module.ts` will look like this:
 
-```
+```typescript
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -132,7 +132,7 @@ export class AppRoutingModule { }
 
 In the `app-routing.module.ts` file import the `Login` and `Dashboard` components. Also import the `RouterModule`, and `Routes` from `@angular/router` library.
 
-```
+```typescript
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -140,7 +140,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 Now that we have our components imported next create an array of objects named `routes` of type `Routes`. Each object is a route with a path and a component to render to that path.
 
-```
+```typescript
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -157,7 +157,7 @@ We want our router to be configured at the app's root level. To do so we'll use 
 
 Inject the `RouterModule` to the `@NgModule()` metadata imports array and pass the `routes` array into `forRoot()`:
 
-```
+```typescript
 @NgModule({
   imports: [
     CommonModule,
@@ -170,7 +170,7 @@ Inject the `RouterModule` to the `@NgModule()` metadata imports array and pass t
 
 Export `RouterModule` so that the `AppModule` can utilize the `router-outlet` directive and other directives including service providers anywhere in the app.
 
-```
+```typescript
 @NgModule({
   imports: [
     RouterModule.forRoot(routes)
@@ -182,7 +182,7 @@ Export `RouterModule` so that the `AppModule` can utilize the `router-outlet` di
 
 The `app-routing.module.ts` file will look like this completed.
 
-```
+```typescript
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
@@ -208,7 +208,7 @@ export class AppRoutingModule { }
 
 Make sure the `AppModule` has the `AppRoutingModule` imported. The file should look like this.
 
-```
+```typescript
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -236,7 +236,7 @@ export class AppModule { }
 
 If we visit the browser and navigate to our paths notice that nothing changes. Why is that?
 
-![implement_the_routermodule_navigate](https://media.giphy.com/media/VdniIMTS6IzU0b0UOD/giphy.gif)
+![implement_the_routermodule_navigate](./images/dashboard.jpg)
 
 We've missed one crucial step, which is implementing the `router-outlet` directive.
 
@@ -245,7 +245,7 @@ We've missed one crucial step, which is implementing the `router-outlet` directi
 Let's open the `app.component.html` file, replace all its content with the `router-outlet` and simple navigation to our login and dashboard routes.
 
 The app's template should look like this:
-```
+```typescript
 <nav>
   <a routerLink="login">home</a>
   <br>
@@ -258,8 +258,6 @@ The app's template should look like this:
 
 Once that's done we can visit each of our paths directly in the browser.
 
-![update_app_component_navigation](https://media.giphy.com/media/hu7l47LqR68IgWlkLI/giphy.gif)
-
 The next thing to do is to update the Login component.
 
 ## Update Login Component
@@ -270,7 +268,7 @@ Let's stub out functionality. Stubbing is like blueprinting. We add placeholder 
 What we want is for the login component to handle access to our dashboard by granting the user permission via a guard (more on this later).
 
 Update the `login.component.ts` file:
-```
+```typescript
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -302,7 +300,7 @@ export class LoginComponent implements OnInit {
 ```
 
 Update the `login.component.html` file:
-```
+```typescript
 <div>
   <h1>Login page</h1>
   <h2>{{ message }}</h2>
@@ -317,7 +315,7 @@ Update the `login.component.html` file:
 
 What we've done is to interpolate a simple message that is attached to the two buttons click events that call our methods: `login()` and `logout()`
 
-![update_login_component_screen](https://media.giphy.com/media/jVZB1gTaicFlq0JrtL/giphy.gif)
+![login image](./images/login.jpg)
 
 We'll revisit the login component later to integrate the guard we're creating next.
 
@@ -341,7 +339,7 @@ ng generate guard auth/auth
 
 By default our newly generated guard implements the CanActivate guard interface.
 
-```
+```typescript
 
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
@@ -363,7 +361,7 @@ Go to the `app-routing.module.ts` file and import the newly created guard to our
 
 Tie the imported guard to the route we want protected which is the dashboard route.
 
-```
+```typescript
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
@@ -404,7 +402,7 @@ We now have a bare-bones service file.
 
 Update the service:
 
-```
+```typescript
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
@@ -435,7 +433,7 @@ Add a pipe method and use `tap` after a 1sec delay to toggle the `isLoggedIn` fl
 
 In the logout method toggle the `isLoggedIn` flag to false.
 
-```
+```typescript
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { tap, delay } from 'rxjs/operators';
@@ -470,7 +468,7 @@ Import our newly created `AuthService` and inject it in the constructor along wi
 
 Update the `auth.guard.ts` file to this:
 
-```
+```typescript
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 
@@ -511,7 +509,7 @@ we can now update our login component and tie in the new functionality.
 
 Currently our file `login.component.ts` looks like this:
 
-```
+```typescript
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -548,7 +546,7 @@ Inside this we check the `isLoggedIn` flag and if it's true we redirect to the d
 
 Update the logout method to call the logout method from the `AuthService` which logs our user out, effectively protecting the dashboard route.
 
-```
+```typescript
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
@@ -602,13 +600,13 @@ Go to the `app-routing.module.ts` file.
 
 Import our `AuthGuard` then add it to the dashboard route like so:
 
-```
+```typescript
 { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] }
 ```
 
 our file should look like this:
 
-```
+```typescript
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
@@ -634,7 +632,7 @@ And that's it! The dashboard route is successfully protected!
 
 Visit the app in the browser and try to visit the dashboard without logging in.
 
-![final_app_screen](https://media.giphy.com/media/J5qOq4LlUGF4hAP1WT/giphy.gif)
+![final_app_screen](./images/final.jpg)
 
 *Our user is now able to access the protected dashboard app by clicking 'login'*
 
