@@ -1,0 +1,45 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <legend>Feedback form</legend>
+
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput type="text" name="name" formControlName="name" />
+    <mat-error *ngIf="nameControl.hasError('required')">
+      Name is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Rating</mat-label>
+    <input matInput type="number" name="rating" formControlName="rating" />
+    <mat-error *ngIf="ratingControl.hasError('required')">
+      Rating is required
+    </mat-error>
+    <mat-error
+      *ngIf="ratingControl.hasError('min') || ratingControl.hasError('max')"
+    >
+      Rating must be between 0 and 10
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea matInput name="description" formControlName="description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>T-shirt size</mat-label>
+    <mat-select placeholder="Select" name="shirtSize" formControlName="shirtSize">
+      <mat-option *ngFor="let size of shirtSizes" [value]="size">
+        {{ size }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="shirtSizeControl.hasError('required')">
+      T-shirt size is required
+    </mat-error>
+  </mat-form-field>
+
+  <button type="submit" mat-stroked-button color="primary">
+    Submit your feedback
+  </button>
+</form>
