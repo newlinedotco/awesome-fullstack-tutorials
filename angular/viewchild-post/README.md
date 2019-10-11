@@ -1,7 +1,11 @@
-# Replace @OutPut, @Input, and EventEmitters with ViewChild For Component Interction
-The first time I used the Angular framework I found the concept of two-way data binding hard to keep track of. A simple app grew complex with the more properties I needed to share between child and parent components. The straight forward solution was to use data binding with @Input, @Output and event emitters. There's a better way, however. Using viewChild is one, and utilizing Services is another. In this tutorial, ill show you how to use viewChild as an effective way of passing props and accessing content in a child component from a parent component.
+# Replace @OutPut, @Input, and EventEmitters with ViewChild For Component Interaction
 
-## what youll learn
+The first time I used the Angular framework I found the concept of two-way data binding hard to grasp. A simple app I would build quickly grew complex with the more properties I needed to share between child and parent components. The straight forward solution was to use data binding with @Input, @Output, and EventEmitters.
+
+There are better ways, however. Using ViewChild is one, and Services is another. In this tutorial, I'll show you how to use ViewChild as an effective way of passing props and accessing content in a child component from a parent component.
+
+## What You'll Learn
+
 - Why Use ViewChild?
 - What Is ViewChild?
 - How Is ViewChild Structured?
@@ -9,14 +13,16 @@ The first time I used the Angular framework I found the concept of two-way data 
 - How To Use ViewChild
 - Conclusion
 
-
 ## Why Use ViewChild?
-We'll use ViewChild instead of @Output and event emitter to allow a parent component to access the child component's content. this comes in handy when we want to keep track of data that rely on one another, such as statuses.
+
+ViewChild allows a parent component to access a child component's content. This is handy when we want to call a child component's function or reference its properties.
 
 ## What Is ViewChild?
+
 ViewChild is a property decorator. It is a class or a class member (an attribute or a method) that configures (decorates) a view query.
 
 ## How Is ViewChild Structured?
+
 To use the ViewChild one must understand ViewChild. Here is a code snippet to help us break down the decorator's basic structure.
 
 ```typescript
@@ -32,6 +38,7 @@ export class MyCompComponent {
 ```
 
 As we can see the ViewChild decorator accepts three parameters:
+
 - selector
   - first parameter that matches the first component, directive, or element in the view query as a reference.
 - static
@@ -42,52 +49,70 @@ As we can see the ViewChild decorator accepts three parameters:
 We use these parameters as a way of referencing an element in the DOM, or a component or directive.
 
 ## Referencing With ViewChild
-there are a few ways of referencing a selector: template, reference of component or directive decorators, or a templateRef. 
-in our sample we are using a templateRef where whe attached `#elementToMatch` to the `div` tag. this is our 'hook', a way to reference the element of interest.
 
+There are a few ways of referencing a selector: template, reference of component or directive decorators, or a templateRef.
+
+In the previous code sample we added `#elementToMatch` to the `div` tag. This is how we reference the element we're interested in.
 
 ## How To Use ViewChild
-Now that we understand why we use ViewChild, and what its made of we can start understanding how it works, we'll use an example of grabbing a child component's data from the parent component. this could be helpful in situations like modal views, or keeping track of selected items.
-it uses the change detector to find the first element or directive that matches the selector in the view DOM. 
 
-## step 1: edit the app component
-edit the components typescript file to setup out the functionality so the function `changeChildCompState()` will replace the string variable `buttonState` once clicked.
+We understand why to use ViewChild and how it's structured. Let's begin to understand how ViewChild works by building a simple app.
+
+Our app will demonstrate the following:
+
+- Calling a child component's method from the parent
+- Grabbing the child component's properties
+- Passing a value to the child component from the parent component
+
+## Step 1: edit the app component
+Assuming you've started a basic Angular app using Angular's CLI we'll first edit the `app.component.ts` file.
+
+Add a method `changeChildCompState()`, and a property `childCompTitle` with the string `n/a`. Our method will replace this string with another string titled 'click' when the method is called.
+
+the file should look like this:
+
 ```typescript
-  buttonState = 'n/a'
+  childCompTitle = 'n/a';
 
   changeChildCompState() {
-    this.buttonState = 'clicked'
+    this.childCompTitle = 'clicked'
   }
 ```
 
-navigate to the app.component.html and edit it like so. we are adding the buttonState string and adding a click handler to a button to call our `changeChildCompState()` function.
+Go to the `app.component.html` and edit it like so. we are interpolating the `buttonState` string and calling our `changeChildCompState()` function once a user clicks the button 'Change component state'.
 
 ```typescript
 <h1>Welcome to {{ title }}!</h1>
 <h2>{{ buttonState }}</h2>
-<button (click)="changeChildCompState()">Change component state</button>
+<button (click)="changeChildCompState()">Access Child Comp Data</button>
 ```
 
 Now if we navigate to the app. we will see our button and the interpolated texts. When we click the button our string should go from n/a to clicked.
 
 ![app component html img]()
 
-## step 2: generate a new component
-this will be the child component that is triggered from the button we added in app component
- - run `ng generate component child` to genenrate a component named child.
-We now will add the modal component to our `app.component.html` file like so
+## Step 2: Generate A Child Component
+
+Using the Angular CLI run `ng generate component child` to create a component named 'child'.
+This will be the child component that is triggered from the button we added in `app.component.ts`.
+
+Add the component to `app.component.html` like so:
 
 ```typescript
 <app-child></app-child>
 ```
 
-once added you should see proof that the component has been added 
-[screenshot]()
+Once added you should see proof that the component has been added.
+![app-child comp added]()
 
-## step 3: update the child component
-add the method `changeCompState()` and the variables `compState` and `compTitle`. These we will access through the parent component using the ViewChild decorator.
+## Step 3: Update The Child Component
 
-when finished the code should look like this:
+In the file `child.component.ts` add the method `changeCompState()` and the properties `compState` and `compTitle`.
+
+We will later use a `ViewChild` decorator from the parent component to call the method `changeCompState()` which accepts a parameter `newState`. This parameter will have the string value of 'active'. `newState` will then change the `compState` property from 'inactive' to 'active'.
+
+Our file `child.component.ts` should look like this:
+
 ```typescript
 import { Component, OnInit } from '@angular/core';
 
@@ -99,58 +124,65 @@ import { Component, OnInit } from '@angular/core';
 export class ChildComponent implements OnInit {
 
 
-  compState = "inactive"
-  compTitle = "Child Component"
+  compState = "inactive";
+  compTitle = "Child Component";
+  newState: string;
 
   constructor() { }
 
   ngOnInit() {
   }
 
-
-  changeCompState() {
-    this.compState = "active"
+  changeCompState(newState) {
+    this.compState = newState;
 
   }
 
 }
 ```
 
-## step 4: update app component to trigger the modal component using ViewChild
-Let's start by adding a reference, `childRef` to the child component's tag in the app template like so
+Next update the child template with some interpolation like so
+```typescript
+<h1>{{title}}</h1>
+<h2>Child Component State: {{compState}}</h2>
+```
+
+## Step 4: Update App Component With ViewChild Functionality
+
+Let's start by adding a reference, `#childRef` to the child component's tag in the app template like so:
+
 ```typescript
 <app-modal #childRef></app-modal>
 ```
 
-import ViewChild from angular core and elementref
+Now we'll go to `app.component.ts` and import `ViewChild`, `AfterViewInit`, and `ElementRef` from `@angular/core`;
+
 ```typescript
 import { Component, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 ```
-next add a ViewChild property of type elementRef named `childElementRef` and target the reference we added to the app-modal tag `childRef`.
+
+Next we'll add a ViewChild property named `childElementRef` and target the reference we added to the app-modal tag `childRef`.
+
 ```typescript
-  @ViewChild('childRef')  childElementRef: ElementRef;
+  @ViewChild('childRef') childElementRef: ElementRef;
 
 ```
 
-Now we can access the referenced element after the parent component is rendered from using the lifecycle hook `ngAfterViewInit`. To do so first implement `AfterViewInit` to the class. 
+We are now able to access the referenced 'childRef' element but only after the parent component is rendered by using the Lifecycle hook `ngAfterViewInit`. To do so first implement `AfterViewInit` to the class.
 
 ```typescript
 export class AppComponent implements AfterViewInit {}
 ```
 
-now we can create the method `ngAFterViewInit`. inside the method we'll access the referenced component like so and log it to the console to view its content.
+Now we can create the method `ngAFterViewInit`. inside the method we'll access the referenced component like so
+
 ```typescript
-  ngAfterViewInit(): void {
-    console.log(this.childElementRef);
-  }
-  ```
 
-if we check our browser's console we can see the accessible content from the child component
-[screenshot of logged content]()
+  ngAfterViewInit(): void {}
+```
 
+The child component's content is now accessible we'll use dot notation to first replace the string property `childCompTitle` with the child component's title stored in it's own string property `compTitle`.
 
-## step 4: final component updates
-Seeing that the child component's content is accessible we'll use dot notation to first replace the string variable `childCompTitle` with the child component's title stored in it's own string variable `compTitle`. We do this after the parent component has rendered
 ```typescript
 
   ngAfterViewInit(): void {
@@ -158,23 +190,24 @@ Seeing that the child component's content is accessible we'll use dot notation t
   }
 ```
 
-we can also invoke the child component's method `changeCompState()`.
-To do so wrap the method call in a new method `changeChildCompState()`.
+We'll also invoke the child component's method `changeCompState()`.
+To do so wrap the referenced method call inside the parent component's method `changeChildCompState()`.
+
 ```typescript
   changeChildCompState() {
     this.childElementRef.changeCompState()
   }
   ```
 
-this will call the child component's method whenever we click the button we've added the `changeChildCompState` method to.
+Clicking the button will change the text in the child component `inactive` to `active`.
+
 [screenshot of button]()
 
-clicking the button will change the text in the child component `inactive` to `active`.
-
 ## Conclusion
-What we just learned is an easier way of handling child component data by using ViewChild to grab data from a child component, call a child component's function, and pass a prop from a parent component to a child component. We completely bypassed eventemitters, outputs, and inputs which could get messy and confusing quickly. 
 
-take a look at the app below
+What we just learned is an easier way of handling child component data by using ViewChild to grab data from a child component, call a child component's function, and pass a prop from a parent component to a child component. We completely bypassed EventEmitters, outputs, and inputs which could get messy and confusing quickly.
+
+Take a look at the app below
 
 https://stackblitz.com/edit/angular-viewchild-post
 
