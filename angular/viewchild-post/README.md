@@ -89,7 +89,7 @@ Go to the `app.component.html` and edit it like so. we are interpolating the `bu
 
 Now if we navigate to the app. we will see our button and the interpolated texts. When we click the button our string should go from n/a to clicked.
 
-![app component html img]()
+![app component html img](./images/start.jpg)
 
 ## Step 2: Generate A Child Component
 
@@ -103,7 +103,7 @@ Add the component to `app.component.html` like so:
 ```
 
 Once added you should see proof that the component has been added.
-![app-child comp added]()
+![app-child comp added](./images/child-works.jpg)
 
 ## Step 3: Update The Child Component
 
@@ -201,7 +201,7 @@ To do so wrap the referenced method call inside the parent component's method `c
 
 Clicking the button will change the text in the child component `inactive` to `active`.
 
-[screenshot of button]()
+![screenshot of button](./images/final.jpg)
 
 ## Conclusion
 
