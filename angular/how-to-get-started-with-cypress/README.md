@@ -170,8 +170,12 @@ The login form I’ve included with my sample app looks like the following:
 
 The `first_test.spec.js` file already has a test that accesses the home page:
 
-```
-describe('Form Test', () =\> { it('should visit home page', () =\> { cy.visit('http://localhost:4200/home-page'); }); });
+```js
+describe('Form Test', () => {
+  it('should visit home page', () => {
+    cy.visit('http://localhost:4200/home-page');
+  });
+});
 ```
 
 Here you see we’re using the `cy.visit` command to navigate to the home page.
