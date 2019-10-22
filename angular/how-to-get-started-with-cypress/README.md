@@ -31,7 +31,7 @@ Cypress also sits on top of:
 
 Since it uses these known frameworks, the syntax is very familiar like so:
 
-```
+```js
 describe('Form Test', () => {
   it('should visit home page', () => {
     cy.visit('/home-page');
@@ -188,8 +188,12 @@ So open `cypress.json` and add:
 
 Now lets change our test to just go to the `/home-page` path with:
 
-```
-describe('Form Test', () =\> { it('should visit home page', () =\> { cy.visit('/home-page'); }); });
+```js
+describe('Form Test', () => {
+  it('should visit home page', () => {
+    cy.visit('/home-page');
+  });
+});
 ```
 
 Now when you run the test, you should see the same result.
@@ -206,14 +210,24 @@ Go back to the `first_test.spec.js` file from before. Run the test, and when it 
 
 The **Selector Playground** detected that the “start button” had an ID of “startButton,” and created the line of code to get it as the following:
 
-```
+```js
 cy.get('#startbutton');
 ```
 
 So lets go ahead and add that to a new test, where we go to the home page, and click the start button like so:
 
-```
-describe('Form Test', () =\> { it('should visit home page', () =\> { cy.visit('/home-page'); }); it('should visit home page and click start', () =\> { cy.visit('/home-page'); cy.get('#startButton').click(); cy.get('h1').should('contain', 'Learn Cypress'); }); });
+```js
+describe('Form Test', () => {
+  it('should visit home page', () => {
+    cy.visit('/home-page');
+  });
+
+  it('should visit home page and click start', () => {
+    cy.visit('/home-page');
+    cy.get('#startButton').click();
+    cy.get('h1').should('contain', 'Learn Cypress');
+  });
+});
 ```
 
 Here you notice that I also added a `should` to do an actual test. I’m verifying that the `h1` element on the page has the text “Learn Cypress.” Since this all sits on top of mocha, chai, and sinon this is somewhat intuitive if you’ve used test runners before.
@@ -226,8 +240,29 @@ Now let’s wrap up the test by actually going to the page, entering a value and
 
 The finished test is in the file `cypress/integration/form.spec.js` as you see here:
 
-```
-describe('Form Test', () =\> { it('should visit home page', () =\> { cy.visit('/home-page'); }); it('should visit home page and click start', () =\> { cy.visit('/home-page'); cy.get('#startButton').click(); cy.get('h1').should('contain', 'Learn Cypress'); }); it('should go to the forms page and enter login information', () =\> { cy.visit('/home-page'); cy.get('#startButton').click(); cy.get('h1').should('contain', 'Learn Cypress'); cy.get('#formsButton').click(); cy.get('#email').type('HanSolo@gmail.com'); cy.get('#password').type('password'); cy.get('#submitButton').click(); cy.get('#popupMessage').should('contain', 'login successful'); }); });
+```js
+describe('Form Test', () => {
+  it('should visit home page', () => {
+    cy.visit('/home-page');
+  });
+
+  it('should visit home page and click start', () => {
+    cy.visit('/home-page');
+    cy.get('#startButton').click();
+    cy.get('h1').should('contain', 'Learn Cypress');
+  });
+
+  it('should go to the forms page and enter login information', () => {
+    cy.visit('/home-page');
+    cy.get('#startButton').click();
+    cy.get('h1').should('contain', 'Learn Cypress');
+    cy.get('#formsButton').click();
+    cy.get('#email').type('HanSolo@gmail.com');
+    cy.get('#password').type('password');
+    cy.get('#submitButton').click();
+    cy.get('#popupMessage').should('contain', 'login successful');
+  });
+});
 ```
 
 ## List Pages
@@ -236,8 +271,38 @@ In most frontend applications you’ll utilize a list of some form. In my sample
 
 In my sample project if you look at the file `/cypress/integration/list.spec.js` you’ll see the list tests that I’ve written.
 
-```
-describe('List Test', () =\> { it('should go to the list page and add a value', () =\> { cy.visit('/home-page'); cy.get('#startButton').click(); cy.get('h1').should('contain', 'Learn Cypress'); cy.get('#listsButton').click(); cy.get('#createInput').type('use the force Luke!'); cy.get('#createButton').click(); cy.get('li') .eq(4) .should('contain', 'use the force Luke!'); }); it('should go to the list page and delete a value', () =\> { cy.visit('/home-page'); cy.get('#startButton').click(); cy.get('h1').should('contain', 'Learn Cypress'); cy.get('#listsButton').click(); cy.get('#createInput').type('use the force Luke!'); cy.get('#createButton').click(); cy.get('li') .eq(4) .should('contain', 'use the force Luke!'); cy.get('li \> .value-row \> .btn') .eq(4) .click(); cy.get('ul') .its('length') .should('be.eq', 4); }); });
+```js
+describe('List Test', () => {
+  it('should go to the list page and add a value', () => {
+    cy.visit('/home-page');
+    cy.get('#startButton').click();
+    cy.get('h1').should('contain', 'Learn Cypress');
+    cy.get('#listsButton').click();
+    cy.get('#createInput').type('use the force Luke!');
+    cy.get('#createButton').click();
+    cy.get('li')
+      .eq(4)
+      .should('contain', 'use the force Luke!');
+  });
+
+  it('should go to the list page and delete a value', () => {
+    cy.visit('/home-page');
+    cy.get('#startButton').click();
+    cy.get('h1').should('contain', 'Learn Cypress');
+    cy.get('#listsButton').click();
+    cy.get('#createInput').type('use the force Luke!');
+    cy.get('#createButton').click();
+    cy.get('li')
+      .eq(4)
+      .should('contain', 'use the force Luke!');
+    cy.get('li > .value-row > .btn')
+      .eq(4)
+      .click();
+    cy.get('ul')
+      .its('length')
+      .should('be.eq', 4);
+  });
+});
 ```
 
 They’re very simple but basically just tests behavior for adding and removing a value from the list. If you notice, Cypress enables you to select items within a list with the “eq” syntax. This is really powerful, and also very intuitive.
@@ -260,14 +325,45 @@ If you navigate over to my sample project’s “Network Requests” page you’
 
 To test this directly (an actual end to end test) looks like the following:
 
-```
-it('should go to the network requests page and select a movie', () =\> { cy.visit('/home-page'); cy.get('#startButton').click(); cy.get('h1').should('contain', 'Learn Cypress'); cy.get('#networkButton').click(); cy.get('#movieSelect').select('A New Hope (1)'); cy.get('#detailsButton').click(); cy.get('#movieTitle').should('contain', 'A New Hope'); cy.get('#episodeNumber').should('contain', 4); });
+```js
+it('should go to the network requests page and select a movie', () => {
+  cy.visit('/home-page');
+  cy.get('#startButton').click();
+  cy.get('h1').should('contain', 'Learn Cypress');
+  cy.get('#networkButton').click();
+  cy.get('#movieSelect').select('A New Hope (1)');
+  cy.get('#detailsButton').click();
+  cy.get('#movieTitle').should('contain', 'A New Hope');
+  cy.get('#episodeNumber').should('contain', 4);
+});
 ```
 
 You can also verify the underlying payload from the API by intercepting the HTTP calls with Cypress. If you add a `beforeEach` that includes `cy.server` and `cy.route`:
 
-```
-beforeEach(() =\> { // server starts to listen for http calls cy.server(); // create route that cypress will listen for, here it is the films endpoint of the SWAPI cy.route('GET', 'https://swapi.co/api/films/\*\*').as('films'); }); it('should go to the network requests page and verify the HTTP payload called', () =\> { cy.visit('/home-page'); cy.get('#startButton').click(); cy.get('h1').should('contain', 'Learn Cypress'); cy.get('#networkButton').click(); cy.get('#movieSelect').select('A New Hope (1)'); cy.get('#detailsButton').click(); // await the response from the SWAPI http call cy.wait('@films').then(films =\> { expect(films.response.body.title).to.equal('A New Hope'); }); cy.get('#movieTitle').should('contain', 'A New Hope'); cy.get('#episodeNumber').should('contain', 4); });
+```js
+beforeEach(() => {
+  // server starts to listen for http calls
+  cy.server();
+  // create route that cypress will listen for, here it is the films endpoint of the SWAPI
+  cy.route('GET', 'https://swapi.co/api/films/**').as('films');
+});
+
+it('should go to the network requests page and verify the HTTP payload called', () => {
+  cy.visit('/home-page');
+  cy.get('#startButton').click();
+  cy.get('h1').should('contain', 'Learn Cypress');
+  cy.get('#networkButton').click();
+  cy.get('#movieSelect').select('A New Hope (1)');
+  cy.get('#detailsButton').click();
+
+  // await the response from the SWAPI http call
+  cy.wait('@films').then(films => {
+    expect(films.response.body.title).to.equal('A New Hope');
+  });
+
+  cy.get('#movieTitle').should('contain', 'A New Hope');
+  cy.get('#episodeNumber').should('contain', 4);
+});
 ```
 
 ![](https://atevans85.files.wordpress.com/2019/10/network_requests2.png?w=1024)
@@ -280,21 +376,21 @@ In addition to the basic testing behavior we’ve covered you can also setup `ta
 
 `Tasks` in Cypress are ways that you can get the runner to do some action alongside a test that is run. A typical example is read a file during testing. The code for this could look similar to the following:
 
-```
+```js
 // in plugins/index.js
-const fs = require('fs')
+const fs = require('fs');
 
 module.exports = (on, config) => {
   on('task', {
-    readFileMaybe (filename) {
+    readFileMaybe(filename) {
       if (fs.existsSync(filename)) {
-        return fs.readFileSync(filename, 'utf8')
+        return fs.readFileSync(filename, 'utf8');
       }
 
-      return null
+      return null;
     }
-  })
-}
+  });
+};
 ```
 
 > This example was copied from [the Cypress Tasks documentation](https://docs.cypress.io/api/commands/task.html#Command).
@@ -307,7 +403,7 @@ There are a lot of cool things you can do with tasks. My friend [Tim Deschryver]
 
 I’ve included an example of this in my GitHub project. If you go over to the file at `cypress/support/commands.js` file you’ll see the following:
 
-```
+```js
 Cypress.Commands.add('start', () => {
   cy.visit('/home-page');
   cy.get('#startButton').click();
@@ -322,7 +418,7 @@ Here you can see that the syntax almost is identical to how we were setting up o
 
 If you next go over to the file at `cypress/integration/command_test.spec.js` you’ll see the following:
 
-```
+```js
 describe('Network Requests Page Test', () => {
   before(() => {
     cy.start();
