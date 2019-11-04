@@ -28,7 +28,7 @@ The typically way to deal with this has traditionally been either:
 * higher-order components or
 * render props complex 
 
-But both of these patterns have drawbacks that can contributed to complex code-bases.
+But both of these patterns have drawbacks that can contribute to complex code-bases.
 
 **Hooks aims to solve all of these by enabling you to write functional components that have access to features like state, context, lifecycle methods, ref, etc. without writing the class component.**
 
