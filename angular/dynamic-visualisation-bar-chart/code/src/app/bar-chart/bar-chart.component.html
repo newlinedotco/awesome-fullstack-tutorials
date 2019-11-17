@@ -1,0 +1,47 @@
+<ol class="legend">
+  <li class="legend-item" *ngFor="let s of series" [style.--color]="s.color">
+    {{ s.label }}
+  </li>
+</ol>
+
+<div class="x-axis"></div>
+<div class="y-axis">
+  <div class="y-tick" *ngFor="let tick of yTicks">
+    <div class="y-tick-value">
+      {{ tick | number }}
+    </div>
+  </div>
+</div>
+
+<div *ngIf="title" class="title">
+  {{ title }}
+</div>
+
+<div *ngIf="xAxisLabel" class="x-axis-label">
+  {{ xAxisLabel }}
+</div>
+
+<div *ngIf="yAxisLabel" class="y-axis-label">
+  {{ yAxisLabel }}
+</div>
+
+<ng-container *ngFor="let category of categories; index as ci">
+  <div class="category" [style.grid-column]="'col-start ' + (ci + 1)">
+    <div
+      class="bar"
+      *ngFor="let value of category.values; index as di"
+      [style.--value]="value"
+      [style.--color]="series[di].color"
+    ></div>
+  </div>
+  <div
+    class="category-label-container"
+    [style.grid-column]="'col-start ' + (ci + 1)"
+  >
+    <div class="category-label">
+      <div class="label-text">
+        {{ category.label }}
+      </div>
+    </div>
+  </div>
+</ng-container>

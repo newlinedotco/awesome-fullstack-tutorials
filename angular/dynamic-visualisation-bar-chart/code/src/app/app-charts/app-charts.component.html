@@ -1,0 +1,22 @@
+<app-bar-chart
+  id="c1"
+  [categories]="categories"
+  [series]="series"
+></app-bar-chart>
+<app-bar-chart
+  id="c2"
+  [categories]="categories"
+  [series]="series"
+></app-bar-chart>
+<app-bar-chart
+  id="c3"
+  [categories]="categories"
+  [series]="series"
+  xAxisLabel="GitHub Project"
+  yAxisLabel="Count"
+  title="GitHub Project Statistics"
+>
+</app-bar-chart>
+
+<div class="grab v-grab" (mousedown)="onVGrab($event)"></div>
+<div class="grab h-grab" (mousedown)="onHGrab($event)"></div>

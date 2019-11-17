@@ -1,0 +1,32 @@
+<ng-container [ngSwitch]="location.path()">
+  <ng-container *ngSwitchCase="'/dynamic-bar-chart/demo'">
+    <app-demo></app-demo>
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <form id="repos" (submit)="addRepo()">
+      <label>
+        Add repo:
+      </label>
+      <input type="text" name="repo" [(ngModel)]="repo" placeholder="org/repo" />
+
+      <label class="fake">
+        <input name="fake" type="checkbox" [(ngModel)]="fakeData" />
+        Fake data</label
+      >
+      <button
+        type="button"
+        (click)="removeRepo(i)"
+        *ngFor="let categories of categories; index as i"
+      >
+        {{ categories.label }}
+      </button>
+      <span class="rate-limit">{{ rateLimit }}</span>
+    </form>
+
+    <app-charts-container
+      id="charts"
+      [categories]="categories"
+      [series]="series"
+    ></app-charts-container>
+  </ng-container>
+</ng-container>

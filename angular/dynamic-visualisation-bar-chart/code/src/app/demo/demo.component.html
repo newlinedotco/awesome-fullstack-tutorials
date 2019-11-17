@@ -1,0 +1,38 @@
+<app-bar-chart
+  id="c1"
+  title="Static Site Generators"
+  yAxisLabel="Count"
+  xAxisLabel="Project"
+  [categories]="[
+    {
+      label: 'Next.js',
+      values: [42564, 5682, 304]
+    },
+    {
+      label: 'Gatsby',
+      values: [40166, 6671, 635]
+    },
+    {
+      label: 'Hugo',
+      values: [39513, 4467, 422]
+    },
+    {
+      label: 'Jekyll',
+      values: [39153, 8568, 158]
+    }
+  ]"
+  [series]="[
+    {
+      label: 'Stars',
+      color: '#11C591'
+    },
+    {
+      label: 'Forks',
+      color: 'rebeccapurple'
+    },
+    {
+      label: 'Issues',
+      color: '#ED4DAF'
+    }
+  ]"
+></app-bar-chart>

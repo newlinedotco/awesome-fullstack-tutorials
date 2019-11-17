@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #F0F0F0;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+button,
+input {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+
+app-root {
+  height: 100%;
+  overflow: hidden;
+}

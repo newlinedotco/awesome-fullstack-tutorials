@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="720px" height="580px" viewBox="0 0 720 580" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+    <title>page-layout</title>
+    <desc>Created with Sketch.</desc>
+    <g id="page-layout" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#F9F9F9" x="0" y="0" width="720" height="580"></rect>
+        <g id="Chart" transform="translate(170.000000, 85.000000)">
+            <rect id="Rectangle" stroke="#CCCCCC" stroke-width="1" fill="#FFFFFF" fill-rule="evenodd" x="0.5" y="0.5" width="519" height="449"></rect>
+            <rect id="Rectangle" fill="#11C591" fill-rule="evenodd" x="105" y="293" width="20" height="67"></rect>
+            <g id="Group" stroke-width="1" fill-rule="evenodd" transform="translate(165.000000, 34.000000)">
+                <g id="Group-4">
+                    <rect id="Rectangle" fill="#11C591" x="0" y="4" width="8" height="8"></rect>
+                    <text id="Series-1" font-family="OpenSans-Regular, Open Sans" font-size="11" font-weight="normal" fill="#000000">
+                        <tspan x="12" y="12">Series 1</tspan>
+                    </text>
+                </g>
+                <g id="Group-3" transform="translate(69.000000, 0.000000)">
+                    <rect id="Rectangle" fill="#181DA1" x="0" y="4" width="8" height="8"></rect>
+                    <text id="Series-2" font-family="OpenSans-Regular, Open Sans" font-size="11" font-weight="normal" fill="#000000">
+                        <tspan x="12" y="12">Series 2</tspan>
+                    </text>
+                </g>
+                <g id="Group-2" transform="translate(138.000000, 0.000000)">
+                    <rect id="Rectangle" fill="#ED4DAF" x="0" y="4" width="8" height="8"></rect>
+                    <text id="Series-3" font-family="OpenSans-Regular, Open Sans" font-size="11" font-weight="normal" fill="#000000">
+                        <tspan x="12" y="12">Series 3</tspan>
+                    </text>
+                </g>
+            </g>
+            <rect id="Rectangle" fill="#663399" fill-rule="evenodd" x="129" y="261" width="20" height="99"></rect>
+            <rect id="Rectangle" fill="#ED4DAF" fill-rule="evenodd" x="153" y="318" width="20" height="42"></rect>
+            <rect id="Rectangle" fill="#11C591" fill-rule="evenodd" x="205" y="239" width="20" height="121"></rect>
+            <rect id="Rectangle" fill="#663399" fill-rule="evenodd" x="229" y="250" width="20" height="110"></rect>
+            <rect id="Rectangle" fill="#ED4DAF" fill-rule="evenodd" x="253" y="305" width="20" height="55"></rect>
+            <rect id="Rectangle" fill="#11C591" fill-rule="evenodd" x="305" y="141" width="20" height="219"></rect>
+            <rect id="Rectangle" fill="#663399" fill-rule="evenodd" x="329" y="210" width="20" height="150"></rect>
+            <rect id="Rectangle" fill="#ED4DAF" fill-rule="evenodd" x="353" y="261" width="20" height="99"></rect>
+            <rect id="Rectangle" fill="#11C591" fill-rule="evenodd" x="405" y="293" width="20" height="67"></rect>
+            <rect id="Rectangle" fill="#663399" fill-rule="evenodd" x="429" y="124" width="20" height="236"></rect>
+            <rect id="Rectangle" fill="#ED4DAF" fill-rule="evenodd" x="453" y="89" width="20" height="271"></rect>
+            <text id="0" font-family="OpenSans-Regular, Open Sans" font-size="11" font-weight="normal" fill="#000000">
+                <tspan x="72.7104492" y="365">0</tspan>
+            </text>
+            <text id="1,000" font-family="OpenSans-Regular, Open Sans" font-size="11" font-weight="normal" fill="#000000">
+                <tspan x="51.1455078" y="305">1,000</tspan>
+            </text>
+            <text id="2,000" font-family="OpenSans-Regular, Open Sans" font-size="11" font-weight="normal" fill="#000000">
+                <tspan x="51.1455078" y="244">2,000</tspan>
+            </text>
+            <text id="3,000" font-family="OpenSans-Regular, Open Sans" font-size="11" font-weight="normal" fill="#000000">
+                <tspan x="51.1455078" y="184">3,000</tspan>
+            </text>
+            <text id="Y-Axis-Title" transform="translate(24.500000, 211.000000) rotate(-90.000000) translate(-24.500000, -211.000000) " font-family="OpenSans-Bold, Open Sans" font-size="10" font-weight="bold" fill="#000000">
+                <tspan x="-2.64111328" y="215">Y Axis Title</tspan>
+            </text>
+            <text id="X-Axis-Title" transform="translate(289.500000, 429.000000) rotate(-360.000000) translate(-289.500000, -429.000000) " font-family="OpenSans-Bold, Open Sans" font-size="10" font-weight="bold" fill="#000000">
+                <tspan x="262.144043" y="433">X Axis Title</tspan>
+            </text>
+            <text id="Chart-Title" font-family="OpenSans-Bold, Open Sans" font-size="10" font-weight="bold" fill="#000000">
+                <tspan x="233.696289" y="24">Chart Title</tspan>
+            </text>
+            <text id="4,000" font-family="OpenSans-Regular, Open Sans" font-size="11" font-weight="normal" fill="#000000">
+                <tspan x="51.1455078" y="124">4,000</tspan>
+            </text>
+            <text id="5,000" font-family="OpenSans-Regular, Open Sans" font-size="11" font-weight="normal" fill="#000000">
+                <tspan x="51.1455078" y="64">5,000</tspan>
+            </text>
+            <text id="Category-A" transform="translate(123.500000, 387.000000) rotate(-45.000000) translate(-123.500000, -387.000000) " font-family="OpenSans-Regular, Open Sans" font-size="10" font-weight="normal" fill="#000000">
+                <tspan x="98.4238281" y="391">Category A</tspan>
+            </text>
+            <text id="Category-B" transform="translate(223.500000, 387.000000) rotate(-45.000000) translate(-223.500000, -387.000000) " font-family="OpenSans-Regular, Open Sans" font-size="10" font-weight="normal" fill="#000000">
+                <tspan x="198.272461" y="391">Category B</tspan>
+            </text>
+            <text id="Category-C" transform="translate(323.500000, 387.000000) rotate(-45.000000) translate(-323.500000, -387.000000) " font-family="OpenSans-Regular, Open Sans" font-size="10" font-weight="normal" fill="#000000">
+                <tspan x="298.443359" y="391">Category C</tspan>
+            </text>
+            <text id="Category-D" transform="translate(423.146447, 387.353553) rotate(-45.000000) translate(-423.146447, -387.353553) " font-family="OpenSans-Regular, Open Sans" font-size="10" font-weight="normal" fill="#000000">
+                <tspan x="397.608361" y="391.353553">Category D</tspan>
+            </text>
+            <line x1="88.5" y1="60" x2="88.5" y2="360" id="Line" stroke="#000000" stroke-width="1" stroke-linecap="square"></line>
+            <line x1="89" y1="360.5" x2="489" y2="360.5" id="Line-2" stroke="#000000" stroke-width="1" stroke-linecap="square"></line>
+            <line x1="84" y1="59.5" x2="89" y2="59.5" id="Line-3" stroke="#000000" stroke-width="1" stroke-linecap="square"></line>
+            <line x1="84" y1="119.5" x2="89" y2="119.5" id="Line-3" stroke="#000000" stroke-width="1" stroke-linecap="square"></line>
+            <line x1="84" y1="179.5" x2="89" y2="179.5" id="Line-3" stroke="#000000" stroke-width="1" stroke-linecap="square"></line>
+            <line x1="84" y1="240.5" x2="89" y2="240.5" id="Line-3" stroke="#000000" stroke-width="1" stroke-linecap="square"></line>
+            <line x1="84" y1="300.5" x2="89" y2="300.5" id="Line-3" stroke="#000000" stroke-width="1" stroke-linecap="square"></line>
+            <line x1="84" y1="360.5" x2="89" y2="360.5" id="Line-3" stroke="#000000" stroke-width="1" stroke-linecap="square"></line>
+            <line x1="88.5" y1="361" x2="88.5" y2="366" id="Line-4" stroke="#000000" stroke-width="1" stroke-linecap="square"></line>
+            <line x1="188.5" y1="361" x2="188.5" y2="366" id="Line-4" stroke="#000000" stroke-width="1" stroke-linecap="square"></line>
+            <line x1="288.5" y1="361" x2="288.5" y2="366" id="Line-4" stroke="#000000" stroke-width="1" stroke-linecap="square"></line>
+            <line x1="388.5" y1="361" x2="388.5" y2="366" id="Line-4" stroke="#000000" stroke-width="1" stroke-linecap="square"></line>
+            <line x1="489.5" y1="361" x2="489.5" y2="366" id="Line-4" stroke="#000000" stroke-width="1" stroke-linecap="square"></line>
+        </g>
+        <rect id="Rectangle" fill="#F0F0F0" x="0" y="0" width="150" height="580"></rect>
+        <rect id="Rectangle" fill="#DDDDDD" x="170" y="19" width="173" height="13"></rect>
+        <rect id="Rectangle" fill="#D8D8D8" x="15" y="19" width="116" height="13"></rect>
+        <rect id="Rectangle" fill="#D8D8D8" x="15" y="39" width="116" height="13"></rect>
+        <rect id="Rectangle" fill="#D8D8D8" x="15" y="59" width="116" height="13"></rect>
+        <rect id="Rectangle" fill="#D8D8D8" x="15" y="79" width="116" height="13"></rect>
+        <rect id="Rectangle" fill="#D8D8D8" x="15" y="99" width="116" height="13"></rect>
+        <rect id="Rectangle" fill="#DDDDDD" x="170" y="37" width="397" height="13"></rect>
+        <rect id="Rectangle" fill="#DDDDDD" x="170" y="55" width="373" height="13"></rect>
+        <rect id="Rectangle" fill="#DDDDDD" x="170" y="550" width="397" height="13"></rect>
+    </g>
+</svg>

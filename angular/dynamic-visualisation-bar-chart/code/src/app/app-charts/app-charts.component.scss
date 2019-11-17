@@ -1,0 +1,63 @@
+:host {
+  display: grid;
+  grid-template-columns: minmax(min-content, var(--left-size, 30%)) auto minmax(
+      min-content,
+      1fr
+    );
+  grid-template-rows: minmax(min-content, var(--top-size, 40%)) auto minmax(
+      min-content,
+      1fr
+    );
+  grid-template-areas:
+    'tleft vgrab cent'
+    'hgrab vgrab cent'
+    'bleft vgrab cent';
+  max-height: 100%;
+  overflow: hidden;
+}
+
+#c1 {
+  grid-area: tleft;
+  font-size: 10px;
+}
+
+#c2 {
+  grid-area: bleft;
+  font-size: 10px;
+}
+
+#c3 {
+  grid-area: cent;
+}
+
+.grab {
+  background: rgba(0, 0, 0, 0.025);
+  display: flex;
+  justify-content: center;
+
+  &::after {
+    content: '⋮';
+    height: 0;
+  }
+}
+
+.v-grab {
+  width: 8px;
+  margin: 0 1em;
+  grid-area: vgrab;
+  cursor: ew-resize;
+  flex-direction: column;
+}
+
+.h-grab {
+  grid-area: hgrab;
+  cursor: ns-resize;
+  height: 8px;
+  margin: 1em 0;
+  background: rgba(0, 0, 0, 0.025);
+  text-align: center;
+
+  &::after {
+    transform: rotate(90deg) translateX(4px);
+  }
+}
