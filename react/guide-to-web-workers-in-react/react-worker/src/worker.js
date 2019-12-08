@@ -12,7 +12,7 @@ export default () => {
     };
 
     for (let i = 0; i < 10000000; i++) {
-      userDetails.id = i++;
+      userDetails.id = i;
       userDetails.dateJoined = Date.now();
 
       users.push(userDetails);
