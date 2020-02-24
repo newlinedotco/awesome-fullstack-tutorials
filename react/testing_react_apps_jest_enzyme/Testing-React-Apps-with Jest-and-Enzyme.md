@@ -1,36 +1,36 @@
-# Testing React apps with Jest and Enzyme
+# Testowanie aplikacji React z Jest oraz Enzyme
 
-Testing is an important part of building software as it allows you to catch annoying bugs and makes your code more maintainable and easy to understand. It can also be an avenue for automated quality assurance and documentation for developers.
+Testowanie jest ważną częścią tworzenia oprogramowania, ponieważ pozwala wychwycić irytujące błędy i sprawia, że kod jest łatwiejszy w utrzymaniu i łatwiejszy do zrozumienia. Może to być także droga do automatycznego zapewniania jakości i dokumentacji dla programistów.
 
-In this article, we'll explore how to test your React apps using [Jest](https://jestjs.io/) and [Enzyme](https://airbnb.io/enzyme/). Let's take a look at what each tool does and how it can be combined to test React apps.
+W tym artykule zajmiemy się testowaniem aplikacji React przy użyciu [Jest](https://jestjs.io/) oraz [Enzyme](https://airbnb.io/enzyme/). Rzućmy okiem na to, co robi poszczególne narzędzie i jak można je połączyć w celu przetestowania aplikacji React.
 
-## Introduction to Jest and Enzyme
+## Wprowadzenie do Jest i Enzyme
 
 **Jest**
 
-Jest is a JavaScript testing framework used to test JavaScript apps. It' was created by Facebook to test React apps or basically any JavaScript app.
+'Jest' jest to framework JavaScript do testowania używany właśnie do testowania aplikacji JavaScript. Został stworzony przez Facebooka w celu przetestowania aplikacji React lub w zasadzie dowolnej aplikacji JavaScript.
 
-Jest also provides **Snapshot testing**, the ability to create a rendered ‘snapshot’ of a component and compare it to a previously saved ‘snapshot’. The test will fail if the two do not match. 
+Jest zapewnia również **Snapshot testing**, możliwość utworzenia renderowanej 'migawki' komponentu i porównania jej z poprzednio zapisaną 'migawką'. Test zakończy się niepowodzeniem, jeśli dwa nie będą pasować. 
 
 **Enzyme**
 
-Enzyme is a JavaScript testing utility for React that makes it easier to assert, manipulate, and traverse your React Components’ output.
+Enzyme to narzędzie do testowania JavaScript dla React, które ułatwia stwierdzanie, manipulowanie i przeglądanie wyników komponentów React.
 
-Enzyme exports three different “modes” in which you can render and test components, [**shallow**](http://airbnb.io/enzyme/docs/api/shallow.html), [**mount**](http://airbnb.io/enzyme/docs/api/mount.html), and [**render**](http://airbnb.io/enzyme/docs/api/render.html). 
+Enzyme eksportuje trzy różne “tryby” w których można renderować i testować komponenty, [**shallow**](http://airbnb.io/enzyme/docs/api/shallow.html), [**mount**](http://airbnb.io/enzyme/docs/api/mount.html), oraz [**render**](http://airbnb.io/enzyme/docs/api/render.html). 
 
-## Testing React Components
+## Testowanie komponentów React'a
 
-Before we can start writing any test, we need to create a React app that we can test against. To do that, we'll use the [create-react-app](https://github.com/facebook/create-react-app) CLI. You can create a new React app with the command below:
+Zanim zaczniemy pisać test, musimy utworzyć aplikację React, na której możemy testować. W tym celu wykorzystamy [create-react-app](https://github.com/facebook/create-react-app) CLI. Możesz utworzyć nową aplikację React za pomocą poniższego polecenia:
 
 ```bash
    npx create-react-app react-testing
 ```
 
-Once the app has been created and installed, `cd` into the `react-testing` directory and run `npm start` to launch the React app.
+Po utworzeniu i zainstalowaniu aplikacji, `cd` do katalogu `react-testing` i uruchom `npm start`, aby uruchomić aplikację React.
 
-The first step would be to write some basic tests using Jest so as to get a feel what tests look like in React. As Jest already comes installed with the `create-react-app` package, you don't need to install anything. We'll just go ahead to writing tests.
+Pierwszym krokiem byłoby napisanie podstawowych testów przy użyciu Jest, aby zorientować się, jak wyglądają testy w React. Ponieważ Jest już dostarczany wraz z pakietem `create-react-app`, nie musisz niczego instalować. Po prostu przejdziemy do pisania testów.
 
-If you check the `src` folder of the newly created react-testing app, you should see a `App.test.js` file and its content should be like the one below.
+Jeśli sprawdzisz folder `src` nowo utworzonej aplikacji do testowania reakcji powinieneś zobaczyć plik `App.test.js`, a jego zawartość powinna być taka jak poniżej.
 
 ```javascript
 // src/App.test.js
@@ -46,11 +46,11 @@ it('renders without crashing', () => {
 });
 ```
 
-The code above is an introductory test suite that tests if the app renders without crashing at all. Let's see the output of the test above by running the command below.
+Powyższy kod to wstępny pakiet testowy, który sprawdza, czy aplikacja renderuje się bez awarii. Zobaczmy wynik testu powyżej, uruchamiając poniższe polecenie.
 
 ![](https://i.imgur.com/QVC5B6i.png)
 
-As you can see in the screenshot, all test suites passed. We can also add an additional test to the `App.test.js` file. Add the code below to the `App.test.js` file.
+Jak widać na zrzucie ekranu, wszystkie pakiety testowe przeszły pomyślnie. Możemy również dodać dodatkowy test do pliku `App.test.js`. Dodaj poniższy kod do pliku `App.test.js`.
 
 ```javascript
 // App.test.js
@@ -63,19 +63,19 @@ it('should return -1 when the value is not present', function() {
 
 ```
 
-For the test above, the assert module is used. It provides a way of testing expressions and if an expression evaluates to 0, or false, an assertion failure is returned. In the test above, we're checking if an array contains a value by returning `-1` when the value is not present. The [.equal()](https://nodejs.org/api/assert.html#assert_assert_equal_actual_expected_message) method is used to check for the equality. Run the `npm run test` command again to see the tests result.
+Do powyższego testu używany jest moduł assert. Zapewnia sposób testowania wyrażeń, a jeśli wyrażenie ma wartość 0 lub fałsz, zwracane jest niepowodzenie asercji. W powyższym teście sprawdzamy, czy tablica zawiera wartość, zwracając '-1', gdy wartość nie jest obecna. Metoda [.equal()](https://nodejs.org/api/assert.html#assert_assert_equal_actual_expected_message) służy do sprawdzania równości. Uruchom komendę `npm run test` ponownie, aby zobaczyć wyniki testów.
 
 ![](https://i.imgur.com/JXtaESK.png)
 
-Now that we've gone through how to write tests with Jest, let's see how we can combine with Enzyme to test components.
+Teraz, kiedy już przeszliśmy przez proces pisania testów w Jest, zobaczmy, jak możemy łączyć się z Enzyme'm w celu testowania składników.
 
-To get started with Enzyme, you can install it via npm. You will also need to install Enzyme along with an Adapter corresponding to the version of React. For instance, if you are using Enzyme with React 16, you will need to install the `enzyme-adapter-react-16` adapter and if you use React 15, you'll need to install the `enzyme-adapter-react-15`. Run the command below to install the required dependencies.
+Aby rozpocząć korzystanie z Enzyme, możesz zainstalować go za pomocą npm. Będziesz także musiał zainstalować Enzyme wraz z adapterem odpowiadającym wersji React. Na przykład, jeśli używasz Enzym'u z React 16, będziesz musiał zainstalować adapter `enzyme-adapter-reaguj-16`, a jeśli używasz React 15, musisz zainstalować` enzym-adapter-reagować-15 `. Uruchom poniższe polecenie, aby zainstalować wymagane zależności.
 
 ```bash
 npm i --save-dev enzyme enzyme-adapter-react-16
 ```
 
-One last thing for the Enzyme setup is to create a `setupTests.js` file in the `src` folder. Because we created the React app using the `create-react-app` package, the `setupTests.js` file automatically communicates to Jest and Enzyme what Adapter will be used.
+Ostatnią rzeczą dla konfiguracji Enzyme jest utworzenie pliku `setupTests.js` w folderze `src`. Ponieważ stworzyliśmy aplikację React za pomocą pakietu `create-React-app`, plik `setupTests.js` automatycznie przekazuje Jest i Enzyme informacje o tym, który adapter zostanie użyty.
 
 ```javascript
 // src/setupTests.js
@@ -88,9 +88,9 @@ configure({ adapter: new Adapter() });
 
 ### Shallow Rendering
 
-Shallow rendering is useful to constrain yourself to test a component as a unit, and to ensure that your tests aren't indirectly asserting on the behavior of child components. A shallow render is a simulated render of a component tree that does not require a DOM. It renders only one level of components deep.
+Shallow rendering jest przydatny, aby zmusić się do przetestowania komponentu jako jednostki i upewnić się, że testy nie są pośrednio utwierdzające zachowania komponentów potomnych. Płytkie renderowanie jest symulowanym renderowaniem drzewa komponentów, które nie wymaga DOM. Głęboko renderuje tylko jeden poziom komponentów.
 
-To carry out a shallow rendering test, we'll be building a simple switch that displays `1` when the on button is clicked on and `0` for when the off button is clicked on. Open up the `App.js` file in the `src` folder and edit with the code below.
+Aby przeprowadzić płytki test renderowania (Shallow Rendering), zbudujemy prosty przełącznik, który wyświetla '1' po kliknięciu przycisku włączenia i '0' po kliknięciu przycisku wyłączenia. Otwórz plik `App.js` w folderze` src` i edytuj kodem poniżej.
 
 ```javascript
 import React, { Component } from 'react';
@@ -130,7 +130,7 @@ export default App;
 
 ```
 
-Next up, let's write the test to ensure that the app works as expected. Open up the `App.test.js` file add the code below.
+Następnie napiszmy test, aby upewnić się, że aplikacja działa zgodnie z oczekiwaniami. Otwórz plik `App.test.js` i dodaj poniższy kod.
 
 ```javascript
 // App.test.js
@@ -146,20 +146,20 @@ describe('Enzyme Tests', () => {
 });
 ```
 
-In the test above, we use the `shallow` method imported from enzyme to return an instance of the rendered component. We then use the `.find` method to find the `p` tag and do a check using the `.toEqual` method to see if the value is 0. If it is, the test passes, if it's not, it fails. 
+W powyższym teście używamy metody 'płytkiej' importowanej z enzymu, aby zwrócić instancję renderowanego komponentu. Następnie używamy metody `.find`, aby znaleźć znacznik `p`, i sprawdzamy za pomocą metody `.toEqual`, aby sprawdzić, czy wartość wynosi 0. Jeśli tak, test jest pozytywny, a jeśli nie, test kończy się niepowodzeniem.
 
-Run the `npm run test` command to see the test output.
+Uruchom komendę `npm run test` aby zobaczyć wynik testu.
 
 ![](https://i.imgur.com/LRblw32.png)
 
-For the next test, we'll check to see if the buttons to turn on and off the switch works as expected. We'll need some way to identify the buttons, so, we'll add IDs to the buttons. Edit the button elements in the `App.js` file with the ones below.
+Do następnego testu sprawdzimy, czy przyciski do włączania i wyłączania przełącznika działają zgodnie z oczekiwaniami. Potrzebujemy sposobu na identyfikację przycisków, dlatego dodamy identyfikatory do przycisków. Edytuj elementy przycisków w pliku `App.js` za pomocą poniższych.
 
 ```javascript
 <button id="offbutton" onClick={this.setOff}>Off</button>
 <button id="onbutton" onClick={this.setOn}>On</button>
 ```
 
-On to the test, add the following code below to the `App.test.js` file.
+W teście dodaj poniższy kod do pliku `App.test.js`.
 
 ```javascript
 // App.test.js
@@ -181,7 +181,7 @@ it('on button works as expected', () => {
   });
 ```
 
-In the code block above, we are identifying the buttons by their IDs and then attaching a `simulate` method to the buttons. The test uses the `simulate` method to simulate a click event on the buttons and then there's a check to see if the value after clicking on the button is what is expected.
+W powyższym bloku kodu identyfikujemy przyciski na podstawie ich identyfikatorów, a następnie dołączamy do przycisków metodę 'simulate'. Test wykorzystuje metodę `simulate` do symulacji zdarzenia kliknięcia na przyciskach, a następnie sprawdza się, czy wartość po kliknięciu przycisku jest zgodna z oczekiwaniami.
 
 ![](https://i.imgur.com/xiCwVWM.png)
 
@@ -189,19 +189,19 @@ In the code block above, we are identifying the buttons by their IDs and then at
 
 ### Snapshot Testing
 
-Snapshot tests are a very useful tool whenever you want to make sure your UI does not change unexpectedly. A snapshot test verifies that a piece of functionality works the same as it did when the snapshot was created.
+Snapshot Testing to bardzo przydatne narzędzie, gdy chcesz się upewnić, że interfejs użytkownika nie zmieni się niespodziewanie. 'Test migawki' weryfikuje, czy element funkcjonalności działa tak samo, jak podczas tworzenia migawki.
 
-Snapshot tests essentially work by first generating a snapshot of a React component's UI. The snapshot tests are committed alongside the component and everytime the tests are run. 
+Snapshot tests zasadniczo działają, najpierw generując snapshot interfejsu użytkownika komponentu React. Snapshot tests są przeprowadzane obok komponentu i za każdym razem, gdy są uruchamiane.
 
-The test will fail if the two snapshots do not match, that means either the change is unexpected, or the reference snapshot needs to be updated to the new version of the UI component.
+Test zakończy się niepowodzeniem, jeśli dwie 'migawki' nie będą się zgadzać, co oznacza, że zmiana jest nieoczekiwana lub migawka referencyjna musi zostać zaktualizowana do nowej wersji składnika interfejsu użytkownika.
 
-Let's carry out a snapshot test on the existing `App.js` file. Before we begin, we'd need to install an additional package, [react-test-renderer](https://www.npmjs.com/package/react-test-renderer). react-test-renderer is a library that enables you to render React components as JavaScript objects without the need of a DOM.
+Przeprowadźmy test migawki na istniejącym pliku `App.js`. Zanim zaczniemy, będziemy musieli zainstalować dodatkowy pakiet, [react-test-renderer](https://www.npmjs.com/package/react-test-renderer). react-test-renderer to biblioteka, która umożliwia renderowanie komponentów React jako obiektów JavaScript bez potrzeby posiadania DOM.
 
 ```bash
 npm i --save-dev react-test-renderer 
 ```
 
-After the installation of the package, go ahead to import it in the `App.test.js` file.
+Po instalacji pakietu, zaimportuj go do pliku `App.test.js`.
 
 ```javascript
 // App.test.js
@@ -213,7 +213,7 @@ import App from './App';
 var assert = require('assert');
 ```
 
-Next step, let's add our first snapshot test. Add the code below to the bottom of the `App.test.js` file.
+Następny krok, dodajmy nasz pierwszy test snapshot test. Dodaj poniższy kod na dole pliku `App.test.js`.
 
 ```javascript
 // App.test.js
@@ -225,7 +225,7 @@ describe('Jest Tests', () => {
 });
 ```
 
-Let's run the `npm run test` command and observe what happens. You'll notice that a `__snapshots_` folder is created with a `App.test.js.snap` file in it.
+Uruchom komendę `npm run test` i obserwuj co się dzieje. Zauważysz, że folder `__snapshots_` jest stworzony z plikiem `App.test.js.snap` w sobie.
 
 ```
 // Jest Snapshot v1, https://goo.gl/fbAQLP
@@ -254,11 +254,11 @@ exports[`Jest Tests snapshot matches 1`] = `
 
 ```
 
-If you look closely, you'll see that the output above is very similar to the content of the `App.js` file. At this point, the snapshot test that was written passes as seen in the image below so how do we know when a snapshot test fails.
+Jeśli przyjrzysz się uważnie, zobaczysz, że powyższy wynik jest bardzo podobny do zawartości pliku `App.js`. W tym momencie napisany snapshot test przechodzi pomyślnie, jak widać na poniższym obrazku, więc skąd wiemy, kiedy test migawki nie powiedzie się.
 
 ![Snapshot test passed](https://i.imgur.com/LtBU2hx.png)
 
-To get the snapshot test to fail and make Jest throw an error, we'll have to edit the `App.js` file so as to change the rendered output and then run the `test` command again. Therefore, we'll be making a tiny edit to the `App.js` file,
+Aby snapshot test nie powiódł się i spowodował, że Jest generuje błąd, będziemy musieli edytować plik `App.js`, aby zmienić renderowany wynik, a następnie ponownie uruchomić komendę` test`. Dlatego dokonamy niewielkiej edycji pliku `App.js`,
 
 ```javascript
 // App.js
@@ -299,19 +299,19 @@ export default App;
 
 ```
 
-The tiny change was `className="value"` added to the only `p` tag in the component. Once the file is updated, your Jest watcher should update and notify about a failed test.
+Niewielka zmiana polegała na dodaniu `className ="value"` do jedynego znacznika `p` w komponencie. Po zaktualizowaniu pliku obserwator Jest powinien zaktualizować i powiadomić o nieudanym teście.
 
 ![Failed snapshot test](https://i.imgur.com/5C5z1k4.png)
 
-As seen in the image above, Jest specifies where the snapshot comparison failed. To fix this, we can do either of these two things.
+Jak widać na powyższym obrazku Jest określa, gdzie nie powiodło się porównanie migawki. Aby to naprawić, możemy wykonać jedną z tych dwóch rzeczy.
 
-1. Undo the change and you should see tests pass.
-2. Press the `u` key in the terminal window to update the snapshots file itself and the tests should all pass.
+1. Cofnij zmianę i powinieneś zobaczyć testy zakończone pomyślnie.
+2. Naciśnij klawisz `u` w oknie terminala, aby zaktualizować sam plik migawek i wszystkie testy powinny zakończyć się pomyślnie.
 
-## Conclusion
+## Wnioski
 
-In this article, we were introduced to Jest and Enzyme. Both are testing tools that help test React apps. Jest is a JavaScript testing framework used to test JavaScript apps while Enzyme is a JavaScript testing utility for React that makes it easier to assert, manipulate, and traverse your React Components’ output.
+W tym artykule zapoznaliśmy się z Jest i Enzymem. Oba są narzędziami testowymi, które pomagają testować aplikacje React. 'Jest' to platforma do testowania JavaScript używana do testowania aplikacji JavaScript, podczas gdy 'Enzyme' to narzędzie do testowania JavaScript dla React, które ułatwia stwierdzanie, manipulowanie i przeglądanie wyników komponentów React.
 
-We were then introduced to testing React components by using the combination of Jest and Enzyme.  We also saw the different methods in which we can use Enzyme to test React apps.
+Następnie wprowadzono nas do testowania składników React przy użyciu kombinacji Jest i Enzymu. Widzieliśmy także różne metody testowania aplikacji React za pomocą Enzymu.
 
-The codebase for this tutorial can be seen on GitHub [here](https://github.com/yomete/react-testing).
+Bazę kodów dla tego samouczka można zobaczyć na GitHub [tutaj](https://github.com/yomete/react-testing).
