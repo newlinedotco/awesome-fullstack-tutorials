@@ -39,7 +39,7 @@ Kod i posty pochodzą z blogów:
 
 ## Artykuły
 
-* 👷<strong><a href="https://blog.ng-book.com/service-workers-and-angular/" target="_blank">Przewodnik dla początkujących pracowników serwisu i Angulara</a></strong> ([Źródło](./angular/service-workers/))
+* 👷<strong><a href="https://blog.ng-book.com/service-workers-and-angular/" target="_blank">Przewodnik dla początkujących Web Workers i Angulara</a></strong> ([Źródło](./angular/service-workers/))
 * 📽<strong><a href="https://blog.ng-book.com/dynamic-components-with-content-projection-in-angular/" target="_blank">Dynamiczne komponenty z projekcją treści w Angular</a></strong> ([Źródło](./angular/dynamic-components-with-content-projection/))
 * 🗺<strong><a href="https://http://blog.ng-book.com/angular-and-google-maps-a-tutorial/" target="_blank">Mapy Angular i Google: Samouczek</a></strong> ([Źródło](./angular/google-maps-and-angular/))
 * ☂️<strong><a href="https://blog.ng-book.com/beginners-guide-to-using-httpclient-in-angular/" target="_blank">Przewodnik dla początkujących do używania HttpClient w Angular</a></strong> ([Źródło](./angular/http-client/))
