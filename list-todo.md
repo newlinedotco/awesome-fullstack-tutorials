@@ -1,7 +1,7 @@
 # done:
 >React
 
-[reactWebWorker](https://github.com/mbiesiad/awesome-fullstack-tutorials/new/pl)
+[reactWebWorker](https://github.com/mbiesiad/awesome-fullstack-tutorials/blob/pl/react/guide-to-web-workers-in-react/reactWebWorker.md)
 
 # todo:
 >React
