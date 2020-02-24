@@ -3,7 +3,7 @@
     <img src="https://i.imgur.com/ESvsOrv.png" width="275"/>
   </p>
 
-  <h3>Kod źródłowy dla wszystkich publicznych artykułów/blogów stworzony przez<a href="https://www.fullstack.io/vue/" target="_blank">Fullstack Vue</a>!</h3>
+  <h3>Kod źródłowy dla wszystkich publicznych artykułów/blogów stworzony przez <a href="https://www.fullstack.io/vue/" target="_blank">Fullstack Vue</a>!</h3>
 </div>
 
 ## Artykuły
