@@ -68,3 +68,5 @@ Jeśli ta opcja zostanie wybrana, będziemy współpracować nad tematem i promo
 Zainteresowany? [wyciągnij rękę](mailto:nate@fullstack.io)
 
 > polska wersja od: ([mbiesiad](https://github.com/mbiesiad))
+
+> TODO / DONE [List:](https://github.com/mbiesiad/awesome-fullstack-tutorials/blob/pl/list-todo.md) 
