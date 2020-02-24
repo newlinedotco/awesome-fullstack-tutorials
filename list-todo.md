@@ -3,12 +3,12 @@
 
 [reactWebWorker](https://github.com/mbiesiad/awesome-fullstack-tutorials/blob/pl/react/guide-to-web-workers-in-react/reactWebWorker.md)
 
+[Testing-React-Apps-with Jest-and-Enzyme](https://github.com/mbiesiad/awesome-fullstack-tutorials/blob/pl/react/testing_react_apps_jest_enzyme/Testing-React-Apps-with%20Jest-and-Enzyme.md)
+
 # todo:
 >React
 
 https://github.com/mbiesiad/awesome-fullstack-tutorials/blob/pl/react/guide-to-using-react-hooks/A-guide-to-using-React-Hooks.md
-
-https://github.com/mbiesiad/awesome-fullstack-tutorials/blob/pl/react/testing_react_apps_jest_enzyme/Testing-React-Apps-with%20Jest-and-Enzyme.md
 
 https://github.com/mbiesiad/awesome-fullstack-tutorials/blob/pl/react/ultimate-guide-to-create-react-2/The-ultimate-guide-to-whats-new-in-Create-React-App-2.0.md
 
