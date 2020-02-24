@@ -66,3 +66,5 @@ Szukamy postów na blogu w stylu samouczka, opartych na kodzie **Vue**, **React*
 Jeśli ta opcja zostanie wybrana, będziemy współpracować nad tematem i promować post we wszystkich naszych kanałach. Mamy ponad 100 000 aktywnych subskrybentów e-mail, głównie programistów, którzy chcieliby dowiedzieć się, czego należy uczyć.
 
 Zainteresowany? [wyciągnij rękę](mailto:nate@fullstack.io)
+
+//polska wersja od: ([mbiesiad](https://github.com/mbiesiad))
