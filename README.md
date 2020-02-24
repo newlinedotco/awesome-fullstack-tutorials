@@ -67,4 +67,4 @@ Jeśli ta opcja zostanie wybrana, będziemy współpracować nad tematem i promo
 
 Zainteresowany? [wyciągnij rękę](mailto:nate@fullstack.io)
 
-//polska wersja od: ([mbiesiad](https://github.com/mbiesiad))
+> polska wersja od: ([mbiesiad](https://github.com/mbiesiad))
