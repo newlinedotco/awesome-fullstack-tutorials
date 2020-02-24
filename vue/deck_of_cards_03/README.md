@@ -3,7 +3,7 @@
     <img src="https://i.imgur.com/8mK9lF6.png" width="550"/>
   </p>
 
-  <h3>The source code for the article <a href="https://medium.com/@hassan.djirdeh/tutorial-shuffle-a-deck-of-cards-in-vue-js-b65da4c59b1" target="_blank">Tutorial - Shuffle a Deck of Cards in Vue.js</a>.</h3>
+  <h3>Kod źródłowy dla tego artykułu <a href="https://medium.com/@hassan.djirdeh/tutorial-shuffle-a-deck-of-cards-in-vue-js-b65da4c59b1" target="_blank">Tutorial - Shuffle a Deck of Cards in Vue.js</a>.</h3>
 </div>
 
 ## Sandboxes
