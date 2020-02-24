@@ -2,18 +2,18 @@
 
 <hr />
 <h2 align="center">
-  ✨ Tutorial blog posts with <b>complete, runnable code</b> ✨
+  ✨ Wpisy na blogu z samouczkiem z <b> pełnym, gotowym do uruchomienia kodem</b> ✨
 </h2>
 <p align="center">
-Written by <a href="https://fullstack.io">Fullstack.io</a> and <a href="#contributors">friends</a>
+Napisane przez <a href="https://fullstack.io">Fullstack.io</a> i <a href="#contributors">przyjaciół</a>
 </p>
 <hr />
 
-# 🚀 Introduction
+# 🚀 Wprowadzenie
 
-This repository is a collection of tutorials, blog posts, and code that teach fullstack web development topics.
+To repozytorium to zbiór samouczków, postów na blogu i kodu, które uczą zagadnień związanych z tworzeniem stron internetowych.
 
-The code and posts are from the blogs:
+Kod i posty pochodzą z blogów:
 
 * [Fullstack Vue](https://medium.com/fullstackio/)
 * [Fullstack React](https://fullstackreact.com/)
@@ -23,11 +23,11 @@ The code and posts are from the blogs:
 
 # Vue
 
-## Articles
+## Artykuły
 
-* 💠 <strong><a href="https://medium.com/fullstackio/managing-state-in-vue-js-23a0352b1c87" target="_blank">Managing State in Vue.js</a></strong> ([Source](./vue/managing_state_01/))
-* 📷 <strong><a href="https://medium.com/fullstackio/tutorial-build-an-instagram-clone-with-vue-js-and-cssgram-24a9f3de0408" target="_blank">Tutorial - Build an Instagram clone with Vue.js and CSSGram</a></strong> ([Source](./vue/instagram_clone_02/))
-* 🃏 <strong><a href="https://medium.com/fullstackio/tutorial-shuffle-a-deck-of-cards-in-vue-js-b65da4c59b1" target="_blank">Tutorial - Shuffle a Deck of Cards in Vue.js</a></strong> ([Source](./vue/deck_of_cards_03//))
+* 💠 <strong><a href="https://medium.com/fullstackio/managing-state-in-vue-js-23a0352b1c87" target="_blank">Zarządzanie Stanem w Vue.js</a></strong> ([Źródło](./vue/managing_state_01/))
+* 📷 <strong><a href="https://medium.com/fullstackio/tutorial-build-an-instagram-clone-with-vue-js-and-cssgram-24a9f3de0408" target="_blank">Samouczek - Zbuduj klona Instagrama za pomocą Vue.js i CSSGram</a></strong> ([Źródło](./vue/instagram_clone_02/))
+* 🃏 <strong><a href="https://medium.com/fullstackio/tutorial-shuffle-a-deck-of-cards-in-vue-js-b65da4c59b1" target="_blank">Tutorial - Shuffle a Deck of Cards in Vue.js</a></strong> ([Źródło](./vue/deck_of_cards_03//))
 
 <sub>Read more on <a href="https://www.fullstack.io/vue/" target="_blank">Fullstack Vue</a></sub>
 
@@ -37,20 +37,20 @@ The code and posts are from the blogs:
 
 # Angular
 
-## Articles
+## Artykuły
 
-* 👷<strong><a href="https://blog.ng-book.com/service-workers-and-angular/" target="_blank">The Beginners Guide to Service Workers and Angular</a></strong> ([Source](./angular/service-workers/))
-* 📽<strong><a href="https://blog.ng-book.com/dynamic-components-with-content-projection-in-angular/" target="_blank">Dynamic Components with Content Projection in Angular</a></strong> ([Source](./angular/dynamic-components-with-content-projection/))
-* 🗺<strong><a href="https://http://blog.ng-book.com/angular-and-google-maps-a-tutorial/" target="_blank">Angular and Google Maps: A Tutorial</a></strong> ([Source](./angular/google-maps-and-angular/))
-* ☂️<strong><a href="https://blog.ng-book.com/beginners-guide-to-using-httpclient-in-angular/" target="_blank">Beginners Guide to Using HttpClient in Angular</a></strong> ([Source](./angular/http-client/))
-* 🎥<strong><a href="https://blog.ng-book.com/how-to-integrate-angular-with-a-net-core-project-lets-go-to-the-movies/" target="_blank">How to Integrate Angular with a .NET Core Project – Let’s go to the movies!</a></strong> ([Source](./angular/angular-dotnetcore-integration/))
-* 🐶<strong><a href="https://http://blog.ng-book.com/managing-state-in-angular-using-akita/" target="_blank">Managing State in Angular using Akita</a></strong> ([Source](./angular/managing-state-in-akita/))
+* 👷<strong><a href="https://blog.ng-book.com/service-workers-and-angular/" target="_blank">Przewodnik dla początkujących pracowników serwisu i Angulara</a></strong> ([Źródło](./angular/service-workers/))
+* 📽<strong><a href="https://blog.ng-book.com/dynamic-components-with-content-projection-in-angular/" target="_blank">Dynamiczne komponenty z projekcją treści w Angular</a></strong> ([Źródło](./angular/dynamic-components-with-content-projection/))
+* 🗺<strong><a href="https://http://blog.ng-book.com/angular-and-google-maps-a-tutorial/" target="_blank">Mapy Angular i Google: Samouczek</a></strong> ([Źródło](./angular/google-maps-and-angular/))
+* ☂️<strong><a href="https://blog.ng-book.com/beginners-guide-to-using-httpclient-in-angular/" target="_blank">Przewodnik dla początkujących do używania HttpClient w Angular</a></strong> ([Źródło](./angular/http-client/))
+* 🎥<strong><a href="https://blog.ng-book.com/how-to-integrate-angular-with-a-net-core-project-lets-go-to-the-movies/" target="_blank">Jak integrować Angular z .NET Core Project – Chodźmy do kina!</a></strong> ([Źródło](./angular/angular-dotnetcore-integration/))
+* 🐶<strong><a href="https://http://blog.ng-book.com/managing-state-in-angular-using-akita/" target="_blank">Zarządzanie stanem w Angular używając Akita</a></strong> ([Źródło](./angular/managing-state-in-akita/))
 
 <sub>Read more on <a href="https://blog.ng-book.com" target="_blank">ng-book blog</a></sub>
 
 <div style="clear:both"></div>
 
-## Contributors
+## Osoby które wniosły wkład
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
@@ -59,10 +59,10 @@ The code and posts are from the blogs:
 | <a href='https://www.netbasal.com'><img src='https://avatars1.githubusercontent.com/u/6745730?v=4' width='140px;'/><h4 align='center'><a href='https://www.netbasal.com'>Netanel Basal</a></h4> | <a href='https://offering.solutions/'><img src='https://avatars3.githubusercontent.com/u/11268349?v=4' width='140px;'/><h4 align='center'><a href='https://offering.solutions/'>Fabian Gosebrink</a></h4> | <a href='http://bodrovis.tech'><img src='https://avatars2.githubusercontent.com/u/646942?v=4' width='140px;'/><h4 align='center'><a href='http://bodrovis.tech'>Ilya Bodrov-Krukowski</a></h4> | <a href='https://www.sitepoint.com/author/mwanyoike/'><img src='https://avatars1.githubusercontent.com/u/14043400?v=4' width='140px;'/><h4 align='center'><a href='https://www.sitepoint.com/author/mwanyoike/'>Michael Wanyoike</a></h4> | <a href='http://yomieluwande.me'><img src='https://avatars1.githubusercontent.com/u/9016992?v=4' width='140px;'/><h4 align='center'><a href='http://yomieluwande.me'>Yomi Eluwande</a></h4> |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-## Contributing
+## Współpraca
 
-We're looking for tutorial-style, code-driven blog posts on **Vue**, **React**, **Angular**, and **Ethereum**. If you'd like to write with us [reach out](mailto:nate@fullstack.io).
+Szukamy postów na blogu w stylu samouczka, opartych na kodzie **Vue**, **React**, **Angular**, i **Ethereum**. Jeśli chcesz pisać z nami [wyciągnij rękę](mailto:nate@fullstack.io).
 
-If selected, we'll collaborate on a topic and promote the post across our channels. We have over 100k active email subscribers, mainly web developers, who would love to learn what you have to teach.
+Jeśli ta opcja zostanie wybrana, będziemy współpracować nad tematem i promować post we wszystkich naszych kanałach. Mamy ponad 100 000 aktywnych subskrybentów e-mail, głównie programistów, którzy chcieliby dowiedzieć się, czego należy uczyć.
 
-Interested? [Reach out](mailto:nate@fullstack.io)
+Zainteresowany? [wyciągnij rękę](mailto:nate@fullstack.io)
