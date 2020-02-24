@@ -3,7 +3,7 @@
     <img src="https://i.imgur.com/5V8lLIJ.png" width="550"/>
   </p>
 
-  <h3>The source code for the article <a href="https://medium.com/@hassan.djirdeh/tutorial-build-an-instagram-clone-with-vue-js-and-cssgram-24a9f3de0408" target="_blank">Tutorial - Build an Instagram clone with Vue.js and CSSGram</a>.</h3>
+  <h3>Kod źródłowy dla tego artykułu <a href="https://medium.com/@hassan.djirdeh/tutorial-build-an-instagram-clone-with-vue-js-and-cssgram-24a9f3de0408" target="_blank">Tutorial - Build an Instagram clone with Vue.js and CSSGram</a>.</h3>
 </div>
 
 ## Sandboxes
