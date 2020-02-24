@@ -12,6 +12,7 @@ https://github.com/mbiesiad/awesome-fullstack-tutorials/blob/pl/react/testing_re
 https://github.com/mbiesiad/awesome-fullstack-tutorials/blob/pl/react/ultimate-guide-to-create-react-2/The-ultimate-guide-to-whats-new-in-Create-React-App-2.0.md
 
 >Angular
+
 https://github.com/mbiesiad/awesome-fullstack-tutorials/tree/pl/angular/angular-dotnetcore-integration
 
 https://github.com/mbiesiad/awesome-fullstack-tutorials/tree/pl/angular/viewchild-post
