@@ -13,55 +13,55 @@ hero_image: /assets/images/articles/refs-guide/guide-to-refs.jpg
 main_image: /assets/images/articles/refs-guide/thumb/guide-to-refs.jpg
 ---
 
-# A guide to using React Hooks
+# Przewodnik korzystania z React Hooks
 
-If you've been reading Twitter you probably are aware that Hooks are a new feature of React, but you might be asking **how do we actually use them?** In this post, we're going to show you a bunch of examples on how to use hooks.
+Jeśli używasz Twittera, prawdopodobnie wiesz, że Hooks są nową funkcją React, ale możesz spytać **jak faktycznie ich używamy?** W tym poście pokażemy ci kilka przykładów użycia hooks.
 
-One of the key ideas to understand is that **Hooks let you use state and other React features without writing a class.**
+Jednym z kluczowych pomysłów do zrozumienia jest to, że **Hooks pozwalają używać stanu i innych funkcji React bez pisania klas.**
 
-## Motivation behind Hooks
+## Motywacja za Hooks
 
-While component-based design lets us reuse _views_ across our app, one of the biggest problems React developers face is how we can **reuse state logic between components**. When we have components that share similar state logic, there hasn't been great solutions for reuse and this can sometimes lead to duplicated logic in the constructor and lifecycle methods.
+Kiedy projektowanie oparte na komponentach pozwala nam na ponowne użycie _views_ w naszej aplikacji, jednym z największych problemów, przed którymi stają programiści React, jest to, jak możemy **ponownie użyć logiki stanu między komponentami**. Kiedy mamy komponenty, które mają podobną logikę stanu, nie było świetnych rozwiązań do ponownego użycia, co czasami może prowadzić do zduplikowanej logiki w metodach konstruktora i cyklu życia.
 
-The typically way to deal with this has traditionally been either:
+Typowym sposobem radzenia sobie z tym jest tradycyjnie:
 
-* higher-order components or
+* elementy wyższego rzędu lub
 * render props complex 
 
-But both of these patterns have drawbacks that can contribute to complex code-bases.
+Ale oba te wzorce mają wady, które mogą przyczynić się do skomplikowanych baz kodu.
 
-**Hooks aims to solve all of these by enabling you to write functional components that have access to features like state, context, lifecycle methods, ref, etc. without writing the class component.**
+**Hooks mają na celu rozwiązanie wszystkich tych problemów, umożliwiając pisanie funkcjonalnych komponentów, które mają dostęp do takich funkcji, jak stan, kontekst, metody cyklu życia, referencje itp. bez pisania komponentu klasy.**
 
-## Hooks are Alpha
+## Hooks są Alpha
 
-> Before we dive in, it's important to mention that the Hooks API is not finalized.
+> Przed zanurzeniem należy wspomnieć, że interfejs API Hooks nie jest sfinalizowany.
 >
-> Also, [the official docs](https://reactjs.org/docs/hooks-intro.html) are very good and we recommend that you read them, in particular, because they expand on the motivations of Hooks.
+> Także, [oficjalna dokumentacja](https://reactjs.org/docs/hooks-intro.html) jest bardzo dobra i zalecamy jej przeczytanie, w szczególności, ponieważ rozszerza ona motywację Hooks.
 
-## Table of Contents
+## Spis treści
 
 <!-- toc -->
 <!-- tocstop -->
 
-## How Hooks Map to Component Classes
+## Jak Hooks Map dla Component Classes
 
-If you're familiar with React, one of the best ways to understand hooks is by looking at how we reproduce the behavior we're used to in "component classes" by using hooks.
+Jeśli znasz React, jednym z najlepszych sposobów zrozumienia hooks jest sprawdzenie, w jaki sposób odtwarzamy zachowanie, do którego jesteśmy przyzwyczajeni "component classes" używając hooks.
 
-Recall that when writing component classes we often need to:
+Pamiętaj, że pisząc klasy komponentów, często musimy:
 
-- Maintain `state`
-- Use lifecycle methods like `componentDidMount()` and `componentDidUpdate()`
-- Access context (by setting `contextType`)
+- Utrzymać `state`
+- Użyć metod cyklu życia, takich jak `componentDidMount()` i `componentDidUpdate()`
+- Dostęp kontekstu (używając ustawień `contextType`)
 
-With React Hooks we can replicate a similar/the same behavior in functional components:
+Wraz z React Hooks możemy odtworzyć podobne / takie samo zachowanie w komponentach funkcjonalnych:
 
-- Component state uses the `useState()` hook.
-- Lifecycle methods like `componentDidMount()` and `componentDidUpdate()` use the `useEffect()` hook.
-- Static contextType uses the `useContext()` hook.
+- Stan komponentu używa `useState()` hook.
+- Metody cyklu życia, takie jak `componentDidMount()` i `componentDidUpdate()` używają `useEffect()` hook.
+- Statyczny contextType używa `useContext()` hook.
 
-## Using Hooks Requires `react` `"next"`
+## Używanie Hooks wymaga `react` `"next"`
 
-You can get started with Hooks right now by setting `react` and `react-dom` in your package.json file to `next` .
+Możesz zacząć korzystać z Hooks już teraz, ustawiając `react` i `react-dom` w twoim pliku package.json dla `next` .
 
 ```javascript
 // package.json
@@ -69,9 +69,9 @@ You can get started with Hooks right now by setting `react` and `react-dom` in y
 "react-dom": "next"
 ```
 
-## useState() Hook Example
+## przykład useState() Hook
 
-State are an essential part of React. They allow us to declare state variables that hold data that will be used in our app. With class components, state is usually defined like this:
+Stan jest istotną częścią React. Pozwalaja nam deklarować zmienne stanu, które przechowują dane, które zostaną wykorzystane w naszej aplikacji. W przypadku komponentów klasy stan jest zwykle definiowany w następujący sposób:
 
 ```javascript
 class Example extends React.Component {
@@ -83,11 +83,11 @@ class Example extends React.Component {
   }
 ```
 
-Before hooks, state was usually only used in a class component but as mentioned above, **Hooks allows us to add state to a functional component**.
+Przed hooks, stan był zwykle używany tylko w komponencie klasy, ale jak wspomniano powyżej, **Hooks pozwala nam dodać stan do komponentu funkcjonalnego**.
 
-Let's see an example below. Here, we'll be building a switch for a lightbulb SVG, which will change color depending on the value of the state. To do this, we'll be using the `useState` hook.
+Zobaczmy przykład poniżej. Tutaj zbudujemy przełącznik żarówki SVG, który zmieni kolor w zależności od wartości stanu. Aby to zrobić, będziemy używać `useState` hook.
 
-Here's the complete code (and runnable example) -- we'll walk through what's going on below.
+Oto pełny kod (i możliwy do uruchomienia przykład) -- omówimy to, co dzieje się poniżej.
 
 ```javascript
 import React, { useState } from "react";
@@ -164,50 +164,50 @@ ReactDOM.render(<LightBulb />, rootElement);
 
 <iframe src="https://codesandbox.io/embed/mpnoljl19?moduleview=1" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
 
-### Our Component is a Function
+### Nasz Komponent jest Funkcją
 
-In the code block above, we start by importing `useState` from `react`. `useState` is a new way to use the capabilities that `this.state` would have offered. 
+W powyższym bloku kodu zaczynamy od importowania `useState` z `react`. `useState` to nowy sposób korzystania z możliwości, które `this.state` zaoferowałby. 
 
-Next, notice that this component is **a function and not a class**. Interesting!
+Następnie zauważ, że ten komponent jest **funkcją i nie klasą**. Interesujące!
 
-### Reading and Writing State
+### Czytanie i Pisanie Stanu
 
-Within this function, we call `useState` to create a state variable:
+W ramach tej funkcji wywołujemy `useState`, aby utworzyć zmienną stanu:
 
 ```javascript
 let [light, setLight] = useState(0);
 ```
 
-**`useState` is used to declare a state variable** and can be initialized with **any** type of value (unlike state in classes, which were required to be an object). 
+**`useState` służy do deklarowania zmiennej stanu** i można go zainicjować za pomocą **każdego** typu wartości (w przeciwieństwie do stanu w klasach, które musiały być obiektami).
 
-As seen above, we use destructuring on the return value of `useState`. 
+Jak widać powyżej, używamy destrukcji na wartości zwracanej `useState`. 
 
-- The first value, `light` in this case, is the current state (sort of like `this.state`) and 
-- The second value is **a function used to update the state (first) value** (like the traditional `this.setState`).
+- Pierwsza wartość, `light` w tym przypadku, jest bieżącym stanem (coś w rodzaju `this.state`) i 
+- Druga wartość jest **funkcją używaną do aktualizacji wartości stanu (pierwszej)** (tak jak tradycyjnt `this.setState`).
 
-Next, we create two functions that each set the state to different values, 0 or 1. 
+Następnie tworzymy dwie funkcje, z których każda ustawia stan na różne wartości, 0 lub 1. 
 
 ```javascript
 const setOff = () => setLight(0);
 const setOn = () => setLight(1);
 ```
 
-We then use these functions as event handlers to the buttons in the view:
+Następnie używamy tych funkcji jako procedur obsługi zdarzeń dla przycisków w widoku:
 
 ```javascript
 <button onClick={setOff}>Off</button>
 <button onClick={setOn}>On</button>
 ```
 
-### React Tracks the State
+### Śledzenie Stanu React
 
-When the "On" button is pressed, `setOn` is called, which will call `setLight(1)`. The call to `setLight(1)` **updates the value of `light` on the next render**. This can feel a bit magical, but what is happen is that **React is tracking the value of this variable** and it will pass in the new value when it re-renders this component. 
+Gdy przycisk "On" jest naciśnięty, `setOn` jest wywoływany, który wywoła `setLight(1)`. Wywołanie `setLight(1)` **aktualizuje wartość `light` w następnym renderze**. To może wydawać się trochę magiczne, ale tak się dzieje **React śledzi wartość tej zmiennej** i przekaże nową wartość, gdy ponownie renderuje ten komponent. 
 
-Then, we use the current state (`light`) to determine whether the bulb should be "on" or not. That is, we set the fill color of the SVG depending on the value of `light`. If `light` is 0 (off), then the `fillColor` is set to `#000000` (and if it's 1 (on), `fillColor` is set to `#ffbb73`).
+Następnie używamy bieżącego stanu (`light`) aby ustalić, czy żarówka powinna być „włączona”, czy nie. Oznacza to, że ustawiamy kolor wypełnienia SVG w zależności od wartości `light`. Jeśli `light` jest 0 (off), wtedy `fillColor` jest ustawione na `#000000` (a jeśli jest 1 (on), `fillColor` jest ustawione na `#ffbb73`).
 
-### Multiple States
+### Wiele Stanów
 
-While we don't do this in the above example, you **can** create multiple states by calling `useState` more than once. E.g.: 
+Chociaż nie robimy tego w powyższym przykładzie, ty **możesz** stwórzyć wiele stanów wywołując `useState` więcej niż raz. Np.: 
 
 ```javascript
 let [light, setLight] = useState(0);
@@ -215,15 +215,15 @@ let [count, setCount] = useState(10);
 let [name, setName] = useState("Yomi");
 ```
 
-> NOTE: There are some constraints when using hooks that you should be aware of. The most important one is that you **must only call hooks at the top level of your function**. See [The Rules of Hooks](https://reactjs.org/docs/hooks-rules.html) for more information.
+> UWAGA: Podczas używania hooks istnieją pewne ograniczenia, o których powinieneś wiedzieć. Najważniejsze jest to, że ty **musisz wywoływać hooks tylko na najwyższym poziomie twojej funkcji**. Zobacz [The Rules of Hooks](https://reactjs.org/docs/hooks-rules.html) aby znaleźć więcej informacji.
 
-## useEffect() Hook Example
+## Przykład useEffect() Hook
 
-**The `useEffect` Hook lets you perform side effects in function components.** Side effects can be API calls, Updating DOM, subscribing to event listeners - anything where you want an "imperative" action to happen.
+**Hook `useEffect` pozwala wykonywać działania niepożądane w komponentach funkcji.** Skutkami ubocznymi mogą być wywołania interfejsu API, aktualizacja DOM, subskrybowanie detektorów zdarzeń - wszystko, gdzie chcesz, aby miało miejsce „działanie imperatywne”.
 
-By using the `useEffect()` Hook, React knows that you'd like to carry out a certain action after it's done rendering. 
+Używając Hook `useEffect()`, React wie, że chcesz wykonać określoną akcję po zakończeniu renderowania.
 
-Let's look at an example below. We'll be using the `useEffect()` hook to make API calls and get the response.
+Spójrzmy na przykład poniżej. Będziemy używać hook `useEffect()` do wykonywania połączeń API i uzyskania odpowiedzi.
 
 ```javascript
 import React, { useState, useEffect } from "react";
@@ -261,17 +261,17 @@ ReactDOM.render(<App />, rootElement);
 
 <iframe src="https://codesandbox.io/embed/5k9ko0287n?moduleview=1" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
 
-In this code example both `useState` and `useEffect` are imported and that's because we'd like to **set the result from the API call to a state**. 
+W tym przykładzie kodu oba `useState` oraz `useEffect` są importowane, a to dlatego, że chcielibyśmy **ustawić wynik wywołania interfejsu API na stan**.
 
 ```javascript
 import React, { useState, useEffect } from "react";
 ```
 
-### Fetch Data and Update State
+### Pobierz dane i zaktualizuj stan
 
-To "use an effect", we need to place our action in the `useEffect` function - that is, we pass our effect "action" as an anonymous function as the first argument to `useEffect`. 
+Aby „użyć efektu”, musimy umieścić naszą akcję w funkcji 'useEffect' - to znaczy przekazujemy naszą „akcję” efektu jako funkcję anonimową jako pierwszy argument do `useEffect`. 
 
-In our example above, we make an API call to an endpoint that returns a list of names. When the `response` comes back, we convert it to JSON and then use `setNames(data)` to set the state.
+W powyższym przykładzie wykonujemy wywołanie API do punktu końcowego, który zwraca listę nazw. Kiedy 'response' powraca, konwertujemy ją na JSON, a następnie używamy `setNames(data)` do ustawienia stanu.
 
 ```javascript
   let [names, setNames] = useState([]);
@@ -285,37 +285,37 @@ In our example above, we make an API call to an endpoint that returns a list of 
   }, []);
 ```
 
-### Performance Concerns When Using Effects
+### Problemy z wydajnością podczas korzystania z efektów
 
-There are some things to note about using `useEffect` though. 
+Jest jednak kilka rzeczy, na które należy zwrócić uwagę przy korzystaniu z `useEffect`.
 
-The first one to think about is that, by default, our `useEffect` will be called on every render! The good news is that we don't need to worry about stale data, but the bad news is that we probably don't want to make an HTTP request on every render (as in this case). 
+Pierwszą rzeczą do rozważenia jest to, że domyślnie nasz `useEffect` będzie wywoływany przy każdym renderowaniu! Dobrą wiadomością jest to, że nie musimy się martwić o nieaktualne dane, ale złą wiadomością jest to, że prawdopodobnie nie chcemy wysyłać żądania HTTP przy każdym renderowaniu (jak w tym przypadku).
 
-You can skip effects by **using the second argument to `useEffect`**, as we did in this case. The second argument to `useEffect` is a list of variables we want to "watch" and then we will only re-run the effect when one of those values changes. 
+Możesz pominąć efekty, **używając drugiego argumentu do `useEffect`**, tak jak zrobiliśmy w tym przypadku. Drugim argumentem 'useEffect' jest lista zmiennych, które chcemy 'obserwować', a następnie ponownie uruchomimy efekt tylko, gdy jedna z tych wartości się zmieni. 
 
-In the above code example, notice that we pass **an empty array** as the second argument. That is us telling React that we only want to call this effect when the component is mounted. 
+W powyższym przykładzie kodu zauważmy, że przekazujemy **pustą tablicę** jako drugi argument. To znaczy mówimy Reactowi, że chcemy wywołać ten efekt tylko wtedy, gdy element jest zamontowany.
 
-> To learn more about Effect performance, [checkout this section in the official docs](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects)
+> Aby dowiedzieć się więcej o wydajności efektu, [sprawdź tę sekcję w oficjalnych dokumentach](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects)
 
-Also, just like `useState` function above, `useEffect` allows for multiple instances, which means you can have several `useEffect` functions.
+Również, tak jak funkcja `useState` powyżej, `useEffect` pozwala na wiele wystąpień, co oznacza, że możesz mieć ich kilka funkcji `useEffect`.
 
-## `useContext()` Hook Example
+## Przykład `useContext()` Hook
 
-### The Point of Context
+### Punkt kontekstu
 
-Context in React is a way for a child component to access a value in a parent component. 
+Kontekst w React to sposób, w jaki komponent potomny może uzyskać dostęp do wartości w komponencie macierzystym.
 
-To understand the need for context, when building a React app you often need to get values from the top of your React tree to the bottom. Without context, you end up passing props through components that do not necessarily need them. Not only is it a hassle to passing props through components that don't need them, it can also introduce an inadvertent coupling if done incorrectly.
+Aby zrozumieć potrzebę kontekstu, budując aplikację React, często musisz uzyskać wartości z góry drzewa React na dół. Bez kontekstu kończysz przekazywanie rekwizytów przez komponenty, które niekoniecznie ich potrzebują. Problemem jest nie tylko przekazywanie rekwizytów przez komponenty, które ich nie potrzebują, ale może również wprowadzić przypadkowe sprzężenie, jeśli zostanie wykonane nieprawidłowo.
 
-Passing props down through a tree of "unrelated" components is affectionately called _props drilling_.
+Przekazywanie props przez drzewo „niepowiązanych" komponentów jest nazywany pieszczotliwie _props drilling_.
 
-React Context solves the problem of props drilling by allowing you to share values through the component tree, to any component that asks for those values.
+React Context rozwiązuje problem wiercenia propsów, umożliwiając współdzielenie wartości przez drzewo komponentów do dowolnego komponentu, który prosi o te wartości.
 
-### `useContext()` makes context easier to use
+### `useContext()` ułatwia korzystanie z kontekstu
 
-With the `useContext` Hook, using Context is easier than ever. 
+Z Hook `useContext` używajanie Context jest łatwiejsze niż kiedykolwiek.
 
-The `useContext()` function accepts a **context object**, which is initially returned from `React.createContext()`, and then returns the current context value. Let's look at an example below.
+Funkcja `useContext()` akceptuje **obiekt kontekstu**, który początkowo jest zwracany z `React.createContext()`, a następnie zwraca bieżącą wartość kontekstu. Spójrzmy na przykład poniżej.
 
 ```javascript
 import React, { useContext } from "react";
@@ -343,13 +343,13 @@ ReactDOM.render(<App />, rootElement);
 
 <iframe src="https://codesandbox.io/embed/3q2x15l4rm" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
 
-In the code above, the context `JediContext` is created using `React.createContext()`.
+W powyższym kodzie kontekst `JediContext` jest tworzony używając `React.createContext()`.
 
-We use the `JediContext.Provider` in our `App` component and set the `value` there to `"Luke"`. This means any context-reading object in the tree can now read that value.
+Używamy `JediContext.Provider` w naszym komponencie `App` i ustawiamy `value` tam to `"Luke"`. Oznacza to, że każdy obiekt czytający kontekst w drzewie może teraz odczytać tę wartość.
 
-To read this value in the `Display()` function we call `useContext`, passing the `JediContext` an argument.
+Aby odczytać tę wartość w funkcji `Display()` wywołujemy `useContext`, uwzględniając argument `JediContext`.
 
-We then pass in the context object we got from `React.createContext`, and it automatically outputs the value. When the value of the provider updates, this Hook will trigger a rerender with the latest context value.
+Następnie przekazujemy obiekt kontekstu, który otrzymaliśmy `React.createContext`, i automatycznie wyświetla wartość. Gdy wartość dostawcy zostanie zaktualizowana, ten Hook spowoduje wyrenderowanie z najnowszą wartością kontekstu.
 
 ### Getting a Reference to the Context in a Larger App
 
