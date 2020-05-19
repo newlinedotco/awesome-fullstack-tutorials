@@ -23,7 +23,7 @@ One of the key ideas to understand is that **Hooks let you use state and other R
 
 While component-based design lets us reuse _views_ across our app, one of the biggest problems React developers face is how we can **reuse state logic between components**. When we have components that share similar state logic, there hasn't been great solutions for reuse and this can sometimes lead to duplicated logic in the constructor and lifecycle methods.
 
-The typically way to deal with this has traditionally been either:
+The typical way to deal with this has traditionally been either:
 
 * higher-order components or
 * render props complex 
